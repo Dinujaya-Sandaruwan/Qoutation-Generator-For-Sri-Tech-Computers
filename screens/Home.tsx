@@ -1,8 +1,9 @@
 import NavSearch from "@/components/NavSearch";
 import SavedQutationItem from "@/components/SavedQutationItem";
 import Colors from "@/constants/Colors";
+import { RootStackParamList } from "@/types/navigation";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -13,7 +14,7 @@ import {
 } from "react-native";
 
 function HomeScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <>
       <NavSearch />
@@ -35,7 +36,8 @@ function HomeScreen() {
       <View style={styles.footer}>
         <TouchableHighlight
           style={styles.createBtn}
-          onPress={() => navigation.navigate("Create")}
+          onPress={() => navigation.navigate("profile")}
+          underlayColor={Colors.border}
         >
           <AntDesign name="plus" size={50} color={Colors.white} />
         </TouchableHighlight>

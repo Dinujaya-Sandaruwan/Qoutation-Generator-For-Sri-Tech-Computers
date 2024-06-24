@@ -3,8 +3,11 @@ import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 
 import Colors from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "@/types/navigation";
 
 const SavedQutationItem = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <View style={styles.qutationItem}>
       <View style={styles.qutationItemLeft}>
@@ -13,7 +16,7 @@ const SavedQutationItem = () => {
         <Text style={styles.qutationItemBudget}>Budget: Rs. 57000.00 </Text>
       </View>
       <TouchableHighlight
-        onPress={() => console.warn("Saman")}
+        onPress={() => navigation.navigate("createPage01")}
         style={styles.qutationItemRight}
       >
         <AntDesign name="rightcircleo" size={30} color={Colors.rightArrow} />
