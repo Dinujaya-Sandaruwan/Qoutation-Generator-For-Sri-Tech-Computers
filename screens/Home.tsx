@@ -1,3 +1,5 @@
+import React, { useRef } from "react";
+
 import NavSearch from "@/components/NavSearch";
 import SavedQutationItem from "@/components/SavedQutationItem";
 import Colors from "@/constants/Colors";
@@ -7,14 +9,37 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   FlatList,
   KeyboardAvoidingView,
+  Pressable,
   StyleSheet,
   Text,
   TouchableHighlight,
   View,
+  Animated,
 } from "react-native";
 
 function HomeScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.95,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      friction: 3,
+      tension: 40,
+      useNativeDriver: true,
+    }).start();
+
+    setTimeout(() => {
+      navigation.navigate("profile");
+    }, 1000);
+  };
   return (
     <>
       <NavSearch />
@@ -34,13 +59,15 @@ function HomeScreen() {
         />
       </KeyboardAvoidingView>
       <View style={styles.footer}>
-        <TouchableHighlight
-          style={styles.createBtn}
-          onPress={() => navigation.navigate("profile")}
-          underlayColor={Colors.border}
-        >
-          <AntDesign name="plus" size={50} color={Colors.white} />
-        </TouchableHighlight>
+        <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+          <Pressable
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            style={styles.createBtn}
+          >
+            <AntDesign name="plus" size={50} color={Colors.white} />
+          </Pressable>
+        </Animated.View>
       </View>
     </>
   );
@@ -77,5 +104,17 @@ const styles = StyleSheet.create({
     height: 63,
     backgroundColor: "#151515",
     alignItems: "center",
+  },
+
+  button: {
+    backgroundColor: "#6200ee",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
