@@ -1,15 +1,5 @@
-import {
-  Button,
-  Text,
-  Touchable,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import {
-  createStaticNavigation,
-  useNavigation,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { Button, Text, TouchableOpacity, View } from "react-native";
 
 function HomeScreen() {
   const navigation = useNavigation();
