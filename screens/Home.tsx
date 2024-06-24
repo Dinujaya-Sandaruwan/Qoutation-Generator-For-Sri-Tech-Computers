@@ -12,7 +12,6 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TouchableHighlight,
   View,
   Animated,
 } from "react-native";
@@ -37,8 +36,8 @@ function HomeScreen() {
     }).start();
 
     setTimeout(() => {
-      navigation.navigate("profile");
-    }, 1000);
+      navigation.navigate("createPage01");
+    }, 100);
   };
   return (
     <>

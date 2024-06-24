@@ -6,4 +6,5 @@ export default {
   componentBg: "#323232",
   rightArrow: "#ACACAC",
   componentBorder: "#262626",
+  buttonBg: "#151515",
 };

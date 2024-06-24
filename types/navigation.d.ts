@@ -4,6 +4,7 @@ export type RootStackParamList = {
   home: undefined; // add parameters if any
   profile: undefined;
   createPage01: undefined;
+  createPage02: undefined;
 };
 
 // export type RootStackParamList = {

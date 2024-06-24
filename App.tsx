@@ -1,12 +1,16 @@
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import "react-native-gesture-handler";
 import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NavigationContainer, DrawerActions } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  DrawerActions,
+  DefaultTheme,
+} from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 import HomeScreen from "./screens/Home";
@@ -39,6 +43,7 @@ function MainStack() {
             style={{ marginRight: 15 }}
           />
         ),
+        cardStyle: { backgroundColor: Colors.darkBg },
       })}
     >
       <Stack.Screen
@@ -51,37 +56,51 @@ function MainStack() {
         }}
         component={HomeScreen}
       />
-      <Stack.Screen name="profile" component={ProfileScreen} />
+      <Stack.Screen
+        name="profile"
+        component={ProfileScreen}
+        options={{ ...TransitionPresets.SlideFromRightIOS }}
+      />
       <Stack.Screen
         name="createPage01"
         component={BuyerInfo}
-        options={{ ...TransitionPresets.SlideFromRightIOS }}
+        options={{
+          title: "Create a Quotation",
+        }}
       />
     </Stack.Navigator>
   );
 }
 
-function App() {
+const App = () => {
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: Colors.darkBg,
+    },
+  };
+
   return (
-    <NavigationContainer>
-      <StatusBar style="light" />
-      <Drawer.Navigator drawerContent={(props) => <Menu {...props} />}>
-        <Drawer.Screen
-          name="MainStack"
-          component={MainStack}
-          options={{ headerShown: false }}
-        />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <View style={styles.root}>
+      <NavigationContainer theme={MyTheme}>
+        <StatusBar style="light" />
+        <Drawer.Navigator drawerContent={(props) => <Menu {...props} />}>
+          <Drawer.Screen
+            name="MainStack"
+            component={MainStack}
+            options={{ headerShown: false }}
+          />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: Colors.darkBg,
   },
   logo: {
     width: 33,
