@@ -44,6 +44,8 @@ export default function App() {
         <Stack.Screen
           name="Home"
           options={{
+            title: "Qutations By Sri Tech",
+
             headerLeft: () => (
               <Image source={require("@img/logo.png")} style={styles.logo} />
             ),
@@ -70,5 +72,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
+    marginRight: 10,
   },
 });
