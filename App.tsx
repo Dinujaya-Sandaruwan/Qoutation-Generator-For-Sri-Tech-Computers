@@ -19,6 +19,7 @@ import Colors from "./constants/Colors";
 import Menu from "./screens/Menu";
 import BuyerInfo from "./screens/create/BuyerInfo";
 import { StatusBar } from "expo-status-bar";
+import BuildItems from "./screens/create/BuildItems";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -66,6 +67,17 @@ function MainStack() {
         component={BuyerInfo}
         options={{
           title: "Create a Quotation",
+          headerLeft: () => (
+            <Image source={require("@img/logo.png")} style={styles.logo} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="createPage02"
+        component={BuildItems}
+        options={{
+          title: "Pick Items For PC Build",
+          ...TransitionPresets.SlideFromRightIOS,
         }}
       />
     </Stack.Navigator>

@@ -14,6 +14,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
+import { Feather } from "@expo/vector-icons";
 
 const BuyerInfo = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -97,7 +98,7 @@ const BuyerInfo = () => {
           <Text style={[styles.navBtnText, { marginRight: 5 }]}>
             Go to next page
           </Text>
-          <AntDesign name="right" size={19} color={Colors.white} />
+          <Feather name="chevron-right" size={19} color={Colors.white} />
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

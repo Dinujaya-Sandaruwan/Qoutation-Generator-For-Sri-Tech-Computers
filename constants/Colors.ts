@@ -7,4 +7,6 @@ export default {
   rightArrow: "#ACACAC",
   componentBorder: "#262626",
   buttonBg: "#151515",
+  green: "#B6FFAF",
+  itemPrice: "#C9C9C9",
 };
