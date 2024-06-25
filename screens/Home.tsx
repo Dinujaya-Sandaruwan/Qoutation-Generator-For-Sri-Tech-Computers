@@ -1,11 +1,16 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import NavSearch from "@/components/NavSearch";
 import SavedQutationItem from "@/components/SavedQutationItem";
 import Colors from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
 import { AntDesign } from "@expo/vector-icons";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+  useNavigationState,
+} from "@react-navigation/native";
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -15,8 +20,16 @@ import {
   View,
   Animated,
 } from "react-native";
+import useNavigationStore from "@/zustand/navigationStore";
 
 function HomeScreen() {
+  const isThisPage = useIsFocused();
+  const setPage = useNavigationStore((state) => state.setPage);
+
+  useEffect(() => {
+    isThisPage && setPage("home");
+  }, [isThisPage]);
+
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const scaleAnim = useRef(new Animated.Value(1)).current;
 

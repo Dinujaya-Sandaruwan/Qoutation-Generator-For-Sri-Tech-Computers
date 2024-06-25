@@ -6,17 +6,29 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import Colors from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import {
+  useNavigation,
+  NavigationProp,
+  useIsFocused,
+} from "@react-navigation/native";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
 import { Feather } from "@expo/vector-icons";
+import useNavigationStore from "@/zustand/navigationStore";
 
 const BuyerInfo = () => {
+  const isThisPage = useIsFocused();
+  const setPage = useNavigationStore((state) => state.setPage);
+
+  useEffect(() => {
+    isThisPage && setPage("create");
+  }, [isThisPage]);
+
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const keyboardVisible = useKeyboardVisibility();
   const marginBottom = keyboardVisible ? 10 : 30;
