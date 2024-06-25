@@ -29,14 +29,18 @@ const data = [
   { label: "Item 8", value: "8" },
 ];
 
+export type Item = {
+  label: string;
+  value: string;
+};
+
 const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const keyboardVisible = useKeyboardVisibility();
   const marginBottom = keyboardVisible ? 10 : 30;
 
-  const [itemList, setItemList] = useState<string[]>([]);
-
-  const [value, setValue] = useState("");
+  const [itemList, setItemList] = useState<Item[]>([]);
+  const [value, setValue] = useState<Item | null>(null);
   const [isFocus, setIsFocus] = useState(false);
 
   const renderItem = (
@@ -80,13 +84,16 @@ const BuildItems = () => {
             placeholder={!isFocus ? "Select item" : "..."}
             searchPlaceholder="Search..."
             value={value}
+            dropdownPosition="bottom"
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
-            onChange={(item) => {
-              setValue(item.value);
+            onChange={(item: Item) => {
+              setValue(item);
               setIsFocus(false);
             }}
-            renderItem={(item) => renderItem(item, item.value === value)}
+            renderItem={(item: Item) =>
+              renderItem(item, item.value === value?.value)
+            }
             renderLeftIcon={() => (
               <AntDesign
                 style={styles.icon}
@@ -98,14 +105,16 @@ const BuildItems = () => {
           />
           <TouchableOpacity
             style={styles.dropDownAddBtn}
-            onPress={() => setItemList([...itemList, value])}
+            onPress={() => {
+              if (value) setItemList([...itemList, value]);
+            }}
           >
             <Entypo name="plus" size={28} color={Colors.white} />
           </TouchableOpacity>
         </View>
 
         {itemList.map((item, index) => (
-          <BuildItem key={index} />
+          <BuildItem key={index} value={item.value} />
         ))}
       </ScrollView>
       <View style={[styles.bottomNavigation, { marginBottom: marginBottom }]}>
@@ -120,7 +129,7 @@ const BuildItems = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.navBtn, { backgroundColor: "#51a34d" }]}
-          onPress={() => navigation.navigate("createPage03")}
+          onPress={() => {}}
         >
           <FontAwesome name="gear" size={19} color={Colors.white} />
           <Text style={[styles.navBtnText, { marginLeft: 5 }]}>

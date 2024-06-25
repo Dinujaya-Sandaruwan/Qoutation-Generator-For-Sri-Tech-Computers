@@ -6,8 +6,13 @@ import Feather from "@expo/vector-icons/Feather";
 import Colors from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { Item } from "@/screens/create/BuildItems";
 
-const BuildItem = () => {
+interface Props {
+  value: string;
+}
+
+const BuildItem = ({ value }: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const handlePressIn = () => {
@@ -41,7 +46,7 @@ const BuildItem = () => {
           <Text style={styles.itemPrice}>Rs. 52000.00</Text>
         </View>
         <Pressable
-          onPress={() => navigation.navigate("createPage03")}
+          onPress={() => navigation.navigate("createPage03", { value })}
           style={styles.nxtPageBtn}
         >
           <Feather name="chevron-right" size={24} color={Colors.white} />

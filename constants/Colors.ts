@@ -9,4 +9,5 @@ export default {
   buttonBg: "#151515",
   green: "#B6FFAF",
   itemPrice: "#C9C9C9",
+  red: "#fc3d4d",
 };
