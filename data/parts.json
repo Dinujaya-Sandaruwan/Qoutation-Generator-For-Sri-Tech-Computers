@@ -1,0 +1,78 @@
+[
+  {
+    "label": "Processor",
+    "value": "processor"
+  },
+  {
+    "label": "MotherBoard",
+    "value": "motherboard"
+  },
+  {
+    "label": "Cooling Kit",
+    "value": "coolingKit"
+  },
+  {
+    "label": "Cooling Fan",
+    "value": "coolingFan"
+  },
+  {
+    "label": "RAM",
+    "value": "ram"
+  },
+  {
+    "label": "Casing",
+    "value": "casing"
+  },
+  {
+    "label": "Storage",
+    "value": "storage"
+  },
+  {
+    "label": "Graphics Card",
+    "value": "graphicsCard"
+  },
+  {
+    "label": "Keyboard",
+    "value": "keyboard"
+  },
+  {
+    "label": "Mouse",
+    "value": "mouse"
+  },
+  {
+    "label": "Mouse Pad",
+    "value": "mousePad"
+  },
+  {
+    "label": "Monitor",
+    "value": "monitor"
+  },
+  {
+    "label": "Speaker",
+    "value": "speaker"
+  },
+  {
+    "label": "Headphone",
+    "value": "headphone"
+  },
+  {
+    "label": "Webcam",
+    "value": "webcam"
+  },
+  {
+    "label": "Microphone",
+    "value": "microphone"
+  },
+  {
+    "label": "Scanner",
+    "value": "scanner"
+  },
+  {
+    "label": "UPS",
+    "value": "ups"
+  },
+  {
+    "label": "Cables",
+    "value": "cables"
+  }
+]

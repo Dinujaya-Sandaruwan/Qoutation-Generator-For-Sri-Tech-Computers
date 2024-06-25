@@ -17,17 +17,7 @@ import { RootStackParamList } from "@/types/navigation";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
 import { DropdownProps } from "react-native-element-dropdown/lib/typescript/components/Dropdown/model";
-
-const data = [
-  { label: "Keyboard", value: "1" },
-  { label: "MotherBoard", value: "2" },
-  { label: "Processor", value: "3" },
-  { label: "Casing", value: "4" },
-  { label: "Item 5", value: "5" },
-  { label: "Item 6", value: "6" },
-  { label: "Item 7", value: "7" },
-  { label: "Item 8", value: "8" },
-];
+import parts from "@/data/parts.json";
 
 export type Item = {
   label: string;
@@ -76,7 +66,7 @@ const BuildItems = () => {
             containerStyle={styles.dropdownContainer}
             itemTextStyle={styles.itemTextStyle}
             itemContainerStyle={styles.itemContainerStyle}
-            data={data}
+            data={parts}
             search
             maxHeight={300}
             labelField="label"

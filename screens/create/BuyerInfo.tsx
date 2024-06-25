@@ -27,7 +27,7 @@ const BuyerInfo = () => {
         <Text style={styles.title}>Add Order Details</Text>
         <Text style={styles.orderId}>#ST202462385697248</Text>
         <View>
-          <Text style={styles.inputText}>Buyer name</Text>
+          <Text style={styles.inputText}>Customer Name</Text>
           <TextInput
             style={styles.textInput}
             placeholder="Enter buyer name here..."
@@ -43,7 +43,7 @@ const BuyerInfo = () => {
           />
         </View>
         <View>
-          <Text style={styles.inputText}>Advance Money</Text>
+          <Text style={styles.inputText}>Advanced Payment</Text>
           <TextInput
             style={styles.textInput}
             placeholder="Enter buyer’s advance here (Rs)..."
