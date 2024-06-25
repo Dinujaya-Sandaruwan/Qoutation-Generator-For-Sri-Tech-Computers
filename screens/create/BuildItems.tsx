@@ -5,12 +5,22 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 import BuildItem from "@/components/BuildItem";
+import { AntDesign, Feather } from "@expo/vector-icons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+
+import { RootStackParamList } from "@/types/navigation";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
 
 const BuildItems = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const keyboardVisible = useKeyboardVisibility();
+  const marginBottom = keyboardVisible ? 10 : 30;
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -22,6 +32,26 @@ const BuildItems = () => {
         <BuildItem />
         <BuildItem />
       </ScrollView>
+      <View style={[styles.bottomNavigation, { marginBottom: marginBottom }]}>
+        <TouchableOpacity
+          style={styles.navBtn}
+          onPress={() => navigation.goBack()}
+        >
+          <Feather name="chevron-left" size={19} color={Colors.white} />
+          <Text style={[styles.navBtnText, { marginLeft: 5 }]}>
+            Go to previous page
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.navBtn, { backgroundColor: "#51a34d" }]}
+          onPress={() => navigation.navigate("createPage03")}
+        >
+          <FontAwesome name="gear" size={19} color={Colors.white} />
+          <Text style={[styles.navBtnText, { marginLeft: 5 }]}>
+            Generate Quotation
+          </Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -59,5 +89,25 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.componentBorder,
     elevation: 5,
+  },
+  bottomNavigation: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  navBtn: {
+    backgroundColor: Colors.buttonBg,
+    width: "48%",
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    elevation: 5,
+  },
+  navBtnText: {
+    color: Colors.white,
+
+    fontWeight: "600",
   },
 });

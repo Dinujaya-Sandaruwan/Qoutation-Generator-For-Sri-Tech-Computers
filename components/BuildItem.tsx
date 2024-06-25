@@ -4,8 +4,11 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 
 import Feather from "@expo/vector-icons/Feather";
 import Colors from "@/constants/Colors";
+import { RootStackParamList } from "@/types/navigation";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 const BuildItem = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
@@ -22,9 +25,9 @@ const BuildItem = () => {
       useNativeDriver: true,
     }).start();
 
-    // setTimeout(() => {
-    //   navigation.navigate("createPage01");
-    // }, 100);
+    setTimeout(() => {
+      navigation.navigate("createPage03");
+    }, 100);
   };
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>

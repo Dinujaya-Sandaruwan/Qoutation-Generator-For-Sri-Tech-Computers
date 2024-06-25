@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import "react-native-gesture-handler";
 import {
   createStackNavigator,
@@ -10,6 +10,7 @@ import {
   NavigationContainer,
   DrawerActions,
   DefaultTheme,
+  useNavigation,
 } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
@@ -20,6 +21,7 @@ import Menu from "./screens/Menu";
 import BuyerInfo from "./screens/create/BuyerInfo";
 import { StatusBar } from "expo-status-bar";
 import BuildItems from "./screens/create/BuildItems";
+import BuildItemList from "./screens/create/BuildItemList";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -62,21 +64,41 @@ function MainStack() {
         component={ProfileScreen}
         options={{ ...TransitionPresets.SlideFromRightIOS }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="createPage01"
         component={BuyerInfo}
         options={{
           title: "Create a Quotation",
+          ...TransitionPresets.SlideFromRightIOS,
           headerLeft: () => (
             <Image source={require("@img/logo.png")} style={styles.logo} />
           ),
         }}
+      /> */}
+      <Stack.Screen
+        name="createPage01"
+        component={BuyerInfo}
+        options={({ navigation, route }) => ({
+          title: "Create a Quotation",
+          transitionSpec: {
+            open: TransitionPresets.DefaultTransition.transitionSpec.open,
+            close: TransitionPresets.SlideFromRightIOS.transitionSpec.close,
+          },
+        })}
       />
       <Stack.Screen
         name="createPage02"
         component={BuildItems}
         options={{
           title: "Pick Items For PC Build",
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="createPage03"
+        component={BuildItemList}
+        options={{
+          title: "Select The Item",
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />

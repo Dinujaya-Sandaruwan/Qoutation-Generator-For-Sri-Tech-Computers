@@ -86,7 +86,7 @@ const BuyerInfo = () => {
       <View style={[styles.bottomNavigation, { marginBottom: marginBottom }]}>
         <TouchableOpacity
           style={styles.navBtn}
-          onPress={() => navigation.navigate("home")}
+          onPress={() => navigation.goBack()}
         >
           <AntDesign name="home" size={19} color={Colors.white} />
           <Text style={[styles.navBtnText, { marginLeft: 5 }]}>Go to home</Text>
