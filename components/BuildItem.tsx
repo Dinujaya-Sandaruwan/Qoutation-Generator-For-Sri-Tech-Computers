@@ -25,9 +25,9 @@ const BuildItem = () => {
       useNativeDriver: true,
     }).start();
 
-    setTimeout(() => {
-      navigation.navigate("createPage03");
-    }, 100);
+    // setTimeout(() => {
+    //   navigation.navigate("createPage03");
+    // }, 100);
   };
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
@@ -40,7 +40,12 @@ const BuildItem = () => {
           <Text style={styles.itemTitle}>GPU: Nvidia GTX 1080 8GB</Text>
           <Text style={styles.itemPrice}>Rs. 52000.00</Text>
         </View>
-        <Feather name="chevron-right" size={24} color={Colors.white} />
+        <Pressable
+          onPress={() => navigation.navigate("createPage03")}
+          style={styles.nxtPageBtn}
+        >
+          <Feather name="chevron-right" size={24} color={Colors.white} />
+        </Pressable>
       </Pressable>
     </Animated.View>
   );
@@ -71,5 +76,15 @@ const styles = StyleSheet.create({
     color: Colors.itemPrice,
     fontWeight: "600",
     marginTop: 5,
+  },
+  nxtPageBtn: {
+    width: 40,
+    // height: "100%",
+    padding: 10,
+    paddingEnd: 0,
+    borderRadius: 5,
+    // backgroundColor: Colors.buttonBg,
+    justifyContent: "center",
+    alignItems: "flex-end",
   },
 });

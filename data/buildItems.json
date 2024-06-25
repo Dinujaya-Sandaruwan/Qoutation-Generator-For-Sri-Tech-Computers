@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "Processor",
+    "slug": "processor"
+  },
+  {
+    "id": 1,
+    "name": "Motherboard",
+    "slug": ""
+  },
+  {
+    "id": 1,
+    "name": "Ram No.01",
+    "slug": "ram"
+  },
+  {
+    "id": 1,
+    "name": "Ram No.02",
+    "slug": "ram"
+  },
+  {
+    "id": 1,
+    "name": "Ram No.03",
+    "slug": "ram"
+  },
+  {
+    "id": 1,
+    "name": "Cooling Kit",
+    "slug": "coolingKit"
+  },
+  {
+    "id": 1,
+    "name": "Cooling Fan No.01",
+    "slug": "fan"
+  },
+  {
+    "id": 1,
+    "name": "Cooling Fan No.02",
+    "slug": "fan"
+  },
+  {
+    "id": 1,
+    "name": "Cooling Fan No.03",
+    "slug": "fan"
+  },
+  {
+    "id": 1,
+    "name": "Storage No.01",
+    "slug": "storage"
+  },
+  {
+    "id": 1,
+    "name": "Storage No.01",
+    "slug": ""
+  },
+  {
+    "id": 1,
+    "name": "",
+    "slug": ""
+  },
+  {
+    "id": 1,
+    "name": "",
+    "slug": ""
+  },
+  {
+    "id": 1,
+    "name": "",
+    "slug": ""
+  },
+  {
+    "id": 1,
+    "name": "",
+    "slug": ""
+  },
+  {
+    "id": 1,
+    "name": "",
+    "slug": ""
+  },
+  {
+    "id": 1,
+    "name": "",
+    "slug": ""
+  },
+  {
+    "id": 1,
+    "name": "",
+    "slug": ""
+  },
+  {
+    "id": 1,
+    "name": "",
+    "slug": ""
+  },
+  {
+    "id": 1,
+    "name": "",
+    "slug": ""
+  }
+]
