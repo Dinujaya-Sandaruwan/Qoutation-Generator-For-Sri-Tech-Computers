@@ -50,13 +50,13 @@ const BuildItems = () => {
     </View>
   );
 
-  const { buildingBudget } = useBuildData();
+  const { id, buildingBudget } = useBuildData();
 
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Add Order Details</Text>
-        <Text style={styles.orderId}>#ST202462385697248</Text>
+        <Text style={styles.orderId}>#{id}</Text>
         <Text style={styles.budgetLimit}>
           Budget Limit: {buildingBudget}.00
         </Text>

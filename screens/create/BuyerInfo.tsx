@@ -21,6 +21,7 @@ import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
 import { Feather } from "@expo/vector-icons";
 import useNavigationStore from "@/zustand/navigationStore";
 import useBuildData from "@/zustand/buildDataStore";
+import useUniqueId from "@/hooks/useGenerateId";
 
 const BuyerInfo = () => {
   const isThisPage = useIsFocused();
@@ -55,11 +56,17 @@ const BuyerInfo = () => {
     additionalNotes,
   } = useBuildData();
 
+  const generateUniqueId = useUniqueId("ST");
+
+  useEffect(() => {
+    if (id === "") setId(generateUniqueId());
+  }, []);
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Add Order Details</Text>
-        <Text style={styles.orderId}>#ST202462385697248</Text>
+        <Text style={styles.orderId}>#{id}</Text>
         <View>
           <Text style={styles.inputText}>Customer Name</Text>
           <TextInput
