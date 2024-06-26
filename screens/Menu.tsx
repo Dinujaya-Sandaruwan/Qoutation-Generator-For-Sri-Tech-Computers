@@ -52,6 +52,19 @@ const Menu = (props: DrawerContentComponentProps) => {
         <Entypo name="circle-with-plus" size={24} color={Colors.white} />
         <Text style={styles.menuItemText}>Create Qutations</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("addData")}
+        style={[
+          styles.menuItemContainer,
+          {
+            backgroundColor:
+              page === "addData" ? Colors.componentBg : Colors.darkBg,
+          },
+        ]}
+      >
+        <Entypo name="circle-with-plus" size={24} color={Colors.white} />
+        <Text style={styles.menuItemText}>Add Stock Items</Text>
+      </TouchableOpacity>
     </DrawerContentScrollView>
   );
 };

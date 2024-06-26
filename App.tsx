@@ -22,6 +22,7 @@ import BuyerInfo from "./screens/create/BuyerInfo";
 import { StatusBar } from "expo-status-bar";
 import BuildItems from "./screens/create/BuildItems";
 import BuildItemList from "./screens/create/BuildItemList";
+import AddDataScreen from "./screens/AddData";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -53,6 +54,7 @@ function MainStack() {
         name="home"
         options={{
           title: "Quotations By Sri Tech",
+          ...TransitionPresets.SlideFromRightIOS,
           headerLeft: () => (
             <Image source={require("@img/logo.png")} style={styles.logo} />
           ),
@@ -99,6 +101,14 @@ function MainStack() {
         component={BuildItemList}
         options={{
           title: "Select The Item",
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="addData"
+        component={AddDataScreen}
+        options={{
+          title: "Add Stock Items",
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />
