@@ -10,37 +10,33 @@ import {
   Button,
   Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Colors from "@/constants/Colors";
 import NavSearch from "@/components/NavSearch";
 import PriceModel from "@/components/models/PriceModel";
-
-const data = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "11",
-  "12",
-  "13",
-  "14",
-  "15",
-  "16",
-  "17",
-  "18",
-  "19",
-  "20",
-];
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import { StockData } from "@/interfaces/stockData";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 
 const BuildItemList = ({ route }: any) => {
   const { value } = route.params;
+
+  const [itemList, setItemList] = useState<StockData[]>([]);
+  const readDataAsyncStorage = useReadAscyncStorage();
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await readDataAsyncStorage(STORAGE_KEYS.stocks);
+
+      const filteredData = data.filter(
+        (item: StockData) => item.itemType === value
+      );
+      setItemList(filteredData);
+    };
+    getData();
+  }, [value]); // Added dependency array
+
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   return (
     <>
@@ -48,19 +44,19 @@ const BuildItemList = ({ route }: any) => {
 
       <KeyboardAvoidingView style={styles.container}>
         <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
+          data={itemList}
+          keyExtractor={(item) => item.itemId.toString()} // Use itemId instead of index
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
           style={styles.itemList}
-          renderItem={({ index }) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               style={styles.item}
               onPress={() => setModalVisible(!isModalVisible)}
             >
               <Text style={styles.itemText}>
-                {index + 1}. GPU: Nvidia GTX 1080 8GB
+                {index + 1}. {item.itemName}
               </Text>
             </TouchableOpacity>
           )}
@@ -73,7 +69,6 @@ const BuildItemList = ({ route }: any) => {
     </>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
