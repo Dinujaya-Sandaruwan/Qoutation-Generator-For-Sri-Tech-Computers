@@ -3,9 +3,14 @@ import React, { useRef } from "react";
 import Foundation from "@expo/vector-icons/Foundation";
 
 import Colors from "@/constants/Colors";
-import { Modal } from "react-native-paper";
 
-const StockItem = ({ item }) => {
+import { StockData } from "@/interfaces/stockData";
+
+type StockItemProps = {
+  item: StockData;
+};
+
+const StockItem = (item: StockItemProps) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
@@ -21,10 +26,6 @@ const StockItem = ({ item }) => {
       tension: 40,
       useNativeDriver: true,
     }).start();
-
-    // setTimeout(() => {
-    //   navigation.navigate("createPage03");
-    // }, 100);
   };
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
@@ -33,7 +34,7 @@ const StockItem = ({ item }) => {
         onPressOut={handlePressOut}
         style={styles.flatlistItemContainer}
       >
-        <Text style={styles.flatlistItelabel}>{item.label}</Text>
+        <Text style={styles.flatlistItelabel}>{item.item.itemName}</Text>
         <Foundation name="trash" size={24} color={Colors.white} />
       </Pressable>
     </Animated.View>

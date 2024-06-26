@@ -9,6 +9,9 @@ import { AntDesign } from "@expo/vector-icons";
 import parts from "@/data/parts.json";
 import StockItem from "@/components/StockItem";
 import { Modal } from "react-native-paper";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import { StockData } from "@/interfaces/stockData";
 
 type Item = {
   label: string;
@@ -25,6 +28,22 @@ const StockList = () => {
 
   const [value, setValue] = useState<Item | null>(null);
   const [isFocus, setIsFocus] = useState(false);
+
+  const [stockItemList, setStockItemList] = useState();
+
+  const readDataAsyncStorage = useReadAscyncStorage();
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await readDataAsyncStorage(STORAGE_KEYS.stocks);
+      const filteredData = data.filter(
+        (item: StockData) => item.itemType === value?.value
+      );
+      // console.log(filteredData);
+      setStockItemList(filteredData);
+    };
+    getData();
+  }, [value]);
 
   const renderItem = (
     item: {
@@ -84,8 +103,8 @@ const StockList = () => {
       />
 
       <FlatList
-        data={parts}
-        keyExtractor={(item) => item.value}
+        data={stockItemList}
+        keyExtractor={(item) => item.itemId}
         renderItem={({ item }) => <StockItem item={item} />}
       />
     </View>
