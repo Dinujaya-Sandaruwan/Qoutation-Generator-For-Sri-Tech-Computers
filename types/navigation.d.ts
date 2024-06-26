@@ -7,6 +7,7 @@ export type RootStackParamList = {
   createPage02: undefined;
   createPage03: { value?: string };
   addData: undefined;
+  stockList: undefined;
 };
 
 // export type RootStackParamList = {

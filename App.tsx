@@ -24,6 +24,7 @@ import { StatusBar } from "expo-status-bar";
 import BuildItems from "./screens/create/BuildItems";
 import BuildItemList from "./screens/create/BuildItemList";
 import AddDataScreen from "./screens/AddData";
+import StockList from "./screens/StockList";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -110,6 +111,14 @@ function MainStack() {
         component={AddDataScreen}
         options={{
           title: "Add Stock Items",
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="stockList"
+        component={StockList}
+        options={{
+          title: "Stock Items List",
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />
