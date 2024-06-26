@@ -8,13 +8,19 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { RadioButton } from "react-native-paper";
 
 import Colors from "@/constants/Colors";
+import useBuildData from "@/zustand/buildDataStore";
+import { RootStackParamList } from "@/types/navigation";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 interface Props {
   isModalVisible: boolean;
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  itemId: string;
 }
 
-const PriceModel = ({ isModalVisible, setModalVisible }: Props) => {
+const PriceModel = ({ isModalVisible, setModalVisible, itemId }: Props) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const [price, setprice] = useState<number | null>(null);
   const [warranty, setWarranty] = useState<number>(1);
   const [warrantyDuration, setWarrantyDuration] = useState("months");
@@ -23,6 +29,27 @@ const PriceModel = ({ isModalVisible, setModalVisible }: Props) => {
   const handleSubPrice = () => setprice(price && price - 50);
   const handleAddWarranty = () => setWarranty(warranty + 1);
   const handleSubWarranty = () => warranty > 1 && setWarranty(warranty - 1);
+
+  const { setItemPrice, setItemWarranty, setItemWarrantyType } = useBuildData();
+
+  const handleaddDetails = () => {
+    console.log(itemId);
+    if (price) {
+      setItemPrice(itemId, price);
+    }
+    if (warranty) {
+      setItemWarranty(itemId, warranty);
+    } else {
+      setItemWarranty(itemId, 0);
+    }
+    if (warrantyDuration) {
+      setItemWarrantyType(itemId, warrantyDuration);
+    } else {
+      setItemWarrantyType(itemId, "");
+    }
+    setModalVisible(false);
+    navigation.navigate("createPage02");
+  };
 
   return (
     <Modal isVisible={isModalVisible}>
@@ -95,7 +122,10 @@ const PriceModel = ({ isModalVisible, setModalVisible }: Props) => {
             <Text style={styles.radioLabel}>Years</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.modelButtons}>
+        <TouchableOpacity
+          style={styles.modelButtons}
+          onPress={handleaddDetails}
+        >
           <Text style={styles.modelBtnText}>Add details</Text>
         </TouchableOpacity>
         <TouchableOpacity

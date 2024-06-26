@@ -127,7 +127,12 @@ const BuildItems = () => {
         </View>
 
         {buildItems.map((item, index) => (
-          <BuildItem key={index} value={item.itemValue} label={item.itemType} />
+          <BuildItem
+            key={index}
+            itemValue={item.itemValue}
+            itemType={item.itemType}
+            itemId={item.itemId}
+          />
         ))}
       </ScrollView>
       <View style={[styles.bottomNavigation, { marginBottom: marginBottom }]}>
@@ -142,7 +147,9 @@ const BuildItems = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.navBtn, { backgroundColor: "#51a34d" }]}
-          onPress={() => {}}
+          onPress={() => {
+            console.log(buildItems);
+          }}
         >
           <FontAwesome name="gear" size={19} color={Colors.white} />
           <Text style={[styles.navBtnText, { marginLeft: 5 }]}>

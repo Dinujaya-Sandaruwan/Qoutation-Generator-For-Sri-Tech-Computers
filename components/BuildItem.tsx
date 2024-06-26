@@ -6,14 +6,15 @@ import Feather from "@expo/vector-icons/Feather";
 import Colors from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { Item } from "@/screens/create/BuildItems";
+import useBuildData from "@/zustand/buildDataStore";
 
 interface Props {
-  value: string;
-  label: string;
+  itemValue: string;
+  itemType: string;
+  itemId: string;
 }
 
-const BuildItem = ({ value = "Saman", label = "Saman" }: Props) => {
+const BuildItem = ({ itemValue, itemType, itemId }: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const handlePressIn = () => {
@@ -37,6 +38,9 @@ const BuildItem = ({ value = "Saman", label = "Saman" }: Props) => {
   };
 
   const state = true;
+  const { buildItems } = useBuildData();
+
+  const currentItem = buildItems.filter((item) => item.itemId === itemId);
 
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
@@ -45,17 +49,21 @@ const BuildItem = ({ value = "Saman", label = "Saman" }: Props) => {
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
       >
-        {state ? (
-          <Text style={styles.itemTitle}>{label}</Text>
-        ) : (
+        {currentItem[0].itemName && currentItem[0].itemPrice ? (
           <View>
-            <Text style={styles.itemTitle}>GPU: Nvidia GTX 1080 8GB</Text>
-            <Text style={styles.itemPrice}>Rs. 52000.00</Text>
+            <Text style={styles.itemTitle}>{currentItem[0].itemName}</Text>
+            <Text style={styles.itemPrice}>
+              Rs.{currentItem[0].itemPrice}.00
+            </Text>
           </View>
+        ) : (
+          <Text style={styles.itemTitle}>{itemType}</Text>
         )}
 
         <Pressable
-          onPress={() => navigation.navigate("createPage03", { value })}
+          onPress={() =>
+            navigation.navigate("createPage03", { itemValue, itemId })
+          }
           style={styles.nxtPageBtn}
         >
           <Feather name="chevron-right" size={24} color={Colors.white} />

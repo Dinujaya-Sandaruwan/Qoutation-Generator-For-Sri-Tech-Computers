@@ -5,7 +5,7 @@ export type RootStackParamList = {
   profile: undefined;
   createPage01: undefined;
   createPage02: undefined;
-  createPage03: { value?: string };
+  createPage03: { itemValue?: string; itemId?: string };
   addData: undefined;
   stockList: undefined;
 };

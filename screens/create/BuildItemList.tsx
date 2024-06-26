@@ -18,9 +18,10 @@ import PriceModel from "@/components/models/PriceModel";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
 import { StockData } from "@/interfaces/stockData";
 import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
+import useBuildData from "@/zustand/buildDataStore";
 
 const BuildItemList = ({ route }: any) => {
-  const { value } = route.params;
+  const { itemValue, itemId } = route.params;
 
   const [itemList, setItemList] = useState<StockData[]>([]);
   const readDataAsyncStorage = useReadAscyncStorage();
@@ -30,14 +31,16 @@ const BuildItemList = ({ route }: any) => {
       const data = await readDataAsyncStorage(STORAGE_KEYS.stocks);
 
       const filteredData = data.filter(
-        (item: StockData) => item.itemType === value
+        (item: StockData) => item.itemType === itemValue
       );
       setItemList(filteredData);
     };
     getData();
-  }, [value]); // Added dependency array
+  }, [itemValue]); // Added dependency array
 
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
+
+  const { setItemName } = useBuildData();
   return (
     <>
       <NavSearch />
@@ -53,7 +56,10 @@ const BuildItemList = ({ route }: any) => {
           renderItem={({ item, index }) => (
             <TouchableOpacity
               style={styles.item}
-              onPress={() => setModalVisible(!isModalVisible)}
+              onPress={() => {
+                setItemName(itemId, item.itemName);
+                setModalVisible(!isModalVisible);
+              }}
             >
               <Text style={styles.itemText}>
                 {index + 1}. {item.itemName}
@@ -64,6 +70,7 @@ const BuildItemList = ({ route }: any) => {
         <PriceModel
           isModalVisible={isModalVisible}
           setModalVisible={setModalVisible}
+          itemId={itemId}
         />
       </KeyboardAvoidingView>
     </>
