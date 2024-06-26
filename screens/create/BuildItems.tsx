@@ -18,6 +18,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
 import { DropdownProps } from "react-native-element-dropdown/lib/typescript/components/Dropdown/model";
 import parts from "@/data/parts.json";
+import useBuildData from "@/zustand/buildDataStore";
 
 export type Item = {
   label: string;
@@ -49,12 +50,16 @@ const BuildItems = () => {
     </View>
   );
 
+  const { buildingBudget } = useBuildData();
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Add Order Details</Text>
         <Text style={styles.orderId}>#ST202462385697248</Text>
-        <Text style={styles.budgetLimit}>Budget Limit: 75000.00</Text>
+        <Text style={styles.budgetLimit}>
+          Budget Limit: {buildingBudget}.00
+        </Text>
 
         <View style={styles.dropDownView}>
           <Dropdown

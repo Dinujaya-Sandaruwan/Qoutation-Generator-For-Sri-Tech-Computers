@@ -9,7 +9,8 @@ const useBuildData = create<
     setBuildingBudget: (buildingBudget: number) => void;
     setAdvancedPayment: (advancedPayment: number) => void;
     setMobileNo: (mobileNo: string) => void;
-    setAddress: (address: string) => void;
+    setAddressLineOne: (addressLineOne: string) => void;
+    setAddressLineTwo: (addressLineTwo: string) => void;
     setAdditionalNotes: (additionalNotes: string) => void;
     setBuildItems: (buildItems: BuildItem[]) => void;
     addBuildItem: (item: BuildItem) => void;
@@ -29,7 +30,8 @@ const useBuildData = create<
   buildingBudget: 0,
   advancedPayment: 0,
   mobileNo: "",
-  address: "",
+  addressLineOne: "",
+  addressLineTwo: "",
   additionalNotes: "",
   buildItems: [],
   ordereFinished: false,
@@ -40,7 +42,8 @@ const useBuildData = create<
   setBuildingBudget: (buildingBudget: number) => set({ buildingBudget }),
   setAdvancedPayment: (advancedPayment: number) => set({ advancedPayment }),
   setMobileNo: (mobileNo: string) => set({ mobileNo }),
-  setAddress: (address: string) => set({ address }),
+  setAddressLineOne: (addressLineOne: string) => set({ addressLineOne }),
+  setAddressLineTwo: (addressLineTwo: string) => set({ addressLineTwo }),
   setAdditionalNotes: (additionalNotes: string) => set({ additionalNotes }),
   setBuildItems: (buildItems: BuildItem[]) => set({ buildItems }),
 

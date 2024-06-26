@@ -6,7 +6,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import Colors from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
@@ -20,6 +20,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
 import { Feather } from "@expo/vector-icons";
 import useNavigationStore from "@/zustand/navigationStore";
+import useBuildData from "@/zustand/buildDataStore";
 
 const BuyerInfo = () => {
   const isThisPage = useIsFocused();
@@ -33,6 +34,27 @@ const BuyerInfo = () => {
   const keyboardVisible = useKeyboardVisibility();
   const marginBottom = keyboardVisible ? 10 : 30;
 
+  const {
+    setId,
+    setDate,
+    setCustomerName,
+    setBuildingBudget,
+    setAdvancedPayment,
+    setMobileNo,
+    setAddressLineOne,
+    setAddressLineTwo,
+    setAdditionalNotes,
+    id,
+    date,
+    customerName,
+    buildingBudget,
+    advancedPayment,
+    mobileNo,
+    addressLineOne,
+    addressLineTwo,
+    additionalNotes,
+  } = useBuildData();
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -44,6 +66,8 @@ const BuyerInfo = () => {
             style={styles.textInput}
             placeholder="Enter buyer name here..."
             placeholderTextColor={Colors.border}
+            onChangeText={(text) => setCustomerName(text)}
+            value={customerName}
           />
         </View>
         <View>
@@ -52,6 +76,9 @@ const BuyerInfo = () => {
             style={styles.textInput}
             placeholder="Enter buyer’s budget here (Rs)..."
             placeholderTextColor={Colors.border}
+            onChangeText={(text) => setBuildingBudget(Number(text))}
+            value={buildingBudget ? buildingBudget.toString() : ""}
+            keyboardType="numeric"
           />
         </View>
         <View>
@@ -60,6 +87,9 @@ const BuyerInfo = () => {
             style={styles.textInput}
             placeholder="Enter buyer’s advance here (Rs)..."
             placeholderTextColor={Colors.border}
+            onChangeText={(text) => setAdvancedPayment(Number(text))}
+            value={advancedPayment ? advancedPayment.toString() : ""}
+            keyboardType="numeric"
           />
         </View>
         <View>
@@ -68,6 +98,9 @@ const BuyerInfo = () => {
             style={styles.textInput}
             placeholder="Enter buyer’s mobile no. here..."
             placeholderTextColor={Colors.border}
+            onChangeText={(text) => setMobileNo(text)}
+            value={mobileNo}
+            keyboardType="numeric"
           />
         </View>
         <View>
@@ -76,11 +109,15 @@ const BuyerInfo = () => {
             style={[styles.textInput, { marginBottom: 5 }]}
             placeholder="Address (Line 01)..."
             placeholderTextColor={Colors.border}
+            onChangeText={(text) => setAddressLineOne(text)}
+            value={addressLineOne}
           />
           <TextInput
             style={styles.textInput}
             placeholder="Address (Line 02)..."
             placeholderTextColor={Colors.border}
+            onChangeText={(text) => setAddressLineTwo(text)}
+            value={addressLineTwo}
           />
         </View>
         <View>
@@ -92,6 +129,8 @@ const BuyerInfo = () => {
             multiline={true}
             numberOfLines={5}
             textAlignVertical="top"
+            onChangeText={(text) => setAdditionalNotes(text)}
+            value={additionalNotes}
           />
         </View>
       </ScrollView>
