@@ -13,6 +13,8 @@ import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
 import { StockData } from "@/interfaces/stockData";
 import StockDeleteModel from "@/components/models/StockDeleteModel";
+import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorage";
+import { useToast } from "react-native-toast-notifications";
 
 type Item = {
   label: string;
@@ -27,11 +29,14 @@ const StockList = () => {
     isThisPage && setPage("stockList");
   }, [isThisPage]);
 
+  const toast = useToast();
+
   const [value, setValue] = useState<Item | null>(null);
   const [isFocus, setIsFocus] = useState(false);
 
   const [stockItemList, setStockItemList] = useState();
   const readDataAsyncStorage = useReadAscyncStorage();
+  const [deleteItemId, setDeleteItemId] = useState("");
 
   useEffect(() => {
     const getData = async () => {
@@ -43,14 +48,35 @@ const StockList = () => {
       setStockItemList(filteredData);
     };
     getData();
-  }, [value]);
+  }, [value, deleteItemId]);
 
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const [deleteItemId, setDeleteItemId] = useState("");
+  const deleteDataAsyncStorage = useDeleteAscyncStorage();
 
-  const handleDelete = () => {
-    console.log(deleteItemId);
+  const handleDelete = async () => {
+    const data = await deleteDataAsyncStorage(
+      deleteItemId,
+      STORAGE_KEYS.stocks
+    );
+
+    if (data.status === "success") {
+      toast.show("Item added successfully", {
+        type: "success",
+        placement: "bottom",
+        duration: 4000,
+        animationType: "slide-in",
+      });
+      setModalVisible(false);
+      setDeleteItemId("");
+    } else {
+      toast.show("Something went wrong", {
+        type: "danger",
+        placement: "bottom",
+        duration: 4000,
+        animationType: "slide-in",
+      });
+    }
   };
 
   const renderItem = (
