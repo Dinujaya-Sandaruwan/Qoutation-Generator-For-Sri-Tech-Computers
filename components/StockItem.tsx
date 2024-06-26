@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet, Pressable, Animated } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Animated,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
 import React, { useRef } from "react";
 import Foundation from "@expo/vector-icons/Foundation";
 
@@ -8,9 +16,11 @@ import { StockData } from "@/interfaces/stockData";
 
 type StockItemProps = {
   item: StockData;
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteItemId: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const StockItem = (item: StockItemProps) => {
+const StockItem = (props: StockItemProps) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
@@ -34,8 +44,15 @@ const StockItem = (item: StockItemProps) => {
         onPressOut={handlePressOut}
         style={styles.flatlistItemContainer}
       >
-        <Text style={styles.flatlistItelabel}>{item.item.itemName}</Text>
-        <Foundation name="trash" size={24} color={Colors.white} />
+        <Text style={styles.flatlistItelabel}>{props.item.itemName}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            props.setModalVisible(true);
+            props.setDeleteItemId(props.item.itemId);
+          }}
+        >
+          <Foundation name="trash" size={24} color={Colors.white} />
+        </TouchableOpacity>
       </Pressable>
     </Animated.View>
   );

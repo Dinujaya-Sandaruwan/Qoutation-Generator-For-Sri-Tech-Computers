@@ -12,6 +12,7 @@ import { Modal } from "react-native-paper";
 import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
 import { StockData } from "@/interfaces/stockData";
+import StockDeleteModel from "@/components/models/StockDeleteModel";
 
 type Item = {
   label: string;
@@ -30,7 +31,6 @@ const StockList = () => {
   const [isFocus, setIsFocus] = useState(false);
 
   const [stockItemList, setStockItemList] = useState();
-
   const readDataAsyncStorage = useReadAscyncStorage();
 
   useEffect(() => {
@@ -44,6 +44,14 @@ const StockList = () => {
     };
     getData();
   }, [value]);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const [deleteItemId, setDeleteItemId] = useState("");
+
+  const handleDelete = () => {
+    console.log(deleteItemId);
+  };
 
   const renderItem = (
     item: {
@@ -62,52 +70,65 @@ const StockList = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Edit Stock Item List</Text>
-      <Text style={styles.dropdownTitle}>Select the item category</Text>
-      <Dropdown
-        style={[styles.dropdown]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        containerStyle={styles.dropdownContainer}
-        itemTextStyle={styles.itemTextStyle}
-        itemContainerStyle={styles.itemContainerStyle}
-        data={parts}
-        search
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder={!isFocus ? "Select item" : "..."}
-        searchPlaceholder="Search..."
-        value={value}
-        dropdownPosition="bottom"
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={(item: Item) => {
-          setValue(item);
-          setIsFocus(false);
-        }}
-        renderItem={(item: Item) =>
-          renderItem(item, item.value === value?.value)
-        }
-        renderLeftIcon={() => (
-          <AntDesign
-            style={styles.icon}
-            color={Colors.border}
-            name="search1"
-            size={20}
-          />
-        )}
+    <>
+      <StockDeleteModel
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        handleDelete={handleDelete}
       />
+      <View style={styles.container}>
+        <Text style={styles.title}>Edit Stock Item List</Text>
+        <Text style={styles.dropdownTitle}>Select the item category</Text>
+        <Dropdown
+          style={[styles.dropdown]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          containerStyle={styles.dropdownContainer}
+          itemTextStyle={styles.itemTextStyle}
+          itemContainerStyle={styles.itemContainerStyle}
+          data={parts}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? "Select item" : "..."}
+          searchPlaceholder="Search..."
+          value={value}
+          dropdownPosition="bottom"
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={(item: Item) => {
+            setValue(item);
+            setIsFocus(false);
+          }}
+          renderItem={(item: Item) =>
+            renderItem(item, item.value === value?.value)
+          }
+          renderLeftIcon={() => (
+            <AntDesign
+              style={styles.icon}
+              color={Colors.border}
+              name="search1"
+              size={20}
+            />
+          )}
+        />
 
-      <FlatList
-        data={stockItemList}
-        keyExtractor={(item) => item.itemId}
-        renderItem={({ item }) => <StockItem item={item} />}
-      />
-    </View>
+        <FlatList
+          data={stockItemList}
+          keyExtractor={(item) => item.itemId}
+          renderItem={({ item }) => (
+            <StockItem
+              item={item}
+              setModalVisible={setModalVisible}
+              setDeleteItemId={setDeleteItemId}
+            />
+          )}
+        />
+      </View>
+    </>
   );
 };
 
