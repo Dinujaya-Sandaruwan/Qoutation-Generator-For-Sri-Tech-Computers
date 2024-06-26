@@ -16,6 +16,8 @@ import { useToast } from "react-native-toast-notifications";
 
 import parts from "@/data/parts.json";
 import Loading from "@/components/Loading";
+import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorage";
+import useUniqueId from "@/hooks/useGenerateId";
 
 type Item = {
   label: string;
@@ -30,8 +32,12 @@ const AddDataScreen = () => {
     isThisPage && setPage("addData");
   }, [isThisPage]);
 
-  const [value, setValue] = useState<Item | null>(null);
+  const generateUniqueId = useUniqueId("STOCK");
+  const storeDataAsyncStorage = useWriteAscyncStorage();
+
+  const [itemType, setItemType] = useState<Item | null>(null);
   const [isFocus, setIsFocus] = useState(false);
+  const [itemName, setItemName] = useState("");
 
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -52,25 +58,56 @@ const AddDataScreen = () => {
     </View>
   );
 
-  const handleSubmit = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      toast.show("Item added sucessfully", {
-        type: "success",
+  const handleSubmit = async () => {
+    if (!itemType || !itemName) {
+      return toast.show("Please fill all fields", {
+        type: "danger",
         placement: "bottom",
         duration: 4000,
-
         animationType: "slide-in",
       });
-    }, 2000);
+    }
+    setLoading(true);
+
+    const uniqueId = generateUniqueId();
+
+    const data = await storeDataAsyncStorage({
+      itemId: uniqueId,
+      itemType: itemType.value,
+      itemName: itemName,
+    });
+
+    setTimeout(() => {
+      setLoading(false);
+
+      if (data.status === "success") {
+        toast.show("Item added successfully", {
+          type: "success",
+          placement: "bottom",
+          duration: 4000,
+          animationType: "slide-in",
+        });
+        setItemName("");
+      } else {
+        toast.show("Something went wrong", {
+          type: "danger",
+          placement: "bottom",
+          duration: 4000,
+          animationType: "slide-in",
+        });
+      }
+    }, 1000);
   };
 
   return (
     <>
       {loading && <Loading />}
 
-      <KeyboardAvoidingView style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={60}
+      >
         <Text style={styles.title}>Enter Items to Build PC</Text>
 
         <View style={styles.inputContainer}>
@@ -79,10 +116,12 @@ const AddDataScreen = () => {
             style={styles.textInput}
             placeholder="Enter item name here..."
             placeholderTextColor={Colors.border}
+            onChangeText={(text) => setItemName(text)}
+            value={itemName}
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Item Name</Text>
+          <Text style={styles.inputLabel}>Item Type</Text>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
@@ -99,16 +138,16 @@ const AddDataScreen = () => {
             valueField="value"
             placeholder={!isFocus ? "Select item" : "..."}
             searchPlaceholder="Search..."
-            value={value}
+            value={itemType}
             dropdownPosition="bottom"
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item: Item) => {
-              setValue(item);
+              setItemType(item);
               setIsFocus(false);
             }}
             renderItem={(item: Item) =>
-              renderItem(item, item.value === value?.value)
+              renderItem(item, item.value === itemType?.value)
             }
             renderLeftIcon={() => (
               <AntDesign
