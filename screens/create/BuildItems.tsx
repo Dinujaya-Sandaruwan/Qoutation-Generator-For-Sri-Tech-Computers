@@ -19,6 +19,8 @@ import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
 import { DropdownProps } from "react-native-element-dropdown/lib/typescript/components/Dropdown/model";
 import parts from "@/data/parts.json";
 import useBuildData from "@/zustand/buildDataStore";
+import { BuildItem as BuildItemInterface } from "@/interfaces/buildData";
+import useUniqueId from "@/hooks/useGenerateId";
 
 export type Item = {
   label: string;
@@ -29,10 +31,6 @@ const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const keyboardVisible = useKeyboardVisibility();
   const marginBottom = keyboardVisible ? 10 : 30;
-
-  const [itemList, setItemList] = useState<Item[]>([]);
-  const [value, setValue] = useState<Item | null>(null);
-  const [isFocus, setIsFocus] = useState(false);
 
   const renderItem = (
     item: {
@@ -50,7 +48,27 @@ const BuildItems = () => {
     </View>
   );
 
-  const { id, buildingBudget } = useBuildData();
+  const [dropDownValue, setDropDownValue] = useState<Item | null>(null);
+  const [isFocus, setIsFocus] = useState(false);
+
+  const { id, buildingBudget, buildItems, addBuildItem } = useBuildData();
+
+  const generateUniqueId = useUniqueId("ITEM");
+
+  const handleDropdownChange = (value: any) => {
+    const newItem: BuildItemInterface = {
+      itemId: generateUniqueId(),
+      itemValue: value.value,
+      itemName: "",
+      itemType: value.label,
+      itemPrice: 0,
+      itemWarranty: 0,
+      itemWarrantyType: "",
+    };
+
+    addBuildItem(newItem);
+    console.log(buildItems);
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -78,16 +96,16 @@ const BuildItems = () => {
             valueField="value"
             placeholder={!isFocus ? "Select item" : "..."}
             searchPlaceholder="Search..."
-            value={value}
+            value={dropDownValue}
             dropdownPosition="bottom"
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item: Item) => {
-              setValue(item);
+              setDropDownValue(item);
               setIsFocus(false);
             }}
             renderItem={(item: Item) =>
-              renderItem(item, item.value === value?.value)
+              renderItem(item, item.value === dropDownValue?.value)
             }
             renderLeftIcon={() => (
               <AntDesign
@@ -101,15 +119,15 @@ const BuildItems = () => {
           <TouchableOpacity
             style={styles.dropDownAddBtn}
             onPress={() => {
-              if (value) setItemList([...itemList, value]);
+              if (dropDownValue) handleDropdownChange(dropDownValue);
             }}
           >
             <Entypo name="plus" size={28} color={Colors.white} />
           </TouchableOpacity>
         </View>
 
-        {itemList.map((item, index) => (
-          <BuildItem key={index} value={item.value} />
+        {buildItems.map((item, index) => (
+          <BuildItem key={index} value={item.itemValue} label={item.itemType} />
         ))}
       </ScrollView>
       <View style={[styles.bottomNavigation, { marginBottom: marginBottom }]}>

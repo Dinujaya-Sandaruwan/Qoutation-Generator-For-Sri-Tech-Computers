@@ -10,9 +10,10 @@ import { Item } from "@/screens/create/BuildItems";
 
 interface Props {
   value: string;
+  label: string;
 }
 
-const BuildItem = ({ value }: Props) => {
+const BuildItem = ({ value = "Saman", label = "Saman" }: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const handlePressIn = () => {
@@ -34,6 +35,9 @@ const BuildItem = ({ value }: Props) => {
     //   navigation.navigate("createPage03");
     // }, 100);
   };
+
+  const state = true;
+
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
       <Pressable
@@ -41,10 +45,15 @@ const BuildItem = ({ value }: Props) => {
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
       >
-        <View>
-          <Text style={styles.itemTitle}>GPU: Nvidia GTX 1080 8GB</Text>
-          <Text style={styles.itemPrice}>Rs. 52000.00</Text>
-        </View>
+        {state ? (
+          <Text style={styles.itemTitle}>{label}</Text>
+        ) : (
+          <View>
+            <Text style={styles.itemTitle}>GPU: Nvidia GTX 1080 8GB</Text>
+            <Text style={styles.itemPrice}>Rs. 52000.00</Text>
+          </View>
+        )}
+
         <Pressable
           onPress={() => navigation.navigate("createPage03", { value })}
           style={styles.nxtPageBtn}

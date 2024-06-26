@@ -16,12 +16,13 @@ const useBuildData = create<
     addBuildItem: (item: BuildItem) => void;
     updateBuildItem: (updatedItem: BuildItem) => void;
     deleteBuildItem: (itemId: string) => void;
-    setItemId: (index: number, itemId: string) => void;
-    setItemName: (index: number, itemName: string) => void;
-    setItemType: (index: number, itemType: string) => void;
-    setItemPrice: (index: number, itemPrice: number) => void;
-    setItemWarranty: (index: number, itemWarranty: number) => void;
-    setItemWarrantyType: (index: number, itemWarrantyType: string) => void;
+    setItemId: (itemId: string, newId: string) => void;
+    setItemValue: (itemId: string, itemValue: string) => void;
+    setItemName: (itemId: string, itemName: string) => void;
+    setItemType: (itemId: string, itemType: string) => void;
+    setItemPrice: (itemId: string, itemPrice: number) => void;
+    setItemWarranty: (itemId: string, itemWarranty: number) => void;
+    setItemWarrantyType: (itemId: string, itemWarrantyType: string) => void;
   }
 >((set) => ({
   id: "",
@@ -64,47 +65,53 @@ const useBuildData = create<
       buildItems: state.buildItems.filter((item) => item.itemId !== itemId),
     })),
 
-  setItemId: (index: number, itemId: string) =>
-    set((state) => {
-      const newBuildItems = [...state.buildItems];
-      newBuildItems[index] = { ...newBuildItems[index], itemId };
-      return { buildItems: newBuildItems };
-    }),
+  setItemId: (itemId: string, newId: string) =>
+    set((state) => ({
+      buildItems: state.buildItems.map((item) =>
+        item.itemId === itemId ? { ...item, itemId: newId } : item
+      ),
+    })),
+  setItemValue: (itemId: string, itemValue: string) =>
+    set((state) => ({
+      buildItems: state.buildItems.map((item) =>
+        item.itemId === itemId ? { ...item, itemId: itemValue } : item
+      ),
+    })),
 
-  setItemName: (index: number, itemName: string) =>
-    set((state) => {
-      const newBuildItems = [...state.buildItems];
-      newBuildItems[index] = { ...newBuildItems[index], itemName };
-      return { buildItems: newBuildItems };
-    }),
+  setItemName: (itemId: string, itemName: string) =>
+    set((state) => ({
+      buildItems: state.buildItems.map((item) =>
+        item.itemId === itemId ? { ...item, itemName } : item
+      ),
+    })),
 
-  setItemType: (index: number, itemType: string) =>
-    set((state) => {
-      const newBuildItems = [...state.buildItems];
-      newBuildItems[index] = { ...newBuildItems[index], itemType };
-      return { buildItems: newBuildItems };
-    }),
+  setItemType: (itemId: string, itemType: string) =>
+    set((state) => ({
+      buildItems: state.buildItems.map((item) =>
+        item.itemId === itemId ? { ...item, itemType } : item
+      ),
+    })),
 
-  setItemPrice: (index: number, itemPrice: number) =>
-    set((state) => {
-      const newBuildItems = [...state.buildItems];
-      newBuildItems[index] = { ...newBuildItems[index], itemPrice };
-      return { buildItems: newBuildItems };
-    }),
+  setItemPrice: (itemId: string, itemPrice: number) =>
+    set((state) => ({
+      buildItems: state.buildItems.map((item) =>
+        item.itemId === itemId ? { ...item, itemPrice } : item
+      ),
+    })),
 
-  setItemWarranty: (index: number, itemWarranty: number) =>
-    set((state) => {
-      const newBuildItems = [...state.buildItems];
-      newBuildItems[index] = { ...newBuildItems[index], itemWarranty };
-      return { buildItems: newBuildItems };
-    }),
+  setItemWarranty: (itemId: string, itemWarranty: number) =>
+    set((state) => ({
+      buildItems: state.buildItems.map((item) =>
+        item.itemId === itemId ? { ...item, itemWarranty } : item
+      ),
+    })),
 
-  setItemWarrantyType: (index: number, itemWarrantyType: string) =>
-    set((state) => {
-      const newBuildItems = [...state.buildItems];
-      newBuildItems[index] = { ...newBuildItems[index], itemWarrantyType };
-      return { buildItems: newBuildItems };
-    }),
+  setItemWarrantyType: (itemId: string, itemWarrantyType: string) =>
+    set((state) => ({
+      buildItems: state.buildItems.map((item) =>
+        item.itemId === itemId ? { ...item, itemWarrantyType } : item
+      ),
+    })),
 }));
 
 export default useBuildData;

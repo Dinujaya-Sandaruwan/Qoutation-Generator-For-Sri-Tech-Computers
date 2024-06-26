@@ -14,6 +14,7 @@ export interface BuildData {
 
 export interface BuildItem {
   itemId: string;
+  itemValue: string;
   itemName: string;
   itemType: string;
   itemPrice: number;

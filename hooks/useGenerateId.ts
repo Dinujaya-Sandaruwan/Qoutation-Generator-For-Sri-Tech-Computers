@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-type IdType = "STOCK" | "ST";
+type IdType = "STOCK" | "ST" | "ITEM";
 
 const useUniqueId = (type: IdType) => {
   const idRef = useRef<number>(Date.now());
