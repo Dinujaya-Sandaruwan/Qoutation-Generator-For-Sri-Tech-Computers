@@ -5,12 +5,15 @@ import useReadAscyncStorage from "./useReadAscyncStorage";
 const useWriteAscyncStorage = () => {
   const readDataAsyncStorage = useReadAscyncStorage();
 
-  const storeDataAsyncStorage = async (value: StockData) => {
-    const existingData = await readDataAsyncStorage("stock");
+  const storeDataAsyncStorage = async (
+    value: StockData,
+    storageKey: string
+  ) => {
+    const existingData = await readDataAsyncStorage(storageKey);
 
     try {
       const jsonValue = JSON.stringify([...(existingData || []), value]);
-      await AsyncStorage.setItem("stock", jsonValue);
+      await AsyncStorage.setItem(storageKey, jsonValue);
 
       return { status: "success" };
     } catch (e) {

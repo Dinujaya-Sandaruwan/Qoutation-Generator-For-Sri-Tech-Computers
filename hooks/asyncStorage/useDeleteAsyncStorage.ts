@@ -5,9 +5,9 @@ import useReadAscyncStorage from "./useReadAscyncStorage";
 const useDeleteAscyncStorage = () => {
   const readDataAsyncStorage = useReadAscyncStorage();
 
-  const deleteDataAsyncStorage = async (itemId: string) => {
+  const deleteDataAsyncStorage = async (itemId: string, storageKey: string) => {
     const existingData: StockData[] | null = await readDataAsyncStorage(
-      "stock"
+      storageKey
     );
 
     if (existingData) {
@@ -15,7 +15,7 @@ const useDeleteAscyncStorage = () => {
 
       try {
         const jsonValue = JSON.stringify(updatedData);
-        await AsyncStorage.setItem("stock", jsonValue);
+        await AsyncStorage.setItem(storageKey, jsonValue);
 
         return { status: "success" };
       } catch (e) {

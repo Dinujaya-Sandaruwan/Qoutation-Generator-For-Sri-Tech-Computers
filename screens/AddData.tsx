@@ -18,6 +18,7 @@ import parts from "@/data/parts.json";
 import Loading from "@/components/Loading";
 import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorage";
 import useUniqueId from "@/hooks/useGenerateId";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
 
 type Item = {
   label: string;
@@ -71,11 +72,14 @@ const AddDataScreen = () => {
 
     const uniqueId = generateUniqueId();
 
-    const data = await storeDataAsyncStorage({
-      itemId: uniqueId,
-      itemType: itemType.value,
-      itemName: itemName,
-    });
+    const data = await storeDataAsyncStorage(
+      {
+        itemId: uniqueId,
+        itemType: itemType.value,
+        itemName: itemName,
+      },
+      STORAGE_KEYS.stocks
+    );
 
     setTimeout(() => {
       setLoading(false);
