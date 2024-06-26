@@ -13,6 +13,7 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { ToastProvider } from "react-native-toast-notifications";
 
 import HomeScreen from "./screens/Home";
 import ProfileScreen from "./screens/Profile";
@@ -127,16 +128,18 @@ const App = () => {
 
   return (
     <View style={styles.root}>
-      <NavigationContainer theme={MyTheme}>
-        <StatusBar style="light" />
-        <Drawer.Navigator drawerContent={(props) => <Menu {...props} />}>
-          <Drawer.Screen
-            name="MainStack"
-            component={MainStack}
-            options={{ headerShown: false }}
-          />
-        </Drawer.Navigator>
-      </NavigationContainer>
+      <ToastProvider>
+        <NavigationContainer theme={MyTheme}>
+          <StatusBar style="light" />
+          <Drawer.Navigator drawerContent={(props) => <Menu {...props} />}>
+            <Drawer.Screen
+              name="MainStack"
+              component={MainStack}
+              options={{ headerShown: false }}
+            />
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </ToastProvider>
     </View>
   );
 };

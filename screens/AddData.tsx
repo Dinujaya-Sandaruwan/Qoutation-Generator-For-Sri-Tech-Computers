@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet,
   KeyboardAvoidingView,
   TouchableOpacity,
@@ -13,8 +12,10 @@ import Colors from "@/constants/Colors";
 import { TextInput } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 import { Dropdown } from "react-native-element-dropdown";
+import { useToast } from "react-native-toast-notifications";
 
 import parts from "@/data/parts.json";
+import Loading from "@/components/Loading";
 
 type Item = {
   label: string;
@@ -29,9 +30,11 @@ const AddDataScreen = () => {
     isThisPage && setPage("addData");
   }, [isThisPage]);
 
-  const [itemList, setItemList] = useState<Item[]>([]);
   const [value, setValue] = useState<Item | null>(null);
   const [isFocus, setIsFocus] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
 
   const renderItem = (
     item: {
@@ -49,61 +52,79 @@ const AddDataScreen = () => {
     </View>
   );
 
-  return (
-    <KeyboardAvoidingView style={styles.container}>
-      <Text style={styles.title}>Enter Items to Build PC</Text>
+  const handleSubmit = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      toast.show("Item added sucessfully", {
+        type: "success",
+        placement: "bottom",
+        duration: 4000,
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Item Name</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter item name here..."
-          placeholderTextColor={Colors.border}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Item Name</Text>
-        <Dropdown
-          style={[styles.dropdown]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          containerStyle={styles.dropdownContainer}
-          itemTextStyle={styles.itemTextStyle}
-          itemContainerStyle={styles.itemContainerStyle}
-          data={parts}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={!isFocus ? "Select item" : "..."}
-          searchPlaceholder="Search..."
-          value={value}
-          dropdownPosition="bottom"
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(item: Item) => {
-            setValue(item);
-            setIsFocus(false);
-          }}
-          renderItem={(item: Item) =>
-            renderItem(item, item.value === value?.value)
-          }
-          renderLeftIcon={() => (
-            <AntDesign
-              style={styles.icon}
-              color={Colors.border}
-              name="search1"
-              size={20}
-            />
-          )}
-        />
-      </View>
-      <TouchableOpacity style={styles.submitBtn}>
-        <Text style={styles.submitBtnText}>Add item</Text>
-      </TouchableOpacity>
-    </KeyboardAvoidingView>
+        animationType: "slide-in",
+      });
+    }, 2000);
+  };
+
+  return (
+    <>
+      {loading && <Loading />}
+
+      <KeyboardAvoidingView style={styles.container}>
+        <Text style={styles.title}>Enter Items to Build PC</Text>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Item Name</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter item name here..."
+            placeholderTextColor={Colors.border}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Item Name</Text>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            containerStyle={styles.dropdownContainer}
+            itemTextStyle={styles.itemTextStyle}
+            itemContainerStyle={styles.itemContainerStyle}
+            data={parts}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={!isFocus ? "Select item" : "..."}
+            searchPlaceholder="Search..."
+            value={value}
+            dropdownPosition="bottom"
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={(item: Item) => {
+              setValue(item);
+              setIsFocus(false);
+            }}
+            renderItem={(item: Item) =>
+              renderItem(item, item.value === value?.value)
+            }
+            renderLeftIcon={() => (
+              <AntDesign
+                style={styles.icon}
+                color={Colors.border}
+                name="search1"
+                size={20}
+              />
+            )}
+          />
+        </View>
+        <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
+          <Text style={styles.submitBtnText}>Add item</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    </>
   );
 };
 
