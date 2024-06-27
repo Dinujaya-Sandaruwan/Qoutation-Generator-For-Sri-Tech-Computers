@@ -18,7 +18,7 @@ export interface BuildItem {
   itemName: string;
   itemType: string;
   itemPrice: number;
-  // itemQuantity: number;
+  itemQuantity: number;
   itemWarranty: number;
   itemWarrantyType: string;
 }

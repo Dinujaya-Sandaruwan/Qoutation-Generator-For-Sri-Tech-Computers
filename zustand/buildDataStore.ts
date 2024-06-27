@@ -18,6 +18,7 @@ const useBuildData = create<
     deleteBuildItem: (itemId: string) => void;
     setItemId: (itemId: string, newId: string) => void;
     setItemValue: (itemId: string, itemValue: string) => void;
+    setItemQuantity: (itemId: string, itemQuantity: number) => void;
     setItemName: (itemId: string, itemName: string) => void;
     setItemType: (itemId: string, itemType: string) => void;
     setItemPrice: (itemId: string, itemPrice: number) => void;
@@ -69,6 +70,12 @@ const useBuildData = create<
     set((state) => ({
       buildItems: state.buildItems.map((item) =>
         item.itemId === itemId ? { ...item, itemId: newId } : item
+      ),
+    })),
+  setItemQuantity: (itemId: string, itemQuantity: number) =>
+    set((state) => ({
+      buildItems: state.buildItems.map((item) =>
+        item.itemId === itemId ? { ...item, itemQuantity: itemQuantity } : item
       ),
     })),
   setItemValue: (itemId: string, itemValue: string) =>
