@@ -22,6 +22,7 @@ import useBuildData from "@/zustand/buildDataStore";
 import { BuildItem as BuildItemInterface } from "@/interfaces/buildData";
 import useUniqueId from "@/hooks/useGenerateId";
 import useFormatMoney from "@/hooks/useFormatMoney";
+import BuildItemDeleteModel from "@/components/models/BuildItemDeleteModel";
 
 export type Item = {
   label: string;
@@ -52,7 +53,8 @@ const BuildItems = () => {
   const [dropDownValue, setDropDownValue] = useState<Item | null>(null);
   const [isFocus, setIsFocus] = useState(false);
 
-  const { id, buildingBudget, buildItems, addBuildItem } = useBuildData();
+  const { id, buildingBudget, buildItems, addBuildItem, deleteBuildItem } =
+    useBuildData();
 
   const generateUniqueId = useUniqueId("ITEM");
 
@@ -83,7 +85,7 @@ const BuildItems = () => {
   }, [buildItems]);
 
   const budgetTextColor = () => {
-    if (dynamicBudget < 0) {
+    if (dynamicBudget <= 0) {
       return Colors.red;
     } else if ((buildingBudget / 100) * 30 > dynamicBudget) {
       return Colors.yellow;
@@ -96,8 +98,21 @@ const BuildItems = () => {
   const format = useFormatMoney();
   const formatedBudget = format(dynamicBudget);
 
+  const [isModelOpen, setModelOpen] = React.useState(false);
+  const [deleteBuildItemState, setDeleteBuildItemState] = React.useState("");
+
+  const handleDeleteItem = () => {
+    deleteBuildItem(deleteBuildItemState);
+    setModelOpen(false);
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container}>
+      <BuildItemDeleteModel
+        isModalVisible={isModelOpen}
+        setModalVisible={setModelOpen}
+        handleDelete={handleDeleteItem}
+      />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Add Order Details</Text>
         <Text style={styles.orderId}>#{id}</Text>
@@ -160,6 +175,8 @@ const BuildItems = () => {
             itemValue={item.itemValue}
             itemType={item.itemType}
             itemId={item.itemId}
+            setDeleteBuildItem={setDeleteBuildItemState}
+            setModelOpen={setModelOpen}
           />
         ))}
       </ScrollView>

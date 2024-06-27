@@ -13,9 +13,17 @@ interface Props {
   itemValue: string;
   itemType: string;
   itemId: string;
+  setModelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteBuildItem: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const BuildItem = ({ itemValue, itemType, itemId }: Props) => {
+const BuildItem = ({
+  itemValue,
+  itemType,
+  itemId,
+  setModelOpen,
+  setDeleteBuildItem,
+}: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const handlePressIn = () => {
@@ -52,6 +60,10 @@ const BuildItem = ({ itemValue, itemType, itemId }: Props) => {
         style={styles.itemView}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
+        onLongPress={() => {
+          setModelOpen(true);
+          setDeleteBuildItem(itemId);
+        }}
       >
         {currentItem[0].itemName && currentItem[0].itemPrice ? (
           <View>
