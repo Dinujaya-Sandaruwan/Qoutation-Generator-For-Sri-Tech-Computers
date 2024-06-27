@@ -1,5 +1,3 @@
-import { RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import {
   View,
   Text,
@@ -7,8 +5,6 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   FlatList,
-  Button,
-  Pressable,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 
@@ -19,6 +15,7 @@ import { STORAGE_KEYS } from "@/constants/storageKeys";
 import { StockData } from "@/interfaces/stockData";
 import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import useBuildData from "@/zustand/buildDataStore";
+import { RootStackParamList } from "@/types/navigation";
 
 const BuildItemList = ({ route }: any) => {
   const { itemValue, itemId } = route.params;

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 import { TextInput } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Entypo from "@expo/vector-icons/Entypo";
 import { RadioButton } from "react-native-paper";
 
@@ -57,7 +56,7 @@ const PriceModel = ({
     console.log(itemName);
     setItemName(itemId, itemName);
     setModalVisible(false);
-    navigation.navigate("createPage02");
+    navigation.goBack();
   };
 
   return (
