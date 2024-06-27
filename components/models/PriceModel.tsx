@@ -29,14 +29,22 @@ const PriceModel = ({
   const [price, setprice] = useState<number | null>(null);
   const [warranty, setWarranty] = useState<number>(1);
   const [warrantyDuration, setWarrantyDuration] = useState("months");
+  const [quantity, setQuantity] = useState<number>(1);
 
   const handleAddPrice = () => setprice(price && price + 50);
   const handleSubPrice = () => setprice(price && price - 50);
   const handleAddWarranty = () => setWarranty(warranty + 1);
   const handleSubWarranty = () => warranty > 1 && setWarranty(warranty - 1);
+  const handleAddQuantity = () => setQuantity(quantity + 1);
+  const handleSubQuantity = () => quantity > 1 && setQuantity(quantity - 1);
 
-  const { setItemPrice, setItemWarranty, setItemWarrantyType, setItemName } =
-    useBuildData();
+  const {
+    setItemPrice,
+    setItemWarranty,
+    setItemWarrantyType,
+    setItemName,
+    setItemQuantity,
+  } = useBuildData();
 
   const handleaddDetails = () => {
     // console.log(itemId);
@@ -52,6 +60,11 @@ const PriceModel = ({
       setItemWarrantyType(itemId, warrantyDuration);
     } else {
       setItemWarrantyType(itemId, "");
+    }
+    if (quantity) {
+      setItemQuantity(itemId, quantity);
+    } else {
+      setItemQuantity(itemId, 1);
     }
     console.log(itemName);
     setItemName(itemId, itemName);
@@ -98,7 +111,7 @@ const PriceModel = ({
           <TextInput
             keyboardType="numeric"
             style={styles.priceInput}
-            value={warranty.toString()}
+            value={warranty ? warranty.toString() : ""}
             onChange={(e) => {
               setWarranty(parseInt(e.nativeEvent.text));
             }}
@@ -129,6 +142,29 @@ const PriceModel = ({
             />
             <Text style={styles.radioLabel}>Years</Text>
           </View>
+        </View>
+        <Text style={styles.modellabel}>Enter the quantity</Text>
+        <View style={styles.priceInputContainer}>
+          <TouchableOpacity
+            style={styles.priceInputBtn}
+            onPress={handleSubQuantity}
+          >
+            <Entypo name="minus" size={24} color={Colors.white} />
+          </TouchableOpacity>
+          <TextInput
+            keyboardType="numeric"
+            style={styles.priceInput}
+            value={quantity ? quantity.toString() : ""}
+            onChange={(e) => {
+              setWarranty(parseInt(e.nativeEvent.text));
+            }}
+          ></TextInput>
+          <TouchableOpacity
+            style={styles.priceInputBtn}
+            onPress={handleAddQuantity}
+          >
+            <Entypo name="plus" size={24} color={Colors.white} />
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
           style={styles.modelButtons}
