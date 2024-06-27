@@ -16,9 +16,15 @@ interface Props {
   isModalVisible: boolean;
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   itemId: string;
+  itemName: string;
 }
 
-const PriceModel = ({ isModalVisible, setModalVisible, itemId }: Props) => {
+const PriceModel = ({
+  isModalVisible,
+  setModalVisible,
+  itemId,
+  itemName,
+}: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const [price, setprice] = useState<number | null>(null);
@@ -30,10 +36,11 @@ const PriceModel = ({ isModalVisible, setModalVisible, itemId }: Props) => {
   const handleAddWarranty = () => setWarranty(warranty + 1);
   const handleSubWarranty = () => warranty > 1 && setWarranty(warranty - 1);
 
-  const { setItemPrice, setItemWarranty, setItemWarrantyType } = useBuildData();
+  const { setItemPrice, setItemWarranty, setItemWarrantyType, setItemName } =
+    useBuildData();
 
   const handleaddDetails = () => {
-    console.log(itemId);
+    // console.log(itemId);
     if (price) {
       setItemPrice(itemId, price);
     }
@@ -47,6 +54,8 @@ const PriceModel = ({ isModalVisible, setModalVisible, itemId }: Props) => {
     } else {
       setItemWarrantyType(itemId, "");
     }
+    console.log(itemName);
+    setItemName(itemId, itemName);
     setModalVisible(false);
     navigation.navigate("createPage02");
   };

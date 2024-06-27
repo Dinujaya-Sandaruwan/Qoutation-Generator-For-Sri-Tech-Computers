@@ -39,8 +39,9 @@ const BuildItemList = ({ route }: any) => {
   }, [itemValue]); // Added dependency array
 
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const [itemNameState, setItemNameState] = useState<string>("");
 
-  const { setItemName } = useBuildData();
+  // const { setItemName } = useBuildData();
   return (
     <>
       <NavSearch />
@@ -57,7 +58,7 @@ const BuildItemList = ({ route }: any) => {
             <TouchableOpacity
               style={styles.item}
               onPress={() => {
-                setItemName(itemId, item.itemName);
+                setItemNameState(item.itemName);
                 setModalVisible(!isModalVisible);
               }}
             >
@@ -71,6 +72,7 @@ const BuildItemList = ({ route }: any) => {
           isModalVisible={isModalVisible}
           setModalVisible={setModalVisible}
           itemId={itemId}
+          itemName={itemNameState}
         />
       </KeyboardAvoidingView>
     </>
