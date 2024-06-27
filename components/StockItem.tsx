@@ -43,16 +43,12 @@ const StockItem = (props: StockItemProps) => {
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         style={styles.flatlistItemContainer}
+        onLongPress={() => {
+          props.setModalVisible(true);
+          props.setDeleteItemId(props.item.itemId);
+        }}
       >
         <Text style={styles.flatlistItelabel}>{props.item.itemName}</Text>
-        <TouchableOpacity
-          onPress={() => {
-            props.setModalVisible(true);
-            props.setDeleteItemId(props.item.itemId);
-          }}
-        >
-          <Foundation name="trash" size={24} color={Colors.white} />
-        </TouchableOpacity>
       </Pressable>
     </Animated.View>
   );
