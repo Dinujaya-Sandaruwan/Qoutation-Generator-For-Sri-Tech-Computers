@@ -7,6 +7,7 @@ import Colors from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import useBuildData from "@/zustand/buildDataStore";
+import useFormatMoney from "@/hooks/useFormatMoney";
 
 interface Props {
   itemValue: string;
@@ -42,6 +43,9 @@ const BuildItem = ({ itemValue, itemType, itemId }: Props) => {
 
   const currentItem = buildItems.filter((item) => item.itemId === itemId);
 
+  const format = useFormatMoney();
+  const formatedPrice = format(currentItem[0].itemPrice);
+
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
       <Pressable
@@ -52,9 +56,7 @@ const BuildItem = ({ itemValue, itemType, itemId }: Props) => {
         {currentItem[0].itemName && currentItem[0].itemPrice ? (
           <View>
             <Text style={styles.itemTitle}>{currentItem[0].itemName}</Text>
-            <Text style={styles.itemPrice}>
-              Rs.{currentItem[0].itemPrice}.00
-            </Text>
+            <Text style={styles.itemPrice}>{formatedPrice}</Text>
           </View>
         ) : (
           <Text style={styles.itemTitle}>{itemType}</Text>
