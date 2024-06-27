@@ -10,4 +10,5 @@ export default {
   green: "#B6FFAF",
   itemPrice: "#C9C9C9",
   red: "#fc3d4d",
+  yellow: "#fcff59",
 };

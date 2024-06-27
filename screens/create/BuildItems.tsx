@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Colors from "@/constants/Colors";
 import BuildItem from "@/components/BuildItem";
 import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
@@ -21,6 +21,7 @@ import parts from "@/data/parts.json";
 import useBuildData from "@/zustand/buildDataStore";
 import { BuildItem as BuildItemInterface } from "@/interfaces/buildData";
 import useUniqueId from "@/hooks/useGenerateId";
+import useFormatMoney from "@/hooks/useFormatMoney";
 
 export type Item = {
   label: string;
@@ -70,13 +71,40 @@ const BuildItems = () => {
     console.log(buildItems);
   };
 
+  const [dynamicBudget, setDynamicBudget] = useState<number>(buildingBudget);
+
+  useEffect(() => {
+    let total = 0;
+    buildItems.forEach((item) => {
+      total += item.itemPrice;
+    });
+
+    setDynamicBudget(buildingBudget - total);
+  }, [buildItems]);
+
+  const budgetTextColor = () => {
+    if (dynamicBudget < 0) {
+      return Colors.red;
+    } else if ((buildingBudget / 100) * 30 > dynamicBudget) {
+      return Colors.yellow;
+    } else {
+      console.log((dynamicBudget / 100) * 30);
+      return Colors.green;
+    }
+  };
+
+  const format = useFormatMoney();
+  const formatedBudget = format(dynamicBudget);
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Add Order Details</Text>
         <Text style={styles.orderId}>#{id}</Text>
-        <Text style={styles.budgetLimit}>
-          Budget Limit: {buildingBudget}.00
+        <Text style={[styles.budgetLimit, { color: budgetTextColor() }]}>
+          {buildingBudget === 0
+            ? "No budget limit! 🫢"
+            : `Budget: ${formatedBudget}`}
         </Text>
 
         <View style={styles.dropDownView}>
