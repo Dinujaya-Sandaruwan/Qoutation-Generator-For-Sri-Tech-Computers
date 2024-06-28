@@ -22,6 +22,7 @@ import { Feather } from "@expo/vector-icons";
 import useNavigationStore from "@/zustand/navigationStore";
 import useBuildData from "@/zustand/buildDataStore";
 import useUniqueId from "@/hooks/useGenerateId";
+import useFormattedDate from "@/hooks/useFormattedDate";
 
 const BuyerInfo = () => {
   const isThisPage = useIsFocused();
@@ -55,6 +56,12 @@ const BuyerInfo = () => {
     addressLineTwo,
     additionalNotes,
   } = useBuildData();
+
+  const formattedDate = useFormattedDate();
+
+  useEffect(() => {
+    setDate(formattedDate);
+  }, [formattedDate]);
 
   const generateUniqueId = useUniqueId("ST");
 
