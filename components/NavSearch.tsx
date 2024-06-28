@@ -3,7 +3,12 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 
-const NavSearch = () => {
+interface Props {
+  setSearchText: (text: string) => void;
+  searchText: string;
+}
+
+const NavSearch = ({ setSearchText, searchText }: Props) => {
   return (
     <View style={styles.navBottom}>
       <View style={styles.searchBox}>
@@ -11,6 +16,8 @@ const NavSearch = () => {
           style={styles.search}
           placeholder="Search Saved Qutations..."
           placeholderTextColor={Colors.border}
+          value={searchText}
+          onChangeText={setSearchText}
         />
         <FontAwesome name="search" size={25} color="white" />
       </View>

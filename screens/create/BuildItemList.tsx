@@ -39,13 +39,18 @@ const BuildItemList = ({ route }: any) => {
   const [itemNameState, setItemNameState] = useState<string>("");
 
   // const { setItemName } = useBuildData();
+
+  const [searchText, setSearchText] = React.useState("");
+  const filteredData = itemList.filter((item) =>
+    item.itemName.toLowerCase().includes(searchText.toLowerCase())
+  );
   return (
     <>
-      <NavSearch />
+      <NavSearch searchText={searchText} setSearchText={setSearchText} />
 
       <KeyboardAvoidingView style={styles.container}>
         <FlatList
-          data={itemList}
+          data={filteredData}
           keyExtractor={(item) => item.itemId.toString()} // Use itemId instead of index
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
