@@ -29,6 +29,15 @@ dependencies:
   expo:
     specifier: ~51.0.14
     version: 51.0.14(@babel/core@7.24.7)(@babel/preset-env@7.24.7)
+  expo-file-system:
+    specifier: ~17.0.1
+    version: 17.0.1(expo@51.0.14)
+  expo-print:
+    specifier: ~13.0.1
+    version: 13.0.1(expo@51.0.14)
+  expo-sharing:
+    specifier: ~12.0.1
+    version: 12.0.1(expo@51.0.14)
   expo-status-bar:
     specifier: ~1.12.1
     version: 1.12.1
@@ -3799,6 +3808,22 @@ packages:
     resolution: {integrity: sha512-VjDPIgUyhCZzf692NF4p2iFTsKAQMcU3jc0pg33eNvN/kdrJqkeucqCDuuwoNxg0vIBKtoqAJDuPnWiemldsTg==}
     dependencies:
       invariant: 2.2.4
+    dev: false
+
+  /expo-print@13.0.1(expo@51.0.14):
+    resolution: {integrity: sha512-o8LuCguGrkyC5RaWEfL5N2J0V9mfbZ3GVzLpaf3KU5RrdYzGEjoiv4xlhVVzh/++hMUqOgnIrtF7tzWYhwu/7g==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 51.0.14(@babel/core@7.24.7)(@babel/preset-env@7.24.7)
+    dev: false
+
+  /expo-sharing@12.0.1(expo@51.0.14):
+    resolution: {integrity: sha512-wBT+WeXwapj/9NWuLJO01vi9bdlchYu/Q/xD8slL/Ls4vVYku8CPqzkTtDFcjLrjtlJqyeHsdQXwKLvORmBIew==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 51.0.14(@babel/core@7.24.7)(@babel/preset-env@7.24.7)
     dev: false
 
   /expo-status-bar@1.12.1:

@@ -13,6 +13,10 @@ import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
 
+import * as Print from "expo-print";
+import { shareAsync } from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+
 import { RootStackParamList } from "@/types/navigation";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
@@ -29,6 +33,22 @@ export type Item = {
   label: string;
   value: string;
 };
+
+const html = `
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  </head>
+  <body style="text-align: center;">
+    <h1 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
+      Hello Expo!
+    </h1>
+    <img
+      src="https://d30j33t1r58ioz.cloudfront.net/static/guides/sdk.png"
+      style="width: 90vw;" />
+  </body>
+</html>
+`;
 
 const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -122,6 +142,37 @@ const BuildItems = () => {
     setModelOpen(false);
   };
 
+  const print = async () => {
+    await Print.printAsync({
+      html,
+    });
+  };
+
+  const printToFile = async () => {
+    const { uri } = await Print.printToFileAsync({ html });
+    console.log("File has been saved to:", uri);
+    await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
+  };
+
+  const { moveAsync } = FileSystem;
+
+  const printToPdf = async () => {
+    const response = await Print.printToFileAsync({
+      html,
+    });
+
+    const pdfName = `${response.uri.slice(
+      0,
+      response.uri.lastIndexOf("/") + 1
+    )}invoice_${id}.pdf`;
+
+    await FileSystem.moveAsync({
+      from: response.uri,
+      to: pdfName,
+    });
+    await shareAsync(pdfName, { UTI: ".pdf", mimeType: "application/pdf" });
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <BuildItemDeleteModel
@@ -208,9 +259,7 @@ const BuildItems = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.navBtn, { backgroundColor: "#51a34d" }]}
-          onPress={() => {
-            console.log(buildItems);
-          }}
+          onPress={printToPdf}
         >
           <FontAwesome name="gear" size={19} color={Colors.white} />
           <Text style={[styles.navBtnText, { marginLeft: 5 }]}>
