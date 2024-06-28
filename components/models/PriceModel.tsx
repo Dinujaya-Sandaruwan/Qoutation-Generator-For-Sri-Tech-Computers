@@ -29,14 +29,14 @@ const PriceModel = ({
   const toast = useToast();
 
   const [price, setprice] = useState<number | null>(null);
-  const [warranty, setWarranty] = useState<number>(1);
+  const [warranty, setWarranty] = useState<number>(0);
   const [warrantyDuration, setWarrantyDuration] = useState("months");
   const [quantity, setQuantity] = useState<number>(1);
 
   const handleAddPrice = () => setprice(price && price + 50);
   const handleSubPrice = () => setprice(price && price - 50);
   const handleAddWarranty = () => setWarranty(warranty + 1);
-  const handleSubWarranty = () => warranty > 1 && setWarranty(warranty - 1);
+  const handleSubWarranty = () => warranty >= 1 && setWarranty(warranty - 1);
   const handleAddQuantity = () => setQuantity(quantity + 1);
   const handleSubQuantity = () => quantity > 1 && setQuantity(quantity - 1);
 
