@@ -99,7 +99,9 @@ const BuildItems = () => {
   }, [buildItems]);
 
   const budgetTextColor = () => {
-    if (dynamicBudget <= 0) {
+    if (dynamicBudget === 0) {
+      return Colors.green;
+    } else if (dynamicBudget < 0) {
       return Colors.red;
     } else if ((buildingBudget / 100) * 30 > dynamicBudget) {
       return Colors.yellow;
