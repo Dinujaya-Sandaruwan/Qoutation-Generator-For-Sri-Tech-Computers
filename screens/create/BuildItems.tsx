@@ -28,32 +28,18 @@ import useUniqueId from "@/hooks/useGenerateId";
 import useFormatMoney from "@/hooks/useFormatMoney";
 import BuildItemDeleteModel from "@/components/models/BuildItemDeleteModel";
 import { useToast } from "react-native-toast-notifications";
+import qutationPdfTemplate from "@/templates/qutationPdfTemplate";
 
 export type Item = {
   label: string;
   value: string;
 };
 
-const html = `
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-  </head>
-  <body style="text-align: center;">
-    <h1 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
-      Hello Expo!
-    </h1>
-    <img
-      src="https://d30j33t1r58ioz.cloudfront.net/static/guides/sdk.png"
-      style="width: 90vw;" />
-  </body>
-</html>
-`;
-
 const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const keyboardVisible = useKeyboardVisibility();
   const marginBottom = keyboardVisible ? 10 : 30;
+  const html = qutationPdfTemplate();
 
   const renderItem = (
     item: {
@@ -141,20 +127,6 @@ const BuildItems = () => {
     deleteBuildItem(deleteBuildItemState);
     setModelOpen(false);
   };
-
-  const print = async () => {
-    await Print.printAsync({
-      html,
-    });
-  };
-
-  const printToFile = async () => {
-    const { uri } = await Print.printToFileAsync({ html });
-    console.log("File has been saved to:", uri);
-    await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
-  };
-
-  const { moveAsync } = FileSystem;
 
   const printToPdf = async () => {
     const response = await Print.printToFileAsync({
