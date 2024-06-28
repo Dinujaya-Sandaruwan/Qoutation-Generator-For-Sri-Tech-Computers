@@ -23,6 +23,7 @@ import { BuildItem as BuildItemInterface } from "@/interfaces/buildData";
 import useUniqueId from "@/hooks/useGenerateId";
 import useFormatMoney from "@/hooks/useFormatMoney";
 import BuildItemDeleteModel from "@/components/models/BuildItemDeleteModel";
+import { useToast } from "react-native-toast-notifications";
 
 export type Item = {
   label: string;
@@ -53,18 +54,31 @@ const BuildItems = () => {
   const [dropDownValue, setDropDownValue] = useState<Item | null>(null);
   const [isFocus, setIsFocus] = useState(false);
 
+  const toast = useToast();
+
+  // toast.show("Please fill all fields 🥲👍", {
+  //   type: "warning",
+  // });
+
   const { id, buildingBudget, buildItems, addBuildItem, deleteBuildItem } =
     useBuildData();
 
   const generateUniqueId = useUniqueId("ITEM");
 
   const handleDropdownChange = (value: any) => {
+    if (!value) {
+      return toast.show("You can't add without selecting an item 😁", {
+        type: "warning",
+      });
+    }
+
     const newItem: BuildItemInterface = {
       itemId: generateUniqueId(),
       itemValue: value.value,
       itemName: "",
       itemType: value.label,
       itemPrice: 0,
+      itemQuantity: 0,
       itemWarranty: 0,
       itemWarrantyType: "",
     };
@@ -162,7 +176,7 @@ const BuildItems = () => {
           <TouchableOpacity
             style={styles.dropDownAddBtn}
             onPress={() => {
-              if (dropDownValue) handleDropdownChange(dropDownValue);
+              handleDropdownChange(dropDownValue);
             }}
           >
             <Entypo name="plus" size={28} color={Colors.white} />

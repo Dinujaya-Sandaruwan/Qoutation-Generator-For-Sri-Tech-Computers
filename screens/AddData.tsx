@@ -61,11 +61,8 @@ const AddDataScreen = () => {
 
   const handleSubmit = async () => {
     if (!itemType || !itemName) {
-      return toast.show("Please fill all fields", {
-        type: "danger",
-        placement: "bottom",
-        duration: 4000,
-        animationType: "slide-in",
+      return toast.show("You need to fill all fields to add an stock item 😁", {
+        type: "warning",
       });
     }
     setLoading(true);

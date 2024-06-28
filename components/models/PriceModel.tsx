@@ -10,6 +10,7 @@ import Colors from "@/constants/Colors";
 import useBuildData from "@/zustand/buildDataStore";
 import { RootStackParamList } from "@/types/navigation";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { useToast } from "react-native-toast-notifications";
 
 interface Props {
   isModalVisible: boolean;
@@ -25,6 +26,7 @@ const PriceModel = ({
   itemName,
 }: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const toast = useToast();
 
   const [price, setprice] = useState<number | null>(null);
   const [warranty, setWarranty] = useState<number>(1);
@@ -47,7 +49,13 @@ const PriceModel = ({
   } = useBuildData();
 
   const handleaddDetails = () => {
-    // console.log(itemId);
+    if (!price) {
+      toast.show("You can't have an item without a price 😁", {
+        type: "warning",
+      });
+      return;
+    }
+
     if (price) {
       setItemPrice(itemId, price);
     }
