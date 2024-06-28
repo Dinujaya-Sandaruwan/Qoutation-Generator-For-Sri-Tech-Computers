@@ -1,0 +1,59 @@
+.saman {
+}
+
+#customers {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.details {
+  margin-left: 20px;
+  margin-right: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.boldText {
+  font-weight: 700;
+}
+
+p {
+  border: 1px solid red;
+}
+
+.address {
+  display: flex;
+  align-items: baseline;
+}
+
+.totalRow {
+  background-color: #242424 !important;
+  color: white;
+  font-weight: 700;
+  border-color: white;
+  border-bottom-color: #242424;
+  margin-top: 10px;
+}
+.footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+}
+
+.footer p {
+  text-align: center;
+  font-size: 12px;
+  color: #4d4d4d;
+}
+
+.semiBoldText {
+  font-weight: 600;
+  color: #171717;
+}

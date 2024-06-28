@@ -29,6 +29,7 @@ import useFormatMoney from "@/hooks/useFormatMoney";
 import BuildItemDeleteModel from "@/components/models/BuildItemDeleteModel";
 import { useToast } from "react-native-toast-notifications";
 import qutationPdfTemplate from "@/templates/qutationPdfTemplate";
+import Loading from "@/components/Loading";
 
 export type Item = {
   label: string;
@@ -128,7 +129,10 @@ const BuildItems = () => {
     setModelOpen(false);
   };
 
+  const [loading, setLoading] = useState(false);
+
   const printToPdf = async () => {
+    setLoading(true);
     const response = await Print.printToFileAsync({
       html,
     });
@@ -143,10 +147,13 @@ const BuildItems = () => {
       to: pdfName,
     });
     await shareAsync(pdfName, { UTI: ".pdf", mimeType: "application/pdf" });
+
+    setLoading(false);
   };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
+      {loading && <Loading />}
       <BuildItemDeleteModel
         isModalVisible={isModelOpen}
         setModalVisible={setModelOpen}
