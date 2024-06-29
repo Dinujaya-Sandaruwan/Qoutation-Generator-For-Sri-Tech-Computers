@@ -69,7 +69,7 @@ const BuildItems = () => {
 
   const handleDropdownChange = (value: any) => {
     if (!value) {
-      return toast.show("You can't add without selecting an item 😁", {
+      return toast.show("You can't add without selecting an item 🥲", {
         type: "warning",
       });
     }
@@ -122,6 +122,20 @@ const BuildItems = () => {
   const handleDeleteItem = () => {
     deleteBuildItem(deleteBuildItemState);
     setModelOpen(false);
+  };
+
+  const goToGeneratingQutationScreen = () => {
+    if (buildItems.length === 0) {
+      return toast.show(
+        "You must need to add at least one item to generate a quotation 🥲",
+        {
+          type: "warning",
+        }
+      );
+    }
+    navigation.navigate("generatingQutation", {
+      id: id,
+    });
   };
 
   return (
@@ -210,11 +224,7 @@ const BuildItems = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.navBtn, { backgroundColor: Colors.btnGreen }]}
-          onPress={() =>
-            navigation.navigate("generatingQutation", {
-              id: id,
-            })
-          }
+          onPress={goToGeneratingQutationScreen}
         >
           <FontAwesome name="gear" size={19} color={Colors.white} />
           <Text style={[styles.navBtnText, { marginLeft: 5 }]}>

@@ -23,6 +23,7 @@ import useNavigationStore from "@/zustand/navigationStore";
 import useBuildData from "@/zustand/buildDataStore";
 import useUniqueId from "@/hooks/useGenerateId";
 import useFormattedDate from "@/hooks/useFormattedDate";
+import { useToast } from "react-native-toast-notifications";
 
 const BuyerInfo = () => {
   const isThisPage = useIsFocused();
@@ -68,6 +69,21 @@ const BuyerInfo = () => {
   useEffect(() => {
     if (id === "") setId(generateUniqueId());
   }, []);
+
+  const toast = useToast();
+
+  const navigateToPageTwo = () => {
+    if (customerName === "") {
+      return toast.show(
+        "You must need to add a customer name to generate a quotation. 🥲",
+        {
+          type: "warning",
+        }
+      );
+    }
+
+    navigation.navigate("createPage02");
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -156,10 +172,7 @@ const BuyerInfo = () => {
           <AntDesign name="home" size={19} color={Colors.white} />
           <Text style={[styles.navBtnText, { marginLeft: 5 }]}>Go to home</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navBtn}
-          onPress={() => navigation.navigate("createPage02")}
-        >
+        <TouchableOpacity style={styles.navBtn} onPress={navigateToPageTwo}>
           <Text style={[styles.navBtnText, { marginRight: 5 }]}>
             Go to next page
           </Text>

@@ -8,7 +8,7 @@ const useWriteAscyncStorage = () => {
   const storeDataAsyncStorage = async (
     value: BuildData,
     storageKey: string
-  ) => {
+  ): Promise<{ status: string; error?: string | any }> => {
     const existingData = await readDataAsyncStorage(storageKey);
 
     // Check for duplicates based on id and itemId

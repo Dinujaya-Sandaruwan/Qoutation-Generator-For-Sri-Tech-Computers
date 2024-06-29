@@ -19,6 +19,7 @@ import { STORAGE_KEYS } from "@/constants/storageKeys";
 import useBuildData from "@/zustand/buildDataStore";
 import { RootStackParamList } from "@/types/navigation";
 import Loading from "@/components/Loading";
+import { useToast } from "react-native-toast-notifications";
 
 export default function GeneratingQutation({ route }: any) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -56,8 +57,10 @@ export default function GeneratingQutation({ route }: any) {
     setBuildItems,
   } = useBuildData();
 
+  const toast = useToast();
+
   const saveAsnycStorage = async () => {
-    await storeDataAsyncStorage(
+    const saveStatus = await storeDataAsyncStorage(
       {
         id: temId,
         date,
@@ -73,6 +76,12 @@ export default function GeneratingQutation({ route }: any) {
       },
       STORAGE_KEYS.qutations
     );
+
+    if (saveStatus.status === "failed") {
+      return toast.show("Error saving data to databse! Try again", {
+        type: "danger",
+      });
+    }
   };
 
   const printToPdf = async () => {
@@ -100,7 +109,7 @@ export default function GeneratingQutation({ route }: any) {
   const handleGoHome = async () => {
     setLoadingHandleHome(true);
 
-    saveAsnycStorage();
+    await saveAsnycStorage();
 
     setId("");
     setDate("");
