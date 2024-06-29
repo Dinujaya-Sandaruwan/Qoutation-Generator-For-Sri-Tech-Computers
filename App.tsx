@@ -25,6 +25,7 @@ import BuildItems from "./screens/create/BuildItems";
 import BuildItemList from "./screens/create/BuildItemList";
 import AddDataScreen from "./screens/AddData";
 import StockList from "./screens/StockList";
+import GeneratingQutation from "./screens/GeneratingQutation";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -120,6 +121,14 @@ function MainStack() {
         options={{
           title: "Stock Items List",
           ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="generatingQutation"
+        component={GeneratingQutation}
+        options={{
+          title: "Generating...",
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

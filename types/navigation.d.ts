@@ -8,6 +8,7 @@ export type RootStackParamList = {
   createPage03: { itemValue?: string; itemId?: string };
   addData: undefined;
   stockList: undefined;
+  generatingQutation: { id?: string };
 };
 
 // export type RootStackParamList = {

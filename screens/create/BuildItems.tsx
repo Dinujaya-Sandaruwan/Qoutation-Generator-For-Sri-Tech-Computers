@@ -13,10 +13,6 @@ import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
 
-import * as Print from "expo-print";
-import { shareAsync } from "expo-sharing";
-import * as FileSystem from "expo-file-system";
-
 import { RootStackParamList } from "@/types/navigation";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
@@ -40,7 +36,6 @@ const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const keyboardVisible = useKeyboardVisibility();
   const marginBottom = keyboardVisible ? 10 : 30;
-  const html = qutationPdfTemplate();
 
   const renderItem = (
     item: {
@@ -129,31 +124,8 @@ const BuildItems = () => {
     setModelOpen(false);
   };
 
-  const [loading, setLoading] = useState(false);
-
-  const printToPdf = async () => {
-    setLoading(true);
-    const response = await Print.printToFileAsync({
-      html,
-    });
-
-    const pdfName = `${response.uri.slice(
-      0,
-      response.uri.lastIndexOf("/") + 1
-    )}invoice_${id}.pdf`;
-
-    await FileSystem.moveAsync({
-      from: response.uri,
-      to: pdfName,
-    });
-    await shareAsync(pdfName, { UTI: ".pdf", mimeType: "application/pdf" });
-
-    setLoading(false);
-  };
-
   return (
     <KeyboardAvoidingView style={styles.container}>
-      {loading && <Loading />}
       <BuildItemDeleteModel
         isModalVisible={isModelOpen}
         setModalVisible={setModelOpen}
@@ -237,8 +209,12 @@ const BuildItems = () => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.navBtn, { backgroundColor: "#51a34d" }]}
-          onPress={printToPdf}
+          style={[styles.navBtn, { backgroundColor: Colors.btnGreen }]}
+          onPress={() =>
+            navigation.navigate("generatingQutation", {
+              id: id,
+            })
+          }
         >
           <FontAwesome name="gear" size={19} color={Colors.white} />
           <Text style={[styles.navBtnText, { marginLeft: 5 }]}>

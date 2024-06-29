@@ -11,4 +11,5 @@ export default {
   itemPrice: "#C9C9C9",
   red: "#fc3d4d",
   yellow: "#fcff59",
+  btnGreen: "#51a34d",
 };
