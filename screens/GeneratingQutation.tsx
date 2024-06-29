@@ -1,6 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import {
+  CommonActions,
+  NavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
 
 import * as Print from "expo-print";
 import { shareAsync } from "expo-sharing";
@@ -9,8 +14,15 @@ import * as FileSystem from "expo-file-system";
 import LottieView from "lottie-react-native";
 import Colors from "@/constants/Colors";
 import qutationPdfTemplate from "@/templates/qutationPdfTemplate";
+import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorage";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useBuildData from "@/zustand/buildDataStore";
+import { RootStackParamList } from "@/types/navigation";
+import Loading from "@/components/Loading";
 
 export default function GeneratingQutation({ route }: any) {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const { id } = route.params;
   const animation = useRef(null);
 
@@ -18,8 +30,54 @@ export default function GeneratingQutation({ route }: any) {
 
   const [loading, setLoading] = useState(false);
 
+  const storeDataAsyncStorage = useWriteAscyncStorage();
+  const {
+    id: temId,
+    date,
+    customerName,
+    buildingBudget,
+    advancedPayment,
+    mobileNo,
+    addressLineOne,
+    addressLineTwo,
+    additionalNotes,
+    buildItems,
+    ordereFinished,
+
+    setId,
+    setDate,
+    setCustomerName,
+    setBuildingBudget,
+    setAdvancedPayment,
+    setMobileNo,
+    setAddressLineOne,
+    setAddressLineTwo,
+    setAdditionalNotes,
+    setBuildItems,
+  } = useBuildData();
+
+  const saveAsnycStorage = async () => {
+    await storeDataAsyncStorage(
+      {
+        id: temId,
+        date,
+        customerName,
+        buildingBudget,
+        advancedPayment,
+        mobileNo,
+        addressLineOne,
+        addressLineTwo,
+        additionalNotes,
+        buildItems,
+        ordereFinished,
+      },
+      STORAGE_KEYS.qutations
+    );
+  };
+
   const printToPdf = async () => {
     setLoading(true);
+    await saveAsnycStorage();
     const response = await Print.printToFileAsync({
       html,
     });
@@ -37,8 +95,32 @@ export default function GeneratingQutation({ route }: any) {
     await shareAsync(pdfName, { UTI: ".pdf", mimeType: "application/pdf" });
   };
 
-  const handleGoHome = () => {
-    // navigation.navigate("home");
+  const [loadingHandleHome, setLoadingHandleHome] = useState(false);
+
+  const handleGoHome = async () => {
+    setLoadingHandleHome(true);
+
+    saveAsnycStorage();
+
+    setId("");
+    setDate("");
+    setCustomerName("");
+    setBuildingBudget(0);
+    setAdvancedPayment(0);
+    setMobileNo("");
+    setAddressLineOne("");
+    setAddressLineTwo("");
+    setAdditionalNotes("");
+    setBuildItems([]);
+
+    setLoadingHandleHome(false);
+
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "home" }], // Replace 'HomeScreen' with your actual home screen name
+      })
+    );
   };
 
   useEffect(() => {
@@ -50,48 +132,51 @@ export default function GeneratingQutation({ route }: any) {
   }, []);
 
   return (
-    <View style={styles.animationContainer}>
-      {loading ? (
-        <LottieView
-          autoPlay
-          ref={animation}
-          style={{
-            width: 300,
-            height: 300,
-            marginLeft: 25,
-          }}
-          source={require("@/animations/generating.json")}
-        />
-      ) : (
-        <LottieView
-          autoPlay
-          ref={animation}
-          style={{
-            width: 300,
-            height: 300,
-          }}
-          source={require("@/animations/done.json")}
-        />
-      )}
-      {loading ? (
-        <Text style={styles.generateText}>Generating Your Quotation</Text>
-      ) : (
-        <>
-          <Text style={styles.generateText}>Quotation Generated.</Text>
-          <TouchableOpacity style={styles.goHomeBtn} onPress={handleGoHome}>
-            <FontAwesome name="save" size={24} color={Colors.white} />
-            <Text style={styles.goHomeBtnText}>Save and go to Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.generateAgainBtn}
-            onPress={printToPdf}
-          >
-            <FontAwesome name="gear" size={19} color={Colors.white} />
-            <Text style={styles.generateAgainBtnText}>Generate again</Text>
-          </TouchableOpacity>
-        </>
-      )}
-    </View>
+    <>
+      {loadingHandleHome && <Loading />}
+      <View style={styles.animationContainer}>
+        {loading ? (
+          <LottieView
+            autoPlay
+            ref={animation}
+            style={{
+              width: 300,
+              height: 300,
+              marginLeft: 25,
+            }}
+            source={require("@/animations/generating.json")}
+          />
+        ) : (
+          <LottieView
+            autoPlay
+            ref={animation}
+            style={{
+              width: 300,
+              height: 300,
+            }}
+            source={require("@/animations/done.json")}
+          />
+        )}
+        {loading ? (
+          <Text style={styles.generateText}>Generating Your Quotation</Text>
+        ) : (
+          <>
+            <Text style={styles.generateText}>Quotation Generated.</Text>
+            <TouchableOpacity style={styles.goHomeBtn} onPress={handleGoHome}>
+              <FontAwesome name="save" size={24} color={Colors.white} />
+              <Text style={styles.goHomeBtnText}>Save and go to Home</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.generateAgainBtn}
+              onPress={printToPdf}
+            >
+              <FontAwesome name="gear" size={19} color={Colors.white} />
+              <Text style={styles.generateAgainBtnText}>Generate again</Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </View>
+    </>
   );
 }
 
