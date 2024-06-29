@@ -14,7 +14,7 @@ const NavSearch = ({ setSearchText, searchText }: Props) => {
       <View style={styles.searchBox}>
         <TextInput
           style={styles.search}
-          placeholder="Search Saved Qutations..."
+          placeholder="Search Saved Quotations..."
           placeholderTextColor={Colors.border}
           value={searchText}
           onChangeText={setSearchText}

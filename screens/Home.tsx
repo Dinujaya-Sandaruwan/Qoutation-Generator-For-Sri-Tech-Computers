@@ -9,7 +9,6 @@ import {
   NavigationProp,
   useIsFocused,
   useNavigation,
-  useNavigationState,
 } from "@react-navigation/native";
 import {
   FlatList,
@@ -21,6 +20,10 @@ import {
   Animated,
 } from "react-native";
 import useNavigationStore from "@/zustand/navigationStore";
+
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import { BuildData } from "@/interfaces/buildData";
 
 function HomeScreen() {
   const isThisPage = useIsFocused();
@@ -52,16 +55,44 @@ function HomeScreen() {
       navigation.navigate("createPage01");
     }, 100);
   };
+
+  const readDataAsyncStorage = useReadAscyncStorage();
+  const [data, setData] = React.useState<BuildData[]>([] as BuildData[]);
+  useEffect(() => {
+    readDataAsyncStorage(STORAGE_KEYS.qutations).then((data) => {
+      setData(data);
+    });
+  }, []);
+
+  const [searchText, setSearchText] = React.useState("");
+  const [filteredData, setFilteredData] = React.useState<BuildData[]>(data);
+
+  const searchQutations = (data: BuildData[], searchText: string) => {
+    if (searchText === "") return data;
+    return data.filter((item) => {
+      const searchString = searchText.toLowerCase();
+      return (
+        item.customerName.toLowerCase().includes(searchString) ||
+        item.date.toLowerCase().includes(searchString) ||
+        item.buildingBudget.toString().includes(searchString)
+      );
+    });
+  };
+
+  useEffect(() => {
+    setFilteredData(searchQutations(data, searchText));
+  }, [searchText, data]);
+
   return (
     <>
-      <NavSearch />
+      <NavSearch searchText={searchText} setSearchText={setSearchText} />
       <KeyboardAvoidingView style={styles.container}>
         <FlatList
-          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+          data={filteredData}
           ListHeaderComponent={() => (
-            <Text style={styles.title}>Saved Qutations</Text>
+            <Text style={styles.title}>Draft Quotations</Text>
           )}
-          renderItem={() => <SavedQutationItem />}
+          renderItem={(item) => <SavedQutationItem data={item} />}
           ListFooterComponent={() => <View style={{ height: 55 }} />}
           ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
           keyExtractor={(item, index) => index.toString()}

@@ -5,15 +5,32 @@ import Colors from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "@/types/navigation";
+import { BuildData } from "@/interfaces/buildData";
+import useFormatMoney from "@/hooks/useFormatMoney";
 
-const SavedQutationItem = () => {
+interface Props {
+  data: { item: BuildData; index: number };
+}
+
+const SavedQutationItem = ({ data: { item } }: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const formatMoney = useFormatMoney();
+  // Calculate price
+  let totalPrice = 0;
+  item.buildItems.forEach((item) => {
+    totalPrice += item.itemPrice * item.itemQuantity;
+  });
+
+  const finalPrice = totalPrice + item.advancedPayment;
+
   return (
     <View style={styles.qutationItem}>
       <View style={styles.qutationItemLeft}>
-        <Text style={styles.qutationItemTitle}>For: Dinujaya Sandaruwan</Text>
-        <Text style={styles.qutationItemDate}>Date: 2024/06/22</Text>
-        <Text style={styles.qutationItemBudget}>Budget: Rs. 57000.00 </Text>
+        <Text style={styles.qutationItemTitle}>For: {item.customerName}</Text>
+        <Text style={styles.qutationItemDate}>Date: {item.date}</Text>
+        <Text style={styles.qutationItemBudget}>
+          Price: {formatMoney(finalPrice)}
+        </Text>
       </View>
       <TouchableHighlight
         onPress={() => navigation.navigate("createPage01")}
