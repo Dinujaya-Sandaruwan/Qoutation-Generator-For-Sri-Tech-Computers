@@ -19,6 +19,7 @@ import Loading from "@/components/Loading";
 import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorage";
 import useUniqueId from "@/hooks/useGenerateId";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
+import { ProductData } from "@/interfaces/productsData";
 
 type Item = {
   label: string;
@@ -36,7 +37,7 @@ const AddDataScreen = () => {
   const generateUniqueId = useUniqueId("STOCK");
   const storeDataAsyncStorage = useWriteAscyncStorage();
 
-  const [itemType, setItemType] = useState<Item | null>(null);
+  const [itemType, setItemType] = useState<ProductData | null>(null);
   const [isFocus, setIsFocus] = useState(false);
   const [itemName, setItemName] = useState("");
 
@@ -45,8 +46,8 @@ const AddDataScreen = () => {
 
   const renderItem = (
     item: {
-      label: string;
-      value: string;
+      productName: string;
+      productId: string;
     },
     selected: boolean
   ) => (
@@ -54,7 +55,7 @@ const AddDataScreen = () => {
       style={[styles.itemContainer, selected && styles.selectedItemContainer]}
     >
       <Text style={[styles.itemText, selected && styles.selectedItemText]}>
-        {item.label}
+        {item.productName}
       </Text>
     </View>
   );
@@ -72,7 +73,7 @@ const AddDataScreen = () => {
     const data = await storeDataAsyncStorage(
       {
         itemId: uniqueId,
-        itemType: itemType.value,
+        itemType: itemType.productId,
         itemName: itemName,
       },
       STORAGE_KEYS.stocks
@@ -135,20 +136,20 @@ const AddDataScreen = () => {
             data={parts}
             search
             maxHeight={300}
-            labelField="label"
-            valueField="value"
+            labelField="productName"
+            valueField="productId"
             placeholder={!isFocus ? "Select item" : "..."}
             searchPlaceholder="Search..."
             value={itemType}
             dropdownPosition="bottom"
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
-            onChange={(item: Item) => {
+            onChange={(item: ProductData) => {
               setItemType(item);
               setIsFocus(false);
             }}
-            renderItem={(item: Item) =>
-              renderItem(item, item.value === itemType?.value)
+            renderItem={(item: ProductData) =>
+              renderItem(item, item.productId === itemType?.productId)
             }
             renderLeftIcon={() => (
               <AntDesign

@@ -26,11 +26,7 @@ import BuildItemDeleteModel from "@/components/models/BuildItemDeleteModel";
 import { useToast } from "react-native-toast-notifications";
 import qutationPdfTemplate from "@/templates/qutationPdfTemplate";
 import Loading from "@/components/Loading";
-
-export type Item = {
-  label: string;
-  value: string;
-};
+import { ProductData } from "@/interfaces/productsData";
 
 const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -39,8 +35,8 @@ const BuildItems = () => {
 
   const renderItem = (
     item: {
-      label: string;
-      value: string;
+      productId: string;
+      productName: string;
     },
     selected: boolean
   ) => (
@@ -48,12 +44,12 @@ const BuildItems = () => {
       style={[styles.itemContainer, selected && styles.selectedItemContainer]}
     >
       <Text style={[styles.itemText, selected && styles.selectedItemText]}>
-        {item.label}
+        {item.productName}
       </Text>
     </View>
   );
 
-  const [dropDownValue, setDropDownValue] = useState<Item | null>(null);
+  const [dropDownValue, setDropDownValue] = useState<ProductData | null>(null);
   const [isFocus, setIsFocus] = useState(false);
 
   const toast = useToast();
@@ -76,9 +72,9 @@ const BuildItems = () => {
 
     const newItem: BuildItemInterface = {
       itemId: generateUniqueId(),
-      itemValue: value.value,
+      itemValue: value.productId,
       itemName: "",
-      itemType: value.label,
+      itemType: value.productName,
       itemPrice: 0,
       itemQuantity: 0,
       itemWarranty: 0,
@@ -167,20 +163,20 @@ const BuildItems = () => {
             data={parts}
             search
             maxHeight={300}
-            labelField="label"
-            valueField="value"
+            labelField="productName"
+            valueField="productId"
             placeholder={!isFocus ? "Select item" : "..."}
             searchPlaceholder="Search..."
             value={dropDownValue}
             dropdownPosition="bottom"
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
-            onChange={(item: Item) => {
+            onChange={(item: ProductData) => {
               setDropDownValue(item);
               setIsFocus(false);
             }}
-            renderItem={(item: Item) =>
-              renderItem(item, item.value === dropDownValue?.value)
+            renderItem={(item: ProductData) =>
+              renderItem(item, item.productId === dropDownValue?.productId)
             }
             renderLeftIcon={() => (
               <AntDesign

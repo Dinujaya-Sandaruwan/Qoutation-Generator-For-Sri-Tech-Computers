@@ -9,6 +9,7 @@ export type RootStackParamList = {
   addData: undefined;
   stockList: undefined;
   generatingQutation: { id?: string };
+  productsList: undefined;
 };
 
 // export type RootStackParamList = {

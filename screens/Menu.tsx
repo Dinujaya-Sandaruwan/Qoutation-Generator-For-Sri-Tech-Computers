@@ -82,7 +82,7 @@ const Menu = (props: DrawerContentComponentProps) => {
         <Text style={styles.menuItemText}>Stock List</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("stockList")}
+        onPress={() => navigation.navigate("productsList")}
         style={[
           styles.menuItemContainer,
           {

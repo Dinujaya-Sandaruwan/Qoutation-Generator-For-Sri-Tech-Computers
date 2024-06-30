@@ -15,6 +15,7 @@ import { StockData } from "@/interfaces/stockData";
 import StockDeleteModel from "@/components/models/StockDeleteModel";
 import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorage";
 import { useToast } from "react-native-toast-notifications";
+import { ProductData } from "@/interfaces/productsData";
 
 type Item = {
   label: string;
@@ -31,7 +32,7 @@ const StockList = () => {
 
   const toast = useToast();
 
-  const [value, setValue] = useState<Item | null>(null);
+  const [value, setValue] = useState<ProductData | null>(null);
   const [isFocus, setIsFocus] = useState(false);
 
   const [stockItemList, setStockItemList] = useState();
@@ -42,7 +43,7 @@ const StockList = () => {
     const getData = async () => {
       const data = await readDataAsyncStorage(STORAGE_KEYS.stocks);
       const filteredData = data.filter(
-        (item: StockData) => item.itemType === value?.value
+        (item: StockData) => item.itemType === value?.productId
       );
       // console.log(filteredData);
       setStockItemList(filteredData);
@@ -81,8 +82,8 @@ const StockList = () => {
 
   const renderItem = (
     item: {
-      label: string;
-      value: string;
+      productId: string;
+      productName: string;
     },
     selected: boolean
   ) => (
@@ -90,7 +91,7 @@ const StockList = () => {
       style={[styles.itemContainer, selected && styles.selectedItemContainer]}
     >
       <Text style={[styles.itemText, selected && styles.selectedItemText]}>
-        {item.label}
+        {item.productName}
       </Text>
     </View>
   );
@@ -117,20 +118,20 @@ const StockList = () => {
           data={parts}
           search
           maxHeight={300}
-          labelField="label"
-          valueField="value"
+          labelField="productName"
+          valueField="productId"
           placeholder={!isFocus ? "Select item" : "..."}
           searchPlaceholder="Search..."
           value={value}
           dropdownPosition="bottom"
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
-          onChange={(item: Item) => {
+          onChange={(item: ProductData) => {
             setValue(item);
             setIsFocus(false);
           }}
-          renderItem={(item: Item) =>
-            renderItem(item, item.value === value?.value)
+          renderItem={(item: ProductData) =>
+            renderItem(item, item.productId === value?.productId)
           }
           renderLeftIcon={() => (
             <AntDesign
@@ -145,6 +146,8 @@ const StockList = () => {
         <FlatList
           data={stockItemList}
           keyExtractor={(item) => item.itemId}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <StockItem
               item={item}

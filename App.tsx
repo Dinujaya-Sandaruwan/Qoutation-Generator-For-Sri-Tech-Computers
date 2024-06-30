@@ -26,6 +26,7 @@ import BuildItemList from "./screens/create/BuildItemList";
 import AddDataScreen from "./screens/AddData";
 import StockList from "./screens/StockList";
 import GeneratingQutation from "./screens/GeneratingQutation";
+import ProductCategories from "./screens/ProductCategories";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -129,6 +130,14 @@ function MainStack() {
         options={{
           title: "Generating...",
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="productsList"
+        component={ProductCategories}
+        options={{
+          title: "Manage Product Categories",
+          ...TransitionPresets.SlideFromRightIOS,
         }}
       />
     </Stack.Navigator>

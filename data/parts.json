@@ -1,78 +1,78 @@
 [
   {
-    "label": "Processor",
-    "value": "processor"
+    "productName": "Processor",
+    "productId": "processor"
   },
   {
-    "label": "MotherBoard",
-    "value": "motherboard"
+    "productName": "MotherBoard",
+    "productId": "motherboard"
   },
   {
-    "label": "Cooling Kit",
-    "value": "coolingKit"
+    "productName": "Cooling Kit",
+    "productId": "coolingKit"
   },
   {
-    "label": "Cooling Fan",
-    "value": "coolingFan"
+    "productName": "Cooling Fan",
+    "productId": "coolingFan"
   },
   {
-    "label": "RAM",
-    "value": "ram"
+    "productName": "RAM",
+    "productId": "ram"
   },
   {
-    "label": "Casing",
-    "value": "casing"
+    "productName": "Casing",
+    "productId": "casing"
   },
   {
-    "label": "Storage",
-    "value": "storage"
+    "productName": "Storage",
+    "productId": "storage"
   },
   {
-    "label": "Graphics Card",
-    "value": "graphicsCard"
+    "productName": "Graphics Card",
+    "productId": "graphicsCard"
   },
   {
-    "label": "Keyboard",
-    "value": "keyboard"
+    "productName": "Keyboard",
+    "productId": "keyboard"
   },
   {
-    "label": "Mouse",
-    "value": "mouse"
+    "productName": "Mouse",
+    "productId": "mouse"
   },
   {
-    "label": "Mouse Pad",
-    "value": "mousePad"
+    "productName": "Mouse Pad",
+    "productId": "mousePad"
   },
   {
-    "label": "Monitor",
-    "value": "monitor"
+    "productName": "Monitor",
+    "productId": "monitor"
   },
   {
-    "label": "Speaker",
-    "value": "speaker"
+    "productName": "Speaker",
+    "productId": "speaker"
   },
   {
-    "label": "Headphone",
-    "value": "headphone"
+    "productName": "Headphone",
+    "productId": "headphone"
   },
   {
-    "label": "Webcam",
-    "value": "webcam"
+    "productName": "Webcam",
+    "productId": "webcam"
   },
   {
-    "label": "Microphone",
-    "value": "microphone"
+    "productName": "Microphone",
+    "productId": "microphone"
   },
   {
-    "label": "Scanner",
-    "value": "scanner"
+    "productName": "Scanner",
+    "productId": "scanner"
   },
   {
-    "label": "UPS",
-    "value": "ups"
+    "productName": "UPS",
+    "productId": "ups"
   },
   {
-    "label": "Cables",
-    "value": "cables"
+    "productName": "Cables",
+    "productId": "cables"
   }
 ]
