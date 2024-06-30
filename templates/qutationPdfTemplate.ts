@@ -1,6 +1,7 @@
 import useBuildData from "@/zustand/buildDataStore";
 import useFormatMoney from "@/hooks/useFormatMoney";
 import React from "react";
+import usePhoneNumberFormatter from "@/hooks/usePhoneNumberFormatter";
 
 const qutationPdfTemplate = () => {
   const {
@@ -43,6 +44,10 @@ const qutationPdfTemplate = () => {
   };
 
   const currentYear = new Date().getFullYear();
+  const formattedNumber = usePhoneNumberFormatter(mobileNo);
+  const displayNumber = mobileNo
+    ? formattedNumber
+    : "...........................";
 
   const template = `
 <html>
@@ -150,8 +155,12 @@ const qutationPdfTemplate = () => {
         <img src="https://github.com/Dinujaya-Sandaruwan/ProjectImg/assets/88492493/159d2d23-14c6-4930-a27e-ce5d27385d01" alt="Header Image">
       </div>
       <div class="details">
-        <p class="semiBoldText"><span class="boldText">Order ID:</span> ${id}</p>
-        <p class="semiBoldText"><span class="boldText">Date:</span> ${date}</p>
+        <p class="semiBoldText"><span class="boldText">Order ID:</span> ${
+          id ? id : "N/A"
+        }</p>
+        <p class="semiBoldText"><span class="boldText">Date:</span> ${
+          date ? date : "N/A"
+        }</p>
       </div>
       <table>
         <thead>
@@ -181,27 +190,39 @@ const qutationPdfTemplate = () => {
           <tr class="totalRow">
             <td colspan="2"></td>
             <td class="boldText">Advance Payment</td>
-            <td class="boldText">${formatPrice(advancedPayment)}</td>
+            <td class="boldText">${
+              advancedPayment ? formatPrice(advancedPayment) : "N/A"
+            }</td>
           </tr>
           <tr class="totalRow">
             <td colspan="2"></td>
             <td class="boldText">Total</td>
-            <td class="boldText">${formatPrice(toPay)}</td>
+            <td class="boldText">${toPay ? formatPrice(toPay) : "N/A"}</td>
           </tr>
         </tbody>
       </table>
       <div class="footer">
         <div>
-          <p class="semiBoldText"><span class="boldText">Name:</span> ${customerName}</p>   
+          <p class="semiBoldText"><span class="boldText">Name:</span> ${
+            customerName ? customerName : "..........................."
+          }</p>   
         <div class="address">
           <p><span class="boldText">Address:</span></p>
-          <p class="semiBoldText">&nbsp;${addressLineOne}, ${addressLineTwo}</p>
+          <p class="semiBoldText">&nbsp;${
+            addressLineOne ? addressLineOne : ""
+          } ${addressLineOne ? "," : ""} ${
+    addressLineTwo ? addressLineTwo : ""
+  } ${
+    !addressLineOne && !addressLineTwo ? "..........................." : ""
+  }</p>
         </div>
       </div>
-        <p class="semiBoldText"><span class="boldText">Mobile No:</span> ${mobileNo}</p>
+        <p class="semiBoldText"><span class="boldText">Mobile No:</span> ${displayNumber}</p>
       </div>
       <div class="footerCopyright">
-        <p><span class="boldText">Copyright &copy; ${currentYear} Sri Tech Computers. All rights reserved.</span></p>
+        <p><span class="boldText">Copyright &copy; ${
+          currentYear ? currentYear : "..................."
+        } Sri Tech Computers. All rights reserved.</span></p>
       </div>
 
 

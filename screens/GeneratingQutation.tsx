@@ -109,7 +109,7 @@ export default function GeneratingQutation({ route }: any) {
   const handleGoHome = async () => {
     setLoadingHandleHome(true);
 
-    await saveAsnycStorage();
+    // await saveAsnycStorage();
 
     setId("");
     setDate("");
