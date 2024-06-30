@@ -18,6 +18,7 @@ import {
   Text,
   View,
   Animated,
+  Image,
 } from "react-native";
 import useNavigationStore from "@/zustand/navigationStore";
 
@@ -87,19 +88,32 @@ function HomeScreen() {
     <>
       <NavSearch searchText={searchText} setSearchText={setSearchText} />
       <KeyboardAvoidingView style={styles.container}>
-        <FlatList
-          data={filteredData}
-          ListHeaderComponent={() => (
-            <Text style={styles.title}>Draft Quotations</Text>
-          )}
-          renderItem={(item) => <SavedQutationItem data={item} />}
-          ListFooterComponent={() => <View style={{ height: 55 }} />}
-          ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
-          keyExtractor={(item, index) => index.toString()}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          initialNumToRender={5}
-        />
+        {data.length === 0 ? (
+          <>
+            <Text style={styles.title}>No Draft Quotations</Text>
+            <View style={styles.noDataContainer}>
+              <Image
+                source={require("@img/noDraft.png")}
+                style={styles.noDataImage}
+                resizeMode="contain"
+              />
+            </View>
+          </>
+        ) : (
+          <FlatList
+            data={filteredData}
+            ListHeaderComponent={() => (
+              <Text style={styles.title}>Draft Quotations</Text>
+            )}
+            renderItem={(item) => <SavedQutationItem data={item} />}
+            ListFooterComponent={() => <View style={{ height: 55 }} />}
+            ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
+            keyExtractor={(item, index) => index.toString()}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            initialNumToRender={5}
+          />
+        )}
       </KeyboardAvoidingView>
       <View style={styles.footer}>
         <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
@@ -159,5 +173,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+  },
+
+  noDataContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  noDataImage: {
+    width: "80%",
+    opacity: 0.1,
+    marginTop: -30,
   },
 });
