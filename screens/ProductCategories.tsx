@@ -4,7 +4,6 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   TextInput,
-  Button,
   TouchableOpacity,
   FlatList,
 } from "react-native";
@@ -13,52 +12,169 @@ import useNavigationStore from "@/zustand/navigationStore";
 import { useIsFocused } from "@react-navigation/native";
 import Colors from "@/constants/Colors";
 import { Entypo } from "@expo/vector-icons";
-import StockItem from "@/components/StockItem";
 import ProductCategory from "@/components/ProductCategory";
-
-import cotegoryData from "@/data/parts.json";
+import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorage";
+import useUniqueId from "@/hooks/useGenerateId";
+import { useToast } from "react-native-toast-notifications";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
+import Loading from "@/components/Loading";
+import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorage";
+import ProductDeleteModel from "@/components/models/ProductDeleteModel";
+import { ProductData } from "@/interfaces/productsData";
+import { StockData } from "@/interfaces/stockData";
+import useDeleteAscyncStorageProducts from "@/hooks/asyncStorage/useDeleteAsyncStorageProducts";
 
 const ProductCategories = () => {
   const isThisPage = useIsFocused();
   const setPage = useNavigationStore((state) => state.setPage);
 
   useEffect(() => {
-    isThisPage && setPage("productsList");
+    if (isThisPage) {
+      setPage("productsList");
+      fetchData();
+    }
   }, [isThisPage]);
 
+  const generateUniqueId = useUniqueId("PRODUCT");
+  const storeDataAsyncStorage = useWriteAscyncStorage();
+  const toast = useToast();
+
+  const [loading, setLoading] = useState(false);
   const [productName, setProductName] = useState("");
+  const productId = generateUniqueId();
+  const [products, setProducts] = useState<ProductData[]>([]);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState("");
+
+  const readDataAsyncStorage = useReadAscyncStorage();
+
+  const fetchData = async () => {
+    const data = await readDataAsyncStorage(STORAGE_KEYS.products);
+    setProducts(data || []);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const addProductCategory = async () => {
+    setLoading(true);
+    if (productName.trim() === "") {
+      setLoading(false);
+      return toast.show(
+        "You can't add empty product. Type the name before add.",
+        {
+          type: "warning",
+        }
+      );
+    }
+    const productData = { productId, productName };
+
+    const result = await storeDataAsyncStorage(
+      productData,
+      STORAGE_KEYS.products
+    );
+
+    if (result.status === "success") {
+      toast.show("Product added successfully.", { type: "success" });
+      setProductName("");
+      await fetchData();
+    } else {
+      toast.show("Failed to add product. Something went wrong.", {
+        type: "error",
+      });
+    }
+    setLoading(false);
+  };
+
+  const deleteDataAsyncStorage = useDeleteAscyncStorage();
+  const deleteDataAsyncStorageProducts = useDeleteAscyncStorageProducts();
+
+  const deleteProduct = async (id: string) => {
+    setLoading(true);
+    const items = await readDataAsyncStorage(STORAGE_KEYS.stocks);
+
+    const check = items.filter((item: StockData) => item.itemType === id);
+    if (check.length > 0) {
+      for (let i = 0; i < check.length; i++) {
+        const result = await deleteDataAsyncStorage(
+          check[i].itemId,
+          STORAGE_KEYS.stocks
+        );
+        if (result.status === "failed") {
+          setLoading(false);
+          setModalVisible(false);
+          return toast.show("Failed to delete product. Something went wrong.", {
+            type: "error",
+          });
+        }
+      }
+    }
+
+    const result = await deleteDataAsyncStorageProducts(
+      id,
+      STORAGE_KEYS.products
+    );
+    if (result.status === "success") {
+      toast.show("Product deleted successfully.", { type: "success" });
+      await fetchData();
+    } else {
+      toast.show("Failed to delete product. Something went wrong.", {
+        type: "error",
+      });
+    }
+    await fetchData();
+    setLoading(false);
+    setModalVisible(false);
+  };
+
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <Text style={styles.title}>Product Categories</Text>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Product Category Name</Text>
-        <View style={styles.textInputContainer}>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Enter item name here..."
-            placeholderTextColor={Colors.border}
-            onChangeText={(text) => setProductName(text)}
-            value={productName}
-          />
-          <TouchableOpacity
-            style={styles.addBtn}
-            onPress={() => console.log("Add Product Category")}
-          >
-            <Entypo name="plus" size={28} color={Colors.white} />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <FlatList
-        data={cotegoryData}
-        keyExtractor={(item) => item.productId}
-        style={{ marginTop: 20 }}
-        renderItem={({ item }) => <ProductCategory data={item} />}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
+    <>
+      {loading && <Loading />}
+      <ProductDeleteModel
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        handleDelete={() => deleteProduct(deleteItemId)}
       />
-    </KeyboardAvoidingView>
+
+      <KeyboardAvoidingView style={styles.container}>
+        <Text style={styles.title}>Product Categories</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Product Category Name</Text>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Enter item name here..."
+              placeholderTextColor={Colors.border}
+              onChangeText={setProductName}
+              value={productName}
+            />
+            <TouchableOpacity
+              style={styles.addBtn}
+              onPress={addProductCategory}
+            >
+              <Entypo name="plus" size={28} color={Colors.white} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <FlatList
+          data={products}
+          keyExtractor={(item) => item.productId}
+          style={{ marginTop: 20 }}
+          renderItem={({ item }) => (
+            <ProductCategory
+              data={item}
+              setModalVisible={setModalVisible}
+              setDeleteItemId={setDeleteItemId}
+            />
+          )}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        />
+      </KeyboardAvoidingView>
+    </>
   );
 };
 

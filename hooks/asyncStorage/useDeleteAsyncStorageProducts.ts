@@ -1,19 +1,25 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StockData } from "@/interfaces/stockData";
 import useReadAscyncStorage from "./useReadAscyncStorage";
+import { ProductData } from "@/interfaces/productsData";
 
-const useDeleteAscyncStorage = () => {
+const useDeleteAscyncStorageProducts = () => {
   const readDataAsyncStorage = useReadAscyncStorage();
 
-  const deleteDataAsyncStorage = async (itemId: string, storageKey: string) => {
-    const existingData: StockData[] | null = await readDataAsyncStorage(
+  const deleteDataAsyncStorageProducts = async (
+    itemId: string,
+    storageKey: string
+  ) => {
+    const existingData: ProductData[] | null = await readDataAsyncStorage(
       storageKey
     );
 
     console.log("existingData", existingData);
 
     if (existingData) {
-      const updatedData = existingData.filter((item) => item.itemId !== itemId);
+      const updatedData = existingData.filter(
+        (item) => item.productId !== itemId
+      );
 
       try {
         const jsonValue = JSON.stringify(updatedData);
@@ -28,7 +34,7 @@ const useDeleteAscyncStorage = () => {
     }
   };
 
-  return deleteDataAsyncStorage;
+  return deleteDataAsyncStorageProducts;
 };
 
-export default useDeleteAscyncStorage;
+export default useDeleteAscyncStorageProducts;

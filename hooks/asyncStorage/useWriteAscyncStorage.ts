@@ -2,12 +2,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StockData } from "@/interfaces/stockData";
 import useReadAscyncStorage from "./useReadAscyncStorage";
 import { BuildData } from "@/interfaces/buildData";
+import { ProductData } from "@/interfaces/productsData";
 
 const useWriteAscyncStorage = () => {
   const readDataAsyncStorage = useReadAscyncStorage();
 
   const storeDataAsyncStorage = async (
-    value: StockData | BuildData,
+    value: StockData | BuildData | ProductData,
     storageKey: string
   ) => {
     const existingData = await readDataAsyncStorage(storageKey);
