@@ -33,7 +33,7 @@ const SavedQutationItem = ({ data: { item } }: Props) => {
         </Text>
       </View>
       <TouchableHighlight
-        onPress={() => navigation.navigate("createPage01")}
+        onPress={() => navigation.navigate("qutationInfo", { item })}
         style={styles.qutationItemRight}
       >
         <AntDesign name="rightcircleo" size={30} color={Colors.rightArrow} />

@@ -49,6 +49,11 @@ const qutationPdfTemplate = () => {
     ? formattedNumber
     : "...........................";
 
+  const address =
+    [addressLineOne || "", addressLineTwo || ""]
+      .filter((line) => line.trim() !== "")
+      .join(", ") || "...........................";
+
   const template = `
 <html>
   <head>
@@ -208,13 +213,7 @@ const qutationPdfTemplate = () => {
           }</p>   
         <div class="address">
           <p><span class="boldText">Address:</span></p>
-          <p class="semiBoldText">&nbsp;${
-            addressLineOne ? addressLineOne : ""
-          } ${addressLineOne ? "," : ""} ${
-    addressLineTwo ? addressLineTwo : ""
-  } ${
-    !addressLineOne && !addressLineTwo ? "..........................." : ""
-  }</p>
+          <p class="semiBoldText">&nbsp;${address}</p>
         </div>
       </div>
         <p class="semiBoldText"><span class="boldText">Mobile No:</span> ${displayNumber}</p>

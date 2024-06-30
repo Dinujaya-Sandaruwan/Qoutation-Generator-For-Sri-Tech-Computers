@@ -1,3 +1,4 @@
+import { BuildData } from "@/interfaces/buildData";
 import { NavigatorScreenParams } from "@react-navigation/native";
 
 export type RootStackParamList = {
@@ -10,6 +11,7 @@ export type RootStackParamList = {
   stockList: undefined;
   generatingQutation: { id?: string };
   productsList: undefined;
+  qutationInfo: { item: BuildData };
 };
 
 // export type RootStackParamList = {

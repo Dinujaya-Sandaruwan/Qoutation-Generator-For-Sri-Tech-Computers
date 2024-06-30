@@ -27,6 +27,7 @@ import AddDataScreen from "./screens/AddData";
 import StockList from "./screens/StockList";
 import GeneratingQutation from "./screens/GeneratingQutation";
 import ProductCategories from "./screens/ProductCategories";
+import QuotationInfo from "./screens/QuotationInfo";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -137,6 +138,14 @@ function MainStack() {
         component={ProductCategories}
         options={{
           title: "Manage Product Categories",
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="qutationInfo"
+        component={QuotationInfo}
+        options={{
+          title: "Quotation Details",
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />

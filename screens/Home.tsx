@@ -101,7 +101,7 @@ function HomeScreen() {
           </>
         ) : (
           <FlatList
-            data={filteredData}
+            data={filteredData.reverse()}
             ListHeaderComponent={() => (
               <Text style={styles.title}>Draft Quotations</Text>
             )}
