@@ -11,22 +11,18 @@ const useWriteAscyncStorage = () => {
   ): Promise<{ status: string; error?: string | any }> => {
     const existingData = await readDataAsyncStorage(storageKey);
 
-    // Check for duplicates based on id and itemId
-    const isDuplicate = existingData.some(
+    // Filter out any existing data that matches the new value based on id or itemId
+    const filteredData = existingData.filter(
       (item: BuildData) =>
-        item.id === value.id ||
-        item.buildItems.some(
+        item.id !== value.id &&
+        !item.buildItems.some(
           (buildItem: BuildItem) =>
             buildItem.itemId === value.buildItems[0].itemId
         )
     );
 
-    if (isDuplicate) {
-      return { status: "duplicate", error: "Duplicate entry detected." };
-    }
-
     try {
-      const jsonValue = JSON.stringify([...existingData, value]);
+      const jsonValue = JSON.stringify([...filteredData, value]);
       await AsyncStorage.setItem(storageKey, jsonValue);
 
       return { status: "success" };
