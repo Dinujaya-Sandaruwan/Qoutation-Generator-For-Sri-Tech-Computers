@@ -20,6 +20,7 @@ import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorage";
 import useUniqueId from "@/hooks/useGenerateId";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
 import { ProductData } from "@/interfaces/productsData";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 
 type Item = {
   label: string;
@@ -101,6 +102,18 @@ const AddDataScreen = () => {
     }, 1000);
   };
 
+  const readDataAsyncStorage = useReadAscyncStorage();
+  const [products, setProducts] = useState<ProductData[]>([]);
+
+  const fetchData = async () => {
+    const data = await readDataAsyncStorage(STORAGE_KEYS.products);
+    setProducts(data || []);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       {loading && <Loading />}
@@ -133,7 +146,7 @@ const AddDataScreen = () => {
             containerStyle={styles.dropdownContainer}
             itemTextStyle={styles.itemTextStyle}
             itemContainerStyle={styles.itemContainerStyle}
-            data={parts}
+            data={products}
             search
             maxHeight={300}
             labelField="productName"

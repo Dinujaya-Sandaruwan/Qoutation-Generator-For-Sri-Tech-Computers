@@ -80,6 +80,17 @@ const StockList = () => {
     }
   };
 
+  const [products, setProducts] = useState<ProductData[]>([]);
+
+  const fetchData = async () => {
+    const data = await readDataAsyncStorage(STORAGE_KEYS.products);
+    setProducts(data || []);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const renderItem = (
     item: {
       productId: string;
@@ -115,7 +126,7 @@ const StockList = () => {
           containerStyle={styles.dropdownContainer}
           itemTextStyle={styles.itemTextStyle}
           itemContainerStyle={styles.itemContainerStyle}
-          data={parts}
+          data={products}
           search
           maxHeight={300}
           labelField="productName"

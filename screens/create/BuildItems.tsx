@@ -27,6 +27,8 @@ import { useToast } from "react-native-toast-notifications";
 import qutationPdfTemplate from "@/templates/qutationPdfTemplate";
 import Loading from "@/components/Loading";
 import { ProductData } from "@/interfaces/productsData";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
 
 const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -134,6 +136,18 @@ const BuildItems = () => {
     });
   };
 
+  const readDataAsyncStorage = useReadAscyncStorage();
+  const [products, setProducts] = useState<ProductData[]>([]);
+
+  const fetchData = async () => {
+    const data = await readDataAsyncStorage(STORAGE_KEYS.products);
+    setProducts(data || []);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <BuildItemDeleteModel
@@ -160,7 +174,7 @@ const BuildItems = () => {
             containerStyle={styles.dropdownContainer}
             itemTextStyle={styles.itemTextStyle}
             itemContainerStyle={styles.itemContainerStyle}
-            data={parts}
+            data={products}
             search
             maxHeight={300}
             labelField="productName"
