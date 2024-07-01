@@ -87,7 +87,7 @@ export default function GeneratingQutation({ route }: any) {
 
   const printToPdf = async () => {
     setLoading(true);
-    await saveAsnycStorage(STORAGE_KEYS.qutations);
+
     const response = await Print.printToFileAsync({
       html,
     });
@@ -110,7 +110,7 @@ export default function GeneratingQutation({ route }: any) {
   const handleGoHome = async () => {
     setLoadingHandleHome(true);
 
-    // await saveAsnycStorage();
+    await saveAsnycStorage(STORAGE_KEYS.qutations);
 
     setId("");
     setDate("");
@@ -187,7 +187,7 @@ export default function GeneratingQutation({ route }: any) {
             <Text style={styles.generateText}>Quotation Generated.</Text>
             <TouchableOpacity style={styles.goHomeBtn} onPress={handleGoHome}>
               <FontAwesome name="save" size={24} color={Colors.white} />
-              <Text style={styles.goHomeBtnText}>Go to Home</Text>
+              <Text style={styles.goHomeBtnText}>Save and go to Home</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.goHomeBtn}
