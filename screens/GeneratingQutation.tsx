@@ -59,7 +59,7 @@ export default function GeneratingQutation({ route }: any) {
 
   const toast = useToast();
 
-  const saveAsnycStorage = async () => {
+  const saveAsnycStorage = async (key: string) => {
     const saveStatus = await storeDataAsyncStorage(
       {
         id: temId,
@@ -74,7 +74,7 @@ export default function GeneratingQutation({ route }: any) {
         buildItems,
         ordereFinished,
       },
-      STORAGE_KEYS.qutations
+      key
     );
 
     if (saveStatus.status === "failed") {
@@ -82,11 +82,12 @@ export default function GeneratingQutation({ route }: any) {
         type: "danger",
       });
     }
+    return "success";
   };
 
   const printToPdf = async () => {
     setLoading(true);
-    await saveAsnycStorage();
+    await saveAsnycStorage(STORAGE_KEYS.qutations);
     const response = await Print.printToFileAsync({
       html,
     });
@@ -132,6 +133,19 @@ export default function GeneratingQutation({ route }: any) {
     );
   };
 
+  const handleSaveTemplate = async () => {
+    setLoadingHandleHome(true);
+    const result = await saveAsnycStorage(STORAGE_KEYS.templates);
+
+    if (result === "success") {
+      toast.show("Template saved successfully!", {
+        type: "success",
+      });
+    }
+
+    setLoadingHandleHome(false);
+  };
+
   useEffect(() => {
     // You can control the ref programmatically, rather than using autoPlay
     animation.current?.play();
@@ -173,7 +187,14 @@ export default function GeneratingQutation({ route }: any) {
             <Text style={styles.generateText}>Quotation Generated.</Text>
             <TouchableOpacity style={styles.goHomeBtn} onPress={handleGoHome}>
               <FontAwesome name="save" size={24} color={Colors.white} />
-              <Text style={styles.goHomeBtnText}>Save and go to Home</Text>
+              <Text style={styles.goHomeBtnText}>Go to Home</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.goHomeBtn}
+              onPress={handleSaveTemplate}
+            >
+              <FontAwesome name="file-text" size={24} color={Colors.white} />
+              <Text style={styles.goHomeBtnText}>Save as a template</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.generateAgainBtn}
@@ -200,12 +221,13 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 30,
   },
   goHomeBtn: {
     backgroundColor: Colors.buttonBg,
     padding: 15,
     borderRadius: 5,
-    marginTop: 30,
+    marginBottom: 10,
     width: "90%",
     alignItems: "center",
     justifyContent: "center",
