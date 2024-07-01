@@ -12,10 +12,16 @@ import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorageBu
 import { useToast } from "react-native-toast-notifications";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
 import { RootStackParamList } from "@/types/navigation";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import {
+  useNavigation,
+  NavigationProp,
+  CommonActions,
+} from "@react-navigation/native";
 import QuotationDeleteModel from "@/components/models/QuotationDeleteModel";
 import Loading from "@/components/Loading";
 import useBuildData from "@/zustand/buildDataStore";
+import useAddBuildDataToFirebase from "@/hooks/firebase/useAddBuildsToFirebase";
+import { DATABASE_ID } from "@/constants/databaseCollections";
 
 interface Route {
   key: string;
@@ -65,7 +71,12 @@ const QuotationInfo = ({ route }: any) => {
     if (result.status === "success") {
       setLoading(false);
       setModalVisible(false);
-      navigation.navigate("home");
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "home" }],
+        })
+      );
     } else {
       setLoading(false);
       return toast.show("Something went wrong. Try again.", {
@@ -103,9 +114,33 @@ const QuotationInfo = ({ route }: any) => {
     navigation.navigate("createPage01");
   };
 
+  const {
+    addBuildDataToFirebase,
+    loading: firebaseLoading,
+    error,
+  } = useAddBuildDataToFirebase();
+
+  const handleComplete = async () => {
+    await addBuildDataToFirebase(data, DATABASE_ID.qutations);
+    if (error) {
+      return toast.show("Something went wrong. Try again.", {
+        type: "warning",
+      });
+    }
+
+    await handleDelereQuotation();
+
+    // navigation.dispatch(
+    //   CommonActions.reset({
+    //     index: 0,
+    //     routes: [{ name: "home" }],
+    //   })
+    // );
+  };
+
   return (
     <>
-      {loading && <Loading />}
+      {loading || (firebaseLoading && <Loading />)}
       <QuotationDeleteModel
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
@@ -114,7 +149,10 @@ const QuotationInfo = ({ route }: any) => {
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Order Actions</Text>
         <Text style={styles.orderId}>#{data.id}</Text>
-        <TouchableOpacity onPress={() => {}} style={[styles.completeButton]}>
+        <TouchableOpacity
+          onPress={handleComplete}
+          style={[styles.completeButton]}
+        >
           <FontAwesome name="check-square" size={24} color={Colors.white} />
           <Text style={styles.btnText}>Mark as complete</Text>
         </TouchableOpacity>
