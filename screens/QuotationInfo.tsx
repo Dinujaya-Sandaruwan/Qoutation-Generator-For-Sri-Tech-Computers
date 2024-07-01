@@ -8,6 +8,13 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { BuildData, BuildItem } from "@/interfaces/buildData";
 import useFormatMoney from "@/hooks/useFormatMoney";
 import usePhoneNumberFormatter from "@/hooks/usePhoneNumberFormatter";
+import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorageBuilds";
+import { useToast } from "react-native-toast-notifications";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import { RootStackParamList } from "@/types/navigation";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import QuotationDeleteModel from "@/components/models/QuotationDeleteModel";
+import Loading from "@/components/Loading";
 
 interface Route {
   key: string;
@@ -17,6 +24,9 @@ interface Route {
 
 const QuotationInfo = ({ route }: any) => {
   const data = route.params.item;
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const [loading, setLoading] = React.useState(false);
 
   const formatMoney = useFormatMoney();
   const formattedNumber = usePhoneNumberFormatter(data.mobileNo);
@@ -40,83 +50,117 @@ const QuotationInfo = ({ route }: any) => {
     }
   };
 
+  const deleteDataAsyncStorage = useDeleteAscyncStorage();
+  const toast = useToast();
+  const [isModalVisible, setModalVisible] = React.useState(false);
+
+  const handleDelereQuotation = async () => {
+    setLoading(true);
+    const result = await deleteDataAsyncStorage(
+      data.id,
+      STORAGE_KEYS.qutations
+    );
+
+    if (result.status === "success") {
+      setLoading(false);
+      setModalVisible(false);
+      navigation.navigate("home");
+    } else {
+      setLoading(false);
+      return toast.show("Something went wrong. Try again.", {
+        type: "warning",
+      });
+    }
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Order Actions</Text>
-      <Text style={styles.orderId}>#{data.id}</Text>
-      <TouchableOpacity onPress={() => {}} style={[styles.completeButton]}>
-        <FontAwesome name="check-square" size={24} color={Colors.white} />
-        <Text style={styles.btnText}>Mark as complete</Text>
-      </TouchableOpacity>
-      <View style={styles.btnContainer}>
-        <TouchableOpacity onPress={() => {}} style={[styles.button]}>
-          <AntDesign name="edit" size={24} color={Colors.white} />
-          <Text style={styles.btnText}>Edit</Text>
+    <>
+      {loading && <Loading />}
+      <QuotationDeleteModel
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        handleDelete={handleDelereQuotation}
+      />
+      <ScrollView style={styles.container}>
+        <Text style={styles.title}>Order Actions</Text>
+        <Text style={styles.orderId}>#{data.id}</Text>
+        <TouchableOpacity onPress={() => {}} style={[styles.completeButton]}>
+          <FontAwesome name="check-square" size={24} color={Colors.white} />
+          <Text style={styles.btnText}>Mark as complete</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={[styles.button]}>
-          <MaterialIcons name="delete" size={24} color={Colors.white} />
-          <Text style={styles.btnText}>Delete</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity onPress={() => {}} style={[styles.button]}>
+            <AntDesign name="edit" size={24} color={Colors.white} />
+            <Text style={styles.btnText}>Edit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setModalVisible(true)}
+            style={[styles.button]}
+          >
+            <MaterialIcons name="delete" size={24} color={Colors.white} />
+            <Text style={styles.btnText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
 
-      <Text style={styles.title}>Order Details</Text>
+        <Text style={styles.title}>Order Details</Text>
 
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Order ID</Text>
-        <Text style={styles.infoText}>{data?.id ? data?.id : "N/A"}</Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Order Date</Text>
-        <Text style={styles.infoText}>{data?.date ? data?.date : "N/A"}</Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Customer Name</Text>
-        <Text style={styles.infoText}>
-          {data?.customerName ? data?.customerName : "N/A"}
-        </Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Order Budget</Text>
-        <Text style={styles.infoText}>
-          {data?.buildingBudget ? data?.buildingBudget : "N/A"}
-        </Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Advancde Payment</Text>
-        <Text style={styles.infoText}>
-          {data?.advancedPayment ? formatMoney(data?.advancedPayment) : "N/A"}
-        </Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Mobile Number</Text>
-        <Text style={styles.infoText}>{mobileNumber}</Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Address</Text>
-        <Text style={styles.infoText}>{address}</Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Additional Notes</Text>
-        <Text style={styles.infoText}>
-          {data?.additionalNotes ? data?.additionalNotes : "N/A"}
-        </Text>
-      </View>
-      <Text style={styles.title}>Order Items</Text>
-      {data.buildItems.map((item: BuildItem, index: number) => (
-        <View key={index} style={styles.infoContainer}>
-          <Text style={styles.infoTitle}>{item.itemName}</Text>
-          <Text style={[styles.infoText, { lineHeight: 25 }]}>
-            Price: {formatMoney(item.itemPrice)} x {item.itemQuantity} ={" "}
-            {formatMoney(item.itemPrice * item.itemQuantity)} {"\n"}
-            {`Warranty: ${formatWarranty(
-              item.itemWarranty,
-              item.itemWarrantyType
-            )}`}
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoTitle}>Order ID</Text>
+          <Text style={styles.infoText}>{data?.id ? data?.id : "N/A"}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoTitle}>Order Date</Text>
+          <Text style={styles.infoText}>{data?.date ? data?.date : "N/A"}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoTitle}>Customer Name</Text>
+          <Text style={styles.infoText}>
+            {data?.customerName ? data?.customerName : "N/A"}
           </Text>
         </View>
-      ))}
-      <View style={{ height: 50 }} />
-    </ScrollView>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoTitle}>Order Budget</Text>
+          <Text style={styles.infoText}>
+            {data?.buildingBudget ? data?.buildingBudget : "N/A"}
+          </Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoTitle}>Advancde Payment</Text>
+          <Text style={styles.infoText}>
+            {data?.advancedPayment ? formatMoney(data?.advancedPayment) : "N/A"}
+          </Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoTitle}>Mobile Number</Text>
+          <Text style={styles.infoText}>{mobileNumber}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoTitle}>Address</Text>
+          <Text style={styles.infoText}>{address}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoTitle}>Additional Notes</Text>
+          <Text style={styles.infoText}>
+            {data?.additionalNotes ? data?.additionalNotes : "N/A"}
+          </Text>
+        </View>
+        <Text style={styles.title}>Order Items</Text>
+        {data.buildItems.map((item: BuildItem, index: number) => (
+          <View key={index} style={styles.infoContainer}>
+            <Text style={styles.infoTitle}>{item.itemName}</Text>
+            <Text style={[styles.infoText, { lineHeight: 25 }]}>
+              Price: {formatMoney(item.itemPrice)} x {item.itemQuantity} ={" "}
+              {formatMoney(item.itemPrice * item.itemQuantity)} {"\n"}
+              {`Warranty: ${formatWarranty(
+                item.itemWarranty,
+                item.itemWarrantyType
+              )}`}
+            </Text>
+          </View>
+        ))}
+        <View style={{ height: 50 }} />
+      </ScrollView>
+    </>
   );
 };
 

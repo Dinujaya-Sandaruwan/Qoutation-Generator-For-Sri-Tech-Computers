@@ -53,7 +53,7 @@ const Menu = (props: DrawerContentComponentProps) => {
         ]}
       >
         <Entypo name="circle-with-plus" size={24} color={Colors.white} />
-        <Text style={styles.menuItemText}>Create Qutations</Text>
+        <Text style={styles.menuItemText}>Create or Edit Qutations</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate("addData")}

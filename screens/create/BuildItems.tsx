@@ -92,7 +92,7 @@ const BuildItems = () => {
   useEffect(() => {
     let total = 0;
     buildItems.forEach((item) => {
-      total += item.itemPrice;
+      total += item?.itemPrice;
     });
 
     setDynamicBudget(buildingBudget - total);
