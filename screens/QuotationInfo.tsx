@@ -15,6 +15,7 @@ import { RootStackParamList } from "@/types/navigation";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import QuotationDeleteModel from "@/components/models/QuotationDeleteModel";
 import Loading from "@/components/Loading";
+import useBuildData from "@/zustand/buildDataStore";
 
 interface Route {
   key: string;
@@ -73,6 +74,35 @@ const QuotationInfo = ({ route }: any) => {
     }
   };
 
+  const {
+    setId,
+    setDate,
+    setCustomerName,
+    setBuildingBudget,
+    setAdvancedPayment,
+    setMobileNo,
+    setAddressLineOne,
+    setAddressLineTwo,
+    setAdditionalNotes,
+    setBuildItems,
+  } = useBuildData();
+
+  const handleEditQuotation = () => {
+    setLoading(true);
+    setId(data.id);
+    setDate(data.date);
+    setCustomerName(data.customerName);
+    setBuildingBudget(data.buildingBudget);
+    setAdvancedPayment(data.advancedPayment);
+    setMobileNo(data.mobileNo);
+    setAddressLineOne(data.addressLineOne);
+    setAddressLineTwo(data.addressLineTwo);
+    setAdditionalNotes(data.additionalNotes);
+    setBuildItems(data.buildItems);
+    setLoading(false);
+    navigation.navigate("createPage01");
+  };
+
   return (
     <>
       {loading && <Loading />}
@@ -89,7 +119,10 @@ const QuotationInfo = ({ route }: any) => {
           <Text style={styles.btnText}>Mark as complete</Text>
         </TouchableOpacity>
         <View style={styles.btnContainer}>
-          <TouchableOpacity onPress={() => {}} style={[styles.button]}>
+          <TouchableOpacity
+            onPress={handleEditQuotation}
+            style={[styles.button]}
+          >
             <AntDesign name="edit" size={24} color={Colors.white} />
             <Text style={styles.btnText}>Edit</Text>
           </TouchableOpacity>

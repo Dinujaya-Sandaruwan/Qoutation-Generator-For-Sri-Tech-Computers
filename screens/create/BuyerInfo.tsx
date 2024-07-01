@@ -91,7 +91,7 @@ const BuyerInfo = () => {
         <Text style={styles.title}>Add Order Details</Text>
         <Text style={styles.orderId}>#{id}</Text>
         <View>
-          <Text style={styles.inputText}>Customer Name</Text>
+          <Text style={styles.inputText}>Customer or Build Name</Text>
           <TextInput
             style={styles.textInput}
             placeholder="Enter buyer name here..."
