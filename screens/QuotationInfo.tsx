@@ -26,28 +26,36 @@ const QuotationInfo = ({ route }: any) => {
       .filter((line) => line.trim() !== "")
       .join(", ") || "N/A";
 
+  const formatWarranty = (warranty: number, type: string) => {
+    if (!warranty) return "N/A";
+
+    if (warranty > 1 && type === "months") {
+      return `${warranty} months`;
+    } else if (warranty === 1 && type === "months") {
+      return `${warranty} month`;
+    } else if (warranty > 1 && type === "years") {
+      return `${warranty} years`;
+    } else if (warranty === 1 && type === "years") {
+      return `${warranty} year`;
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Order Actions</Text>
       <Text style={styles.orderId}>#{data.id}</Text>
+      <TouchableOpacity onPress={() => {}} style={[styles.completeButton]}>
+        <FontAwesome name="check-square" size={24} color={Colors.white} />
+        <Text style={styles.btnText}>Mark as complete</Text>
+      </TouchableOpacity>
       <View style={styles.btnContainer}>
-        <TouchableOpacity
-          onPress={() => {}}
-          style={[styles.button, { backgroundColor: Colors.btnGreen }]}
-        >
-          <FontAwesome name="check-square" size={24} color={Colors.white} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {}}
-          style={[styles.button, { backgroundColor: Colors.buttonBg }]}
-        >
+        <TouchableOpacity onPress={() => {}} style={[styles.button]}>
           <AntDesign name="edit" size={24} color={Colors.white} />
+          <Text style={styles.btnText}>Edit</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {}}
-          style={[styles.button, { backgroundColor: Colors.red }]}
-        >
+        <TouchableOpacity onPress={() => {}} style={[styles.button]}>
           <MaterialIcons name="delete" size={24} color={Colors.white} />
+          <Text style={styles.btnText}>Delete</Text>
         </TouchableOpacity>
       </View>
 
@@ -97,9 +105,13 @@ const QuotationInfo = ({ route }: any) => {
       {data.buildItems.map((item: BuildItem, index: number) => (
         <View key={index} style={styles.infoContainer}>
           <Text style={styles.infoTitle}>{item.itemName}</Text>
-          <Text style={styles.infoText}>
+          <Text style={[styles.infoText, { lineHeight: 25 }]}>
             Price: {formatMoney(item.itemPrice)} x {item.itemQuantity} ={" "}
-            {formatMoney(item.itemPrice * item.itemQuantity)}
+            {formatMoney(item.itemPrice * item.itemQuantity)} {"\n"}
+            {`Warranty: ${formatWarranty(
+              item.itemWarranty,
+              item.itemWarrantyType
+            )}`}
           </Text>
         </View>
       ))}
@@ -131,8 +143,9 @@ const styles = StyleSheet.create({
   btnContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,
+    // marginBottom: 20,
     width: "100%",
+    marginTop: 10,
   },
   btnText: {
     color: Colors.white,
@@ -140,7 +153,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   button: {
-    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 10,
+    elevation: 5,
+    backgroundColor: Colors.buttonBg,
+    borderBlockColor: Colors.componentBorder,
+    borderWidth: StyleSheet.hairlineWidth,
+    padding: 10,
+    paddingHorizontal: "14%",
+
+    flexDirection: "row",
+    gap: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  completeButton: {
     paddingVertical: 12,
     borderRadius: 10,
     elevation: 5,
@@ -153,6 +180,7 @@ const styles = StyleSheet.create({
     gap: 10,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: Colors.btnGreen,
   },
   infoContainer: {
     marginBottom: 20,
