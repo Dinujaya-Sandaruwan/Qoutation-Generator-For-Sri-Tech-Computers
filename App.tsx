@@ -28,6 +28,7 @@ import StockList from "./screens/StockList";
 import GeneratingQutation from "./screens/GeneratingQutation";
 import ProductCategories from "./screens/ProductCategories";
 import QuotationInfo from "./screens/QuotationInfo";
+import TemplateScreen from "./screens/Templates";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -154,6 +155,14 @@ function MainStack() {
         component={QuotationInfo}
         options={{
           title: "Quotation Details",
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="templates"
+        component={TemplateScreen}
+        options={{
+          title: "Quotation Templates",
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />

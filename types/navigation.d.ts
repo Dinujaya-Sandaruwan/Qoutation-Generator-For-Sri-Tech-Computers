@@ -13,6 +13,7 @@ export type RootStackParamList = {
   generatingQutation: { id?: string };
   productsList: undefined;
   qutationInfo: { item: BuildData };
+  templates: undefined;
 };
 
 // export type RootStackParamList = {

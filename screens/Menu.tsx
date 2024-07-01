@@ -53,7 +53,20 @@ const Menu = (props: DrawerContentComponentProps) => {
         ]}
       >
         <Entypo name="circle-with-plus" size={24} color={Colors.white} />
-        <Text style={styles.menuItemText}>Create or Edit Qutations</Text>
+        <Text style={styles.menuItemText}>Create or Edit Quotations</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("templates")}
+        style={[
+          styles.menuItemContainer,
+          {
+            backgroundColor:
+              page === "templates" ? Colors.componentBg : Colors.darkBg,
+          },
+        ]}
+      >
+        <FontAwesome name="file-text" size={24} color={Colors.white} />
+        <Text style={styles.menuItemText}>Quotation Templates</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate("addData")}
