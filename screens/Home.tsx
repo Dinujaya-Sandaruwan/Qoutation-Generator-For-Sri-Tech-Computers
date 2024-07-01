@@ -25,6 +25,8 @@ import useNavigationStore from "@/zustand/navigationStore";
 import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
 import { BuildData } from "@/interfaces/buildData";
+import useBuildData from "@/zustand/buildDataStore";
+import Loading from "@/components/Loading";
 
 function HomeScreen() {
   const isThisPage = useIsFocused();
@@ -36,6 +38,35 @@ function HomeScreen() {
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  const {
+    setId,
+    setDate,
+    setCustomerName,
+    setBuildingBudget,
+    setAdvancedPayment,
+    setMobileNo,
+    setAddressLineOne,
+    setAddressLineTwo,
+    setAdditionalNotes,
+    setBuildItems,
+  } = useBuildData();
+
+  const [loadingPage, setLoadingPage] = React.useState(false);
+
+  const handleCreateQutation = async () => {
+    setId("");
+    setDate("");
+    setCustomerName("");
+    setBuildingBudget(0);
+    setAdvancedPayment(0);
+    setMobileNo("");
+    setAddressLineOne("");
+    setAddressLineTwo("");
+    setAdditionalNotes("");
+    setBuildItems([]);
+    navigation.navigate("createPage01");
+  };
 
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
@@ -52,9 +83,12 @@ function HomeScreen() {
       useNativeDriver: true,
     }).start();
 
+    setLoadingPage(true);
+
     setTimeout(() => {
-      navigation.navigate("createPage01");
-    }, 100);
+      handleCreateQutation();
+      setLoadingPage(false);
+    }, 50);
   };
 
   const readDataAsyncStorage = useReadAscyncStorage();
@@ -86,6 +120,7 @@ function HomeScreen() {
 
   return (
     <>
+      {loadingPage && <Loading />}
       <NavSearch searchText={searchText} setSearchText={setSearchText} />
       <KeyboardAvoidingView style={styles.container}>
         {data.length === 0 ? (

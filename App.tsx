@@ -94,6 +94,14 @@ function MainStack() {
         })}
       />
       <Stack.Screen
+        name="createPage01slide"
+        component={BuyerInfo}
+        options={{
+          title: "Create a Quotation",
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
         name="createPage02"
         component={BuildItems}
         options={{
