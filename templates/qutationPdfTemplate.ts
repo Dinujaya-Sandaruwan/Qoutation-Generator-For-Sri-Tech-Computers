@@ -27,7 +27,10 @@ const qutationPdfTemplate = () => {
     return formatMoney(price);
   };
 
-  const total = buildItems.reduce((acc, item) => acc + item.itemPrice, 0);
+  const total = buildItems.reduce(
+    (acc, item) => acc + item.itemPrice * item.itemQuantity,
+    0
+  );
   const toPay = total - advancedPayment;
 
   const generateWarranty = (itemWarranty: number, itemWarrantyType: string) => {
