@@ -26,6 +26,7 @@ import { RootStackParamList } from "@/types/navigation";
 import useBuildData from "@/zustand/buildDataStore";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useToast } from "react-native-toast-notifications";
+import Loading from "@/components/Loading";
 
 const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -115,11 +116,16 @@ const BuildItems = () => {
 
   const checkInternetConnection = useCheckInternetConnection();
 
+  const [checkingInternet, setCheckingInternet] = useState(false);
+
   const goToGeneratingQutationScreen = async () => {
+    setCheckingInternet(true);
     const result = await checkInternetConnection();
+    setCheckingInternet(false);
     if (result.status !== "ok") {
       return;
     }
+
     if (buildItems.length === 0) {
       return toast.show(
         "You must need to add at least one item to generate a quotation.",
@@ -147,100 +153,105 @@ const BuildItems = () => {
   }, []);
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <BuildItemDeleteModel
-        isModalVisible={isModelOpen}
-        setModalVisible={setModelOpen}
-        handleDelete={handleDeleteItem}
-      />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>Add Order Details</Text>
-        <Text style={styles.orderId}>#{id}</Text>
-        <Text style={[styles.budgetLimit, { color: budgetTextColor() }]}>
-          {buildingBudget === 0
-            ? "No budget limit! 🫢"
-            : `Budget: ${formatedBudget}`}
-        </Text>
+    <>
+      {checkingInternet && (
+        <Loading message="Checking Your Internet Connection" />
+      )}
+      <KeyboardAvoidingView style={styles.container}>
+        <BuildItemDeleteModel
+          isModalVisible={isModelOpen}
+          setModalVisible={setModelOpen}
+          handleDelete={handleDeleteItem}
+        />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Text style={styles.title}>Add Order Details</Text>
+          <Text style={styles.orderId}>#{id}</Text>
+          <Text style={[styles.budgetLimit, { color: budgetTextColor() }]}>
+            {buildingBudget === 0
+              ? "No budget limit! 🫢"
+              : `Budget: ${formatedBudget}`}
+          </Text>
 
-        <View style={styles.dropDownView}>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            containerStyle={styles.dropdownContainer}
-            itemTextStyle={styles.itemTextStyle}
-            itemContainerStyle={styles.itemContainerStyle}
-            data={products}
-            search
-            maxHeight={300}
-            labelField="productName"
-            valueField="productId"
-            placeholder={!isFocus ? "Select item" : "..."}
-            searchPlaceholder="Search..."
-            value={dropDownValue}
-            dropdownPosition="bottom"
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-            onChange={(item: ProductData) => {
-              setDropDownValue(item);
-              setIsFocus(false);
-            }}
-            renderItem={(item: ProductData) =>
-              renderItem(item, item.productId === dropDownValue?.productId)
-            }
-            renderLeftIcon={() => (
-              <AntDesign
-                style={styles.icon}
-                color={Colors.border}
-                name="search1"
-                size={20}
-              />
-            )}
-          />
+          <View style={styles.dropDownView}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              containerStyle={styles.dropdownContainer}
+              itemTextStyle={styles.itemTextStyle}
+              itemContainerStyle={styles.itemContainerStyle}
+              data={products}
+              search
+              maxHeight={300}
+              labelField="productName"
+              valueField="productId"
+              placeholder={!isFocus ? "Select item" : "..."}
+              searchPlaceholder="Search..."
+              value={dropDownValue}
+              dropdownPosition="bottom"
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              onChange={(item: ProductData) => {
+                setDropDownValue(item);
+                setIsFocus(false);
+              }}
+              renderItem={(item: ProductData) =>
+                renderItem(item, item.productId === dropDownValue?.productId)
+              }
+              renderLeftIcon={() => (
+                <AntDesign
+                  style={styles.icon}
+                  color={Colors.border}
+                  name="search1"
+                  size={20}
+                />
+              )}
+            />
+            <TouchableOpacity
+              style={styles.dropDownAddBtn}
+              onPress={() => {
+                handleDropdownChange(dropDownValue);
+              }}
+            >
+              <Entypo name="plus" size={28} color={Colors.white} />
+            </TouchableOpacity>
+          </View>
+
+          {buildItems.map((item, index) => (
+            <BuildItem
+              key={index}
+              itemValue={item.itemValue}
+              itemType={item.itemType}
+              itemId={item.itemId}
+              setDeleteBuildItem={setDeleteBuildItemState}
+              setModelOpen={setModelOpen}
+            />
+          ))}
+        </ScrollView>
+        <View style={[styles.bottomNavigation, { marginBottom: marginBottom }]}>
           <TouchableOpacity
-            style={styles.dropDownAddBtn}
-            onPress={() => {
-              handleDropdownChange(dropDownValue);
-            }}
+            style={styles.navBtn}
+            onPress={() => navigation.goBack()}
           >
-            <Entypo name="plus" size={28} color={Colors.white} />
+            <Feather name="chevron-left" size={19} color={Colors.white} />
+            <Text style={[styles.navBtnText, { marginLeft: 5 }]}>
+              Go to previous page
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.navBtn, { backgroundColor: Colors.btnGreen }]}
+            onPress={goToGeneratingQutationScreen}
+          >
+            <FontAwesome name="gear" size={19} color={Colors.white} />
+            <Text style={[styles.navBtnText, { marginLeft: 5 }]}>
+              Generate Quotation
+            </Text>
           </TouchableOpacity>
         </View>
-
-        {buildItems.map((item, index) => (
-          <BuildItem
-            key={index}
-            itemValue={item.itemValue}
-            itemType={item.itemType}
-            itemId={item.itemId}
-            setDeleteBuildItem={setDeleteBuildItemState}
-            setModelOpen={setModelOpen}
-          />
-        ))}
-      </ScrollView>
-      <View style={[styles.bottomNavigation, { marginBottom: marginBottom }]}>
-        <TouchableOpacity
-          style={styles.navBtn}
-          onPress={() => navigation.goBack()}
-        >
-          <Feather name="chevron-left" size={19} color={Colors.white} />
-          <Text style={[styles.navBtnText, { marginLeft: 5 }]}>
-            Go to previous page
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.navBtn, { backgroundColor: Colors.btnGreen }]}
-          onPress={goToGeneratingQutationScreen}
-        >
-          <FontAwesome name="gear" size={19} color={Colors.white} />
-          <Text style={[styles.navBtnText, { marginLeft: 5 }]}>
-            Generate Quotation
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </>
   );
 };
 
