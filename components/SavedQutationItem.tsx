@@ -17,17 +17,17 @@ const SavedQutationItem = ({ data: { item } }: Props) => {
   const formatMoney = useFormatMoney();
   // Calculate price
   let totalPrice = 0;
-  item.buildItems.forEach((item) => {
+  item?.buildItems?.forEach((item) => {
     totalPrice += item.itemPrice * item.itemQuantity;
   });
 
-  const finalPrice = totalPrice + item.advancedPayment;
+  const finalPrice = totalPrice + item?.advancedPayment;
 
   return (
     <View style={styles.qutationItem}>
       <View style={styles.qutationItemLeft}>
-        <Text style={styles.qutationItemTitle}>For: {item.customerName}</Text>
-        <Text style={styles.qutationItemDate}>Date: {item.date}</Text>
+        <Text style={styles.qutationItemTitle}>For: {item?.customerName}</Text>
+        <Text style={styles.qutationItemDate}>Date: {item?.date}</Text>
         <Text style={styles.qutationItemBudget}>
           Price: {formatMoney(finalPrice)}
         </Text>

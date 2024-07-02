@@ -112,6 +112,23 @@ const Menu = (props: DrawerContentComponentProps) => {
         <Text style={styles.menuItemText}>Product Categories</Text>
       </TouchableOpacity>
       <TouchableOpacity
+        onPress={() => navigation.navigate("completedOrders")}
+        style={[
+          styles.menuItemContainer,
+          {
+            backgroundColor:
+              page === "completedOrders" ? Colors.componentBg : Colors.darkBg,
+          },
+        ]}
+      >
+        <Ionicons
+          name="checkmark-done-circle-sharp"
+          size={24}
+          color={Colors.white}
+        />
+        <Text style={styles.menuItemText}>Completed Orders</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
         onPress={() => navigation.navigate("backups")}
         style={[
           styles.menuItemContainer,

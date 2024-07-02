@@ -15,6 +15,7 @@ export type RootStackParamList = {
   qutationInfo: { item: BuildData };
   templates: undefined;
   backups: undefined;
+  completedOrders: undefined;
 };
 
 // export type RootStackParamList = {
