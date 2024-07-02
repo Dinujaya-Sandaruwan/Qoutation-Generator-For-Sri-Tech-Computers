@@ -11,6 +11,9 @@ dependencies:
   '@react-native-async-storage/async-storage':
     specifier: ^1.23.1
     version: 1.23.1(react-native@0.74.2)
+  '@react-native-community/netinfo':
+    specifier: 11.3.1
+    version: 11.3.1(react-native@0.74.2)
   '@react-native-masked-view/masked-view':
     specifier: 0.3.1
     version: 0.3.1(react-native@0.74.2)(react@18.2.0)
@@ -2756,6 +2759,14 @@ packages:
       - encoding
       - supports-color
       - utf-8-validate
+
+  /@react-native-community/netinfo@11.3.1(react-native@0.74.2):
+    resolution: {integrity: sha512-UBnJxyV0b7i9Moa97Av+HKho1ByzX0DtbJXzUQS5E3xhQs6P2D/Os0iw3ouy7joY1TVd6uIhplPbr7l1SJNaNQ==}
+    peerDependencies:
+      react-native: '>=0.59'
+    dependencies:
+      react-native: 0.74.2(@babel/core@7.24.7)(@babel/preset-env@7.24.7)(@types/react@18.2.79)(react@18.2.0)
+    dev: false
 
   /@react-native-masked-view/masked-view@0.3.1(react-native@0.74.2)(react@18.2.0):
     resolution: {integrity: sha512-uVm8U6nwFIlUd1iDIB5cS+lDadApKR+l8k4k84d9hn+GN4lzAIJhUZ9syYX7c022MxNgAlbxoFLt0pqKoyaAGg==}

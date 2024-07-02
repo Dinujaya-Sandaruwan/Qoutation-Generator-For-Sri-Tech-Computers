@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-community/netinfo": "11.3.1",
     "@react-native-masked-view/masked-view": "0.3.1",
     "@react-navigation/drawer": "7.0.0-alpha.21",
     "@react-navigation/native": "7.0.0-alpha.18",
