@@ -50,7 +50,7 @@ const BuildItemList = ({ route }: any) => {
 
       <KeyboardAvoidingView style={styles.container}>
         <FlatList
-          data={filteredData}
+          data={filteredData.reverse()}
           keyExtractor={(item) => item.itemId.toString()} // Use itemId instead of index
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}

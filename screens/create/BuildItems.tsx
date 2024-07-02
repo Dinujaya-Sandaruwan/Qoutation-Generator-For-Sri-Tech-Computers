@@ -93,7 +93,7 @@ const BuildItems = () => {
   useEffect(() => {
     let total = 0;
     buildItems.forEach((item) => {
-      total += item?.itemPrice;
+      total += item?.itemPrice * item?.itemQuantity;
     });
 
     setDynamicBudget(buildingBudget - total);
@@ -107,7 +107,6 @@ const BuildItems = () => {
     } else if ((buildingBudget / 100) * 30 > dynamicBudget) {
       return Colors.yellow;
     } else {
-      console.log((dynamicBudget / 100) * 30);
       return Colors.green;
     }
   };

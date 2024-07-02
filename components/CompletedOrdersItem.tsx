@@ -18,7 +18,7 @@ const CompletedOrdersItem = ({ data: { item } }: Props) => {
   // Calculate price
   let totalPrice = 0;
   item?.buildItems?.forEach((item) => {
-    totalPrice += item.itemPrice * item.itemQuantity;
+    totalPrice += item?.itemPrice * item.itemQuantity;
   });
 
   const finalPrice = totalPrice + item?.advancedPayment;

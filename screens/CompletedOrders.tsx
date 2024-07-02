@@ -43,10 +43,13 @@ const CompletedOrdersScreen = () => {
       <View style={styles.container}>
         <Text style={styles.title}>Completed Orders List</Text>
         <FlatList
-          data={data}
+          data={data.reverse()}
           keyExtractor={(item) => item.id}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.5}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
           renderItem={(item) => <CompletedOrdersItem data={item} />}
         />
       </View>

@@ -54,7 +54,7 @@ const BuildItem = ({
   const currentItem = buildItems.filter((item) => item.itemId === itemId);
 
   const format = useFormatMoney();
-  const formatedPrice = format(currentItem[0].itemPrice);
+  const formatedPrice = format(currentItem[0]?.itemPrice);
 
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
@@ -67,10 +67,13 @@ const BuildItem = ({
           setDeleteBuildItem(itemId);
         }}
       >
-        {currentItem[0].itemName && currentItem[0].itemPrice ? (
+        {currentItem[0].itemName && currentItem[0]?.itemPrice ? (
           <View>
-            <Text style={styles.itemTitle}>{currentItem[0].itemName}</Text>
-            <Text style={styles.itemPrice}>{formatedPrice}</Text>
+            <Text style={styles.itemTitle}>{currentItem[0]?.itemName}</Text>
+            <Text style={styles.itemPrice}>
+              {formatedPrice} x {currentItem[0]?.itemQuantity} ={" "}
+              {format(currentItem[0]?.itemPrice * currentItem[0]?.itemQuantity)}
+            </Text>
           </View>
         ) : (
           <Text style={styles.itemTitle}>{itemType}</Text>

@@ -185,12 +185,15 @@ const qutationPdfTemplate = () => {
               return `
                 <tr>
                   <td>${index + 1}</td>
-                  <td>${nameAndQuantity(item.itemName, item.itemQuantity)}</td>
-                  <td>${generateWarranty(
-                    item.itemWarranty,
-                    item.itemWarrantyType
+                  <td>${nameAndQuantity(
+                    item?.itemName,
+                    item?.itemQuantity
                   )}</td>
-                  <td>${formatPrice(item.itemPrice)}</td>
+                  <td>${generateWarranty(
+                    item?.itemWarranty,
+                    item?.itemWarrantyType
+                  )}</td>
+                  <td>${formatPrice(item?.itemPrice * item?.itemQuantity)}</td>
                 </tr>
               `;
             })

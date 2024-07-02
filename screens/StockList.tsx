@@ -35,7 +35,7 @@ const StockList = () => {
   const [value, setValue] = useState<ProductData | null>(null);
   const [isFocus, setIsFocus] = useState(false);
 
-  const [stockItemList, setStockItemList] = useState();
+  const [stockItemList, setStockItemList] = useState([] as StockData[]);
   const readDataAsyncStorage = useReadAscyncStorage();
   const [deleteItemId, setDeleteItemId] = useState("");
 
@@ -155,7 +155,7 @@ const StockList = () => {
         />
 
         <FlatList
-          data={stockItemList}
+          data={stockItemList.reverse()}
           keyExtractor={(item) => item.itemId}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}

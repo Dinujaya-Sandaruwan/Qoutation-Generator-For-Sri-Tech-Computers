@@ -15,12 +15,7 @@ const useWriteAscyncStorage = () => {
     let filteredData: BuildData[] = [];
     if (existingData) {
       filteredData = existingData.filter(
-        (item: BuildData) =>
-          item.id !== value.id &&
-          !item.buildItems.some(
-            (buildItem: BuildItem) =>
-              buildItem.itemId === value.buildItems[0].itemId
-          )
+        (item: BuildData) => item.id !== value.id
       );
     }
 

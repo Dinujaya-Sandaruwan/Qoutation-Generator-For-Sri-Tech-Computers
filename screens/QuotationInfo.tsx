@@ -221,13 +221,13 @@ const QuotationInfo = ({ route }: any) => {
         <Text style={styles.title}>Order Items</Text>
         {data.buildItems.map((item: BuildItem, index: number) => (
           <View key={index} style={styles.infoContainer}>
-            <Text style={styles.infoTitle}>{item.itemName}</Text>
+            <Text style={styles.infoTitle}>{item?.itemName}</Text>
             <Text style={[styles.infoText, { lineHeight: 25 }]}>
-              Price: {formatMoney(item.itemPrice)} x {item.itemQuantity} ={" "}
-              {formatMoney(item.itemPrice * item.itemQuantity)} {"\n"}
+              Price: {formatMoney(item?.itemPrice)} x {item?.itemQuantity} ={" "}
+              {formatMoney(item?.itemPrice * item?.itemQuantity)} {"\n"}
               {`Warranty: ${formatWarranty(
-                item.itemWarranty,
-                item.itemWarrantyType
+                item?.itemWarranty,
+                item?.itemWarrantyType
               )}`}
             </Text>
           </View>

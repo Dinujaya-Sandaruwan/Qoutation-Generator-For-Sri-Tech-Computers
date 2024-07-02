@@ -23,12 +23,10 @@ import { useToast } from "react-native-toast-notifications";
 
 export default function GeneratingQutation({ route }: any) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
   const { id } = route.params;
   const animation = useRef(null);
 
   const html = qutationPdfTemplate();
-
   const [loading, setLoading] = useState(false);
 
   const storeDataAsyncStorage = useWriteAscyncStorage();
@@ -58,79 +56,84 @@ export default function GeneratingQutation({ route }: any) {
   } = useBuildData();
 
   const toast = useToast();
+  const [loadingHandleHome, setLoadingHandleHome] = useState(false);
 
   const saveAsnycStorage = async (key: string) => {
-    const saveStatus = await storeDataAsyncStorage(
-      {
-        id: temId,
-        date,
-        customerName,
-        buildingBudget,
-        advancedPayment,
-        mobileNo,
-        addressLineOne,
-        addressLineTwo,
-        additionalNotes,
-        buildItems,
-        ordereFinished,
-      },
-      key
-    );
+    try {
+      const saveStatus = await storeDataAsyncStorage(
+        {
+          id: temId,
+          date,
+          customerName,
+          buildingBudget,
+          advancedPayment,
+          mobileNo,
+          addressLineOne,
+          addressLineTwo,
+          additionalNotes,
+          buildItems,
+          ordereFinished,
+        },
+        key
+      );
 
-    if (saveStatus.status === "failed") {
-      return toast.show("Error saving data to databse! Try again", {
+      if (saveStatus.status === "failed") {
+        toast.show("Error saving data to database! Try again", {
+          type: "danger",
+        });
+        return "failed";
+      }
+      return "success";
+    } catch (error) {
+      toast.show("An unexpected error occurred!", {
         type: "danger",
       });
+      return "failed";
     }
-    return "success";
   };
 
   const printToPdf = async () => {
     setLoading(true);
+    try {
+      const response = await Print.printToFileAsync({ html });
+      const pdfName = `${response.uri.slice(
+        0,
+        response.uri.lastIndexOf("/") + 1
+      )}invoice_${id}.pdf`;
 
-    const response = await Print.printToFileAsync({
-      html,
-    });
-
-    const pdfName = `${response.uri.slice(
-      0,
-      response.uri.lastIndexOf("/") + 1
-    )}invoice_${id}.pdf`;
-
-    await FileSystem.moveAsync({
-      from: response.uri,
-      to: pdfName,
-    });
-    setLoading(false);
-    await shareAsync(pdfName, { UTI: ".pdf", mimeType: "application/pdf" });
+      await FileSystem.moveAsync({ from: response.uri, to: pdfName });
+      await shareAsync(pdfName, { UTI: ".pdf", mimeType: "application/pdf" });
+    } catch (error) {
+      toast.show("Failed to generate PDF!", { type: "danger" });
+    } finally {
+      setLoading(false);
+    }
   };
-
-  const [loadingHandleHome, setLoadingHandleHome] = useState(false);
 
   const handleGoHome = async () => {
     setLoadingHandleHome(true);
+    const result = await saveAsnycStorage(STORAGE_KEYS.qutations);
 
-    await saveAsnycStorage(STORAGE_KEYS.qutations);
-
-    setId("");
-    setDate("");
-    setCustomerName("");
-    setBuildingBudget(0);
-    setAdvancedPayment(0);
-    setMobileNo("");
-    setAddressLineOne("");
-    setAddressLineTwo("");
-    setAdditionalNotes("");
-    setBuildItems([]);
+    if (result === "success") {
+      // setId("");
+      // setDate("");
+      // setCustomerName("");
+      // setBuildingBudget(0);
+      // setAdvancedPayment(0);
+      // setMobileNo("");
+      // setAddressLineOne("");
+      // setAddressLineTwo("");
+      // setAdditionalNotes("");
+      // setBuildItems([]);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "home" }],
+        })
+      );
+    }
 
     setLoadingHandleHome(false);
-
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: "home" }], // Replace 'HomeScreen' with your actual home screen name
-      })
-    );
   };
 
   const handleSaveTemplate = async () => {
@@ -141,17 +144,24 @@ export default function GeneratingQutation({ route }: any) {
       toast.show("Template saved successfully!", {
         type: "success",
       });
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "home" }],
+        })
+      );
+    } else {
+      toast.show("Failed to save template!", {
+        type: "danger",
+      });
     }
 
     setLoadingHandleHome(false);
   };
 
   useEffect(() => {
-    // You can control the ref programmatically, rather than using autoPlay
     animation.current?.play();
     printToPdf();
-    // animation.current?.reset();
-    // animation.current?.play();
   }, []);
 
   return (
@@ -162,21 +172,14 @@ export default function GeneratingQutation({ route }: any) {
           <LottieView
             autoPlay
             ref={animation}
-            style={{
-              width: 300,
-              height: 300,
-              marginLeft: 25,
-            }}
+            style={{ width: 300, height: 300, marginLeft: 25 }}
             source={require("@/animations/generating.json")}
           />
         ) : (
           <LottieView
             autoPlay
             ref={animation}
-            style={{
-              width: 300,
-              height: 300,
-            }}
+            style={{ width: 300, height: 300 }}
             source={require("@/animations/done.json")}
           />
         )}

@@ -153,8 +153,8 @@ const CompletdOrderInfoScreen = ({ route }: any) => {
           <View key={index} style={styles.infoContainer}>
             <Text style={styles.infoTitle}>{item.itemName}</Text>
             <Text style={[styles.infoText, { lineHeight: 25 }]}>
-              Price: {formatMoney(item.itemPrice)} x {item.itemQuantity} ={" "}
-              {formatMoney(item.itemPrice * item.itemQuantity)} {"\n"}
+              Price: {formatMoney(item?.itemPrice)} x {item?.itemQuantity} ={" "}
+              {formatMoney(item?.itemPrice * item?.itemQuantity)} {"\n"}
               {`Warranty: ${formatWarranty(
                 item.itemWarranty,
                 item.itemWarrantyType
