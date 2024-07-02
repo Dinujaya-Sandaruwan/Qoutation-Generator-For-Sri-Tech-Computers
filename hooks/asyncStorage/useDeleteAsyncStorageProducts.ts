@@ -1,7 +1,6 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StockData } from "@/interfaces/stockData";
-import useReadAscyncStorage from "./useReadAscyncStorage";
 import { ProductData } from "@/interfaces/productsData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import useReadAscyncStorage from "./useReadAscyncStorage";
 
 const useDeleteAscyncStorageProducts = () => {
   const readDataAsyncStorage = useReadAscyncStorage();

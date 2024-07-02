@@ -1,22 +1,13 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import React, { useCallback, useEffect } from "react";
-import { RootStackParamList } from "@/types/navigation";
-import useNavigationStore from "@/zustand/navigationStore";
-import {
-  useIsFocused,
-  useNavigation,
-  NavigationProp,
-} from "@react-navigation/native";
-import Colors from "@/constants/Colors";
-import { ActivityIndicator } from "react-native-paper";
-import useFirestoreData from "../hooks/firebase/useReadFirebaseDataWithScroll";
-import { ProductData } from "@/interfaces/productsData";
-import { DATABASE_ID } from "@/constants/databaseCollections";
-import Loading from "@/components/Loading";
-import { BuildData } from "@/interfaces/buildData";
-import SavedQutationItem from "@/components/SavedQutationItem";
 import CompletedOrdersItem from "@/components/CompletedOrdersItem";
-import { useToast } from "react-native-toast-notifications";
+import Loading from "@/components/Loading";
+import Colors from "@/constants/Colors";
+import { DATABASE_ID } from "@/constants/databaseCollections";
+import { BuildData } from "@/interfaces/buildData";
+import useNavigationStore from "@/zustand/navigationStore";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useCallback, useEffect } from "react";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import useFirestoreData from "../hooks/firebase/useReadFirebaseDataWithScroll";
 
 const CompletedOrdersScreen = () => {
   const isThisPage = useIsFocused();

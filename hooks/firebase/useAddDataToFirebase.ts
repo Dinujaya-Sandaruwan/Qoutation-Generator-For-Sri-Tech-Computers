@@ -1,14 +1,8 @@
-import { useState } from "react";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  deleteDoc,
-  addDoc,
-} from "firebase/firestore";
 import { db } from "@/firebase/config";
 import { ProductData } from "@/interfaces/productsData";
 import { StockData } from "@/interfaces/stockData";
+import { addDoc, collection, deleteDoc, getDocs } from "firebase/firestore";
+import { useState } from "react";
 
 const useAddDataToFirebase = () => {
   const [loading, setLoading] = useState(false);

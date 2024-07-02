@@ -1,28 +1,28 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { ScrollView } from "react-native-gesture-handler";
 import Colors from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
 import {
-  useNavigation,
   NavigationProp,
   useIsFocused,
+  useNavigation,
 } from "@react-navigation/native";
+import React, { useEffect } from "react";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
-import AntDesign from "@expo/vector-icons/AntDesign";
-import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
-import { Feather } from "@expo/vector-icons";
-import useNavigationStore from "@/zustand/navigationStore";
-import useBuildData from "@/zustand/buildDataStore";
-import useUniqueId from "@/hooks/useGenerateId";
 import useFormattedDate from "@/hooks/useFormattedDate";
+import useUniqueId from "@/hooks/useGenerateId";
+import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
+import useBuildData from "@/zustand/buildDataStore";
+import useNavigationStore from "@/zustand/navigationStore";
+import { Feather } from "@expo/vector-icons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { useToast } from "react-native-toast-notifications";
 
 const BuyerInfo = () => {

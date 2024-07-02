@@ -1,26 +1,25 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import useNavigationStore from "@/zustand/navigationStore";
-import { useIsFocused } from "@react-navigation/native";
 import Colors from "@/constants/Colors";
-import { TextInput } from "react-native-gesture-handler";
+import useNavigationStore from "@/zustand/navigationStore";
 import { AntDesign } from "@expo/vector-icons";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
+import { TextInput } from "react-native-gesture-handler";
 import { useToast } from "react-native-toast-notifications";
 
-import parts from "@/data/parts.json";
 import Loading from "@/components/Loading";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorage";
 import useUniqueId from "@/hooks/useGenerateId";
-import { STORAGE_KEYS } from "@/constants/storageKeys";
 import { ProductData } from "@/interfaces/productsData";
-import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 
 type Item = {
   label: string;

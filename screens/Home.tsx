@@ -4,6 +4,7 @@ import NavSearch from "@/components/NavSearch";
 import SavedQutationItem from "@/components/SavedQutationItem";
 import Colors from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
+import useNavigationStore from "@/zustand/navigationStore";
 import { AntDesign } from "@expo/vector-icons";
 import {
   NavigationProp,
@@ -11,22 +12,21 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import {
+  Animated,
   FlatList,
+  Image,
   KeyboardAvoidingView,
   Pressable,
   StyleSheet,
   Text,
   View,
-  Animated,
-  Image,
 } from "react-native";
-import useNavigationStore from "@/zustand/navigationStore";
 
-import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
+import Loading from "@/components/Loading";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import { BuildData } from "@/interfaces/buildData";
 import useBuildData from "@/zustand/buildDataStore";
-import Loading from "@/components/Loading";
 
 function HomeScreen() {
   const isThisPage = useIsFocused();

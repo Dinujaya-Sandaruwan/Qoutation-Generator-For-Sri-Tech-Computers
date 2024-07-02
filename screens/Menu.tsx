@@ -1,27 +1,20 @@
 // screens/Menu.tsx
-import React from "react";
+import Entypo from "@expo/vector-icons/Entypo";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
-  DrawerItemList,
 } from "@react-navigation/drawer";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import Entypo from "@expo/vector-icons/Entypo";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import Colors from "@/constants/Colors";
-import useNavigationStore from "@/zustand/navigationStore";
 import { RootStackParamList } from "@/types/navigation";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import useNavigationStore from "@/zustand/navigationStore";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 const Menu = (props: DrawerContentComponentProps) => {
   const page = useNavigationStore((state) => state.page);

@@ -1,29 +1,28 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useEffect } from "react";
+import Loading from "@/components/Loading";
+import Colors from "@/constants/Colors";
+import { DATABASE_ID } from "@/constants/databaseCollections";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
+import useDeleteCollectionData from "@/hooks/firebase/udeDeleteFirebaseData";
+import useAddDataToFirebase from "@/hooks/firebase/useAddDataToFirebase";
+import useFirestoreData from "@/hooks/firebase/useReadAllFirebaseData";
+import useCheckInternetConnection from "@/hooks/useCheckInternetConnection";
+import { ProductData } from "@/interfaces/productsData";
+import { StockData } from "@/interfaces/stockData";
 import { RootStackParamList } from "@/types/navigation";
 import useNavigationStore from "@/zustand/navigationStore";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
+  NavigationProp,
   useIsFocused,
   useNavigation,
-  NavigationProp,
 } from "@react-navigation/native";
-import Colors from "@/constants/Colors";
-import useAddDataToFirebase from "@/hooks/firebase/useAddDataToFirebase";
-import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
-import { STORAGE_KEYS } from "@/constants/storageKeys";
-import { DATABASE_ID } from "@/constants/databaseCollections";
-import Loading from "@/components/Loading";
+import React, { useEffect } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useToast } from "react-native-toast-notifications";
-import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorage";
-import { StockData } from "@/interfaces/stockData";
-import useFirestoreData from "@/hooks/firebase/useReadAllFirebaseData";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import useDeleteCollectionData from "@/hooks/firebase/udeDeleteFirebaseData";
-import { ProductData } from "@/interfaces/productsData";
-import useCheckInternetConnection from "@/hooks/useCheckInternetConnection";
 
 const BackupScreen = () => {
   const isThisPage = useIsFocused();

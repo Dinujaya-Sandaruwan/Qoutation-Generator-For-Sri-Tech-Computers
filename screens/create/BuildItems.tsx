@@ -1,35 +1,31 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import Colors from "@/constants/Colors";
 import BuildItem from "@/components/BuildItem";
+import Colors from "@/constants/Colors";
 import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import React, { useEffect, useState } from "react";
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
-import { RootStackParamList } from "@/types/navigation";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
-import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
-import { DropdownProps } from "react-native-element-dropdown/lib/typescript/components/Dropdown/model";
-import parts from "@/data/parts.json";
-import useBuildData from "@/zustand/buildDataStore";
-import { BuildItem as BuildItemInterface } from "@/interfaces/buildData";
-import useUniqueId from "@/hooks/useGenerateId";
-import useFormatMoney from "@/hooks/useFormatMoney";
 import BuildItemDeleteModel from "@/components/models/BuildItemDeleteModel";
-import { useToast } from "react-native-toast-notifications";
-import qutationPdfTemplate from "@/templates/qutationPdfTemplate";
-import Loading from "@/components/Loading";
-import { ProductData } from "@/interfaces/productsData";
-import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import useCheckInternetConnection from "@/hooks/useCheckInternetConnection";
+import useFormatMoney from "@/hooks/useFormatMoney";
+import useUniqueId from "@/hooks/useGenerateId";
+import useKeyboardVisibility from "@/hooks/useKeyboardVisibility";
+import { BuildItem as BuildItemInterface } from "@/interfaces/buildData";
+import { ProductData } from "@/interfaces/productsData";
+import { RootStackParamList } from "@/types/navigation";
+import useBuildData from "@/zustand/buildDataStore";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { useToast } from "react-native-toast-notifications";
 
 const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();

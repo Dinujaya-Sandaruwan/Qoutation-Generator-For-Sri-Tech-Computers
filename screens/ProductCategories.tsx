@@ -1,29 +1,29 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  KeyboardAvoidingView,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import useNavigationStore from "@/zustand/navigationStore";
-import { useIsFocused } from "@react-navigation/native";
-import Colors from "@/constants/Colors";
-import { Entypo } from "@expo/vector-icons";
+import Loading from "@/components/Loading";
 import ProductCategory from "@/components/ProductCategory";
+import ProductDeleteModel from "@/components/models/ProductDeleteModel";
+import Colors from "@/constants/Colors";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorage";
+import useDeleteAscyncStorageProducts from "@/hooks/asyncStorage/useDeleteAsyncStorageProducts";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorage";
 import useUniqueId from "@/hooks/useGenerateId";
-import { useToast } from "react-native-toast-notifications";
-import { STORAGE_KEYS } from "@/constants/storageKeys";
-import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
-import Loading from "@/components/Loading";
-import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorage";
-import ProductDeleteModel from "@/components/models/ProductDeleteModel";
 import { ProductData } from "@/interfaces/productsData";
 import { StockData } from "@/interfaces/stockData";
-import useDeleteAscyncStorageProducts from "@/hooks/asyncStorage/useDeleteAsyncStorageProducts";
+import useNavigationStore from "@/zustand/navigationStore";
+import { Entypo } from "@expo/vector-icons";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import {
+  FlatList,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useToast } from "react-native-toast-notifications";
 
 const ProductCategories = () => {
   const isThisPage = useIsFocused();

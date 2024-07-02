@@ -1,21 +1,19 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import React, { useEffect, useState } from "react";
-import useNavigationStore from "@/zustand/navigationStore";
-import { useIsFocused } from "@react-navigation/native";
 import Colors from "@/constants/Colors";
-import { Dropdown } from "react-native-element-dropdown";
+import useNavigationStore from "@/zustand/navigationStore";
 import { AntDesign } from "@expo/vector-icons";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 
-import parts from "@/data/parts.json";
 import StockItem from "@/components/StockItem";
-import { Modal } from "react-native-paper";
-import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
-import { STORAGE_KEYS } from "@/constants/storageKeys";
-import { StockData } from "@/interfaces/stockData";
 import StockDeleteModel from "@/components/models/StockDeleteModel";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
 import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorage";
-import { useToast } from "react-native-toast-notifications";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import { ProductData } from "@/interfaces/productsData";
+import { StockData } from "@/interfaces/stockData";
+import { useToast } from "react-native-toast-notifications";
 
 type Item = {
   label: string;

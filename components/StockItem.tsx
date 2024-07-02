@@ -1,14 +1,5 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Animated,
-  Touchable,
-  TouchableOpacity,
-} from "react-native";
 import React, { useRef } from "react";
-import Foundation from "@expo/vector-icons/Foundation";
+import { Animated, Pressable, StyleSheet, Text } from "react-native";
 
 import Colors from "@/constants/Colors";
 

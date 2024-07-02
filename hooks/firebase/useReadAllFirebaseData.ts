@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { db } from "@/firebase/config";
+import { collection, getDocs } from "firebase/firestore";
+import { useState } from "react";
 
 const useFirestoreData = <T>(collectionName: string) => {
   const [data, setData] = useState<T[]>([]);

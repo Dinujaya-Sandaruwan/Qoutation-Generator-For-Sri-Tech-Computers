@@ -1,21 +1,19 @@
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  KeyboardAvoidingView,
-  TouchableOpacity,
   FlatList,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import React, { useState, useEffect } from "react";
 
-import Colors from "@/constants/Colors";
 import NavSearch from "@/components/NavSearch";
 import PriceModel from "@/components/models/PriceModel";
+import Colors from "@/constants/Colors";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
-import { StockData } from "@/interfaces/stockData";
 import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
-import useBuildData from "@/zustand/buildDataStore";
-import { RootStackParamList } from "@/types/navigation";
+import { StockData } from "@/interfaces/stockData";
 
 const BuildItemList = ({ route }: any) => {
   const { itemValue, itemId } = route.params;

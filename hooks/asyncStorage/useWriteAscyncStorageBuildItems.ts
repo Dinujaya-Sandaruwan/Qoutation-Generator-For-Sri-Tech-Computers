@@ -1,5 +1,5 @@
+import { BuildData } from "@/interfaces/buildData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BuildData, BuildItem } from "@/interfaces/buildData";
 import useReadAscyncStorage from "./useReadAscyncStorage";
 
 const useWriteAscyncStorage = () => {

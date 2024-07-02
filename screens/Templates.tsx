@@ -1,23 +1,17 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  KeyboardAvoidingView,
-  FlatList,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import Loading from "@/components/Loading";
+import NavSearch from "@/components/NavSearch";
+import TemplateItem from "@/components/TemplateItem";
+import TemplateDeleteModel from "@/components/models/TemplateDeleteModel";
+import Colors from "@/constants/Colors";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorageBuilds";
+import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
+import { BuildData } from "@/interfaces/buildData";
 import useNavigationStore from "@/zustand/navigationStore";
 import { useIsFocused } from "@react-navigation/native";
-import Colors from "@/constants/Colors";
-import NavSearch from "@/components/NavSearch";
-import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
-import { STORAGE_KEYS } from "@/constants/storageKeys";
-import TemplateItem from "@/components/TemplateItem";
-import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorageBuilds";
-import TemplateDeleteModel from "@/components/models/TemplateDeleteModel";
+import React, { useEffect, useState } from "react";
+import { FlatList, KeyboardAvoidingView, StyleSheet, Text } from "react-native";
 import { useToast } from "react-native-toast-notifications";
-import { BuildData } from "@/interfaces/buildData";
-import Loading from "@/components/Loading";
 
 const TemplateScreen = () => {
   const isThisPage = useIsFocused();

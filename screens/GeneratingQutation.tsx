@@ -1,24 +1,24 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   CommonActions,
   NavigationProp,
   useNavigation,
 } from "@react-navigation/native";
+import React, { useEffect, useRef, useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import * as FileSystem from "expo-file-system";
 import * as Print from "expo-print";
 import { shareAsync } from "expo-sharing";
-import * as FileSystem from "expo-file-system";
 
-import LottieView from "lottie-react-native";
-import Colors from "@/constants/Colors";
-import qutationPdfTemplate from "@/templates/qutationPdfTemplate";
-import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorageBuildItems";
-import { STORAGE_KEYS } from "@/constants/storageKeys";
-import useBuildData from "@/zustand/buildDataStore";
-import { RootStackParamList } from "@/types/navigation";
 import Loading from "@/components/Loading";
+import Colors from "@/constants/Colors";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useWriteAscyncStorage from "@/hooks/asyncStorage/useWriteAscyncStorageBuildItems";
+import qutationPdfTemplate from "@/templates/qutationPdfTemplate";
+import { RootStackParamList } from "@/types/navigation";
+import useBuildData from "@/zustand/buildDataStore";
+import LottieView from "lottie-react-native";
 import { useToast } from "react-native-toast-notifications";
 
 export default function GeneratingQutation({ route }: any) {

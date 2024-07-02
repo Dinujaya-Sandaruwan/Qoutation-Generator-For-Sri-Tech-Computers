@@ -1,27 +1,27 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
-import React from "react";
+import Loading from "@/components/Loading";
+import QuotationDeleteModel from "@/components/models/QuotationDeleteModel";
 import Colors from "@/constants/Colors";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { BuildData, BuildItem } from "@/interfaces/buildData";
+import { DATABASE_ID } from "@/constants/databaseCollections";
+import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorageBuilds";
+import useAddBuildDataToFirebase from "@/hooks/firebase/useAddBuildsToFirebase";
 import useFormatMoney from "@/hooks/useFormatMoney";
 import usePhoneNumberFormatter from "@/hooks/usePhoneNumberFormatter";
-import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorageBuilds";
-import { useToast } from "react-native-toast-notifications";
-import { STORAGE_KEYS } from "@/constants/storageKeys";
+import { BuildData, BuildItem } from "@/interfaces/buildData";
 import { RootStackParamList } from "@/types/navigation";
-import {
-  useNavigation,
-  NavigationProp,
-  CommonActions,
-} from "@react-navigation/native";
-import QuotationDeleteModel from "@/components/models/QuotationDeleteModel";
-import Loading from "@/components/Loading";
 import useBuildData from "@/zustand/buildDataStore";
-import useAddBuildDataToFirebase from "@/hooks/firebase/useAddBuildsToFirebase";
-import { DATABASE_ID } from "@/constants/databaseCollections";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {
+  CommonActions,
+  NavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
+import React from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useToast } from "react-native-toast-notifications";
 
 interface Route {
   key: string;

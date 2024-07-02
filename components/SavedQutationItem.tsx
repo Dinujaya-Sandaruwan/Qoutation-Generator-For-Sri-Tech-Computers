@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 
 import Colors from "@/constants/Colors";
+import useFormatMoney from "@/hooks/useFormatMoney";
+import { BuildData } from "@/interfaces/buildData";
+import { RootStackParamList } from "@/types/navigation";
 import { AntDesign } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "@/types/navigation";
-import { BuildData } from "@/interfaces/buildData";
-import useFormatMoney from "@/hooks/useFormatMoney";
 
 interface Props {
   data: { item: BuildData; index: number };

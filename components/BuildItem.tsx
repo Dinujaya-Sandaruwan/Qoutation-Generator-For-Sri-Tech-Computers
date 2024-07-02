@@ -1,13 +1,12 @@
-import { View, Text, Pressable, StyleSheet, Animated } from "react-native";
 import React, { useRef } from "react";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 
-import Feather from "@expo/vector-icons/Feather";
 import Colors from "@/constants/Colors";
-import { RootStackParamList } from "@/types/navigation";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
-import useBuildData from "@/zustand/buildDataStore";
 import useFormatMoney from "@/hooks/useFormatMoney";
+import { RootStackParamList } from "@/types/navigation";
+import useBuildData from "@/zustand/buildDataStore";
+import Feather from "@expo/vector-icons/Feather";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 interface Props {
   itemValue: string;

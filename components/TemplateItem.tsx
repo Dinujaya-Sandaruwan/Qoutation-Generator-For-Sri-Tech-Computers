@@ -1,15 +1,14 @@
-import { View, Text, StyleSheet, Pressable, Animated } from "react-native";
-import React, { useRef } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
+import React, { useRef } from "react";
+import { Animated, Pressable, StyleSheet, Text } from "react-native";
 
 import Colors from "@/constants/Colors";
 
-import { StockData } from "@/interfaces/stockData";
 import { BuildData } from "@/interfaces/buildData";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import useBuildData from "@/zustand/buildDataStore";
 import { RootStackParamList } from "@/types/navigation";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import useBuildData from "@/zustand/buildDataStore";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 type TemplateItemProps = {
   data: BuildData;

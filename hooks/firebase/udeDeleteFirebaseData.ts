@@ -1,12 +1,6 @@
-import { useState } from "react";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
 import { db } from "@/firebase/config";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { useState } from "react";
 
 const useDeleteCollectionData = () => {
   const [loading, setLoading] = useState(false);

@@ -1,11 +1,7 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { TextInput } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import Entypo from "@expo/vector-icons/Entypo";
-import { RadioButton } from "react-native-paper";
 
 import Colors from "@/constants/Colors";
 

@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
-import {
-  getFirestore,
-  collection,
-  query,
-  orderBy,
-  limit,
-  startAfter,
-  getDocs,
-} from "firebase/firestore";
 import { db } from "@/firebase/config";
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  startAfter,
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 const useFirestoreData = <T>(collectionName: string, pageSize: number = 10) => {
   const [data, setData] = useState<T[]>([]);
