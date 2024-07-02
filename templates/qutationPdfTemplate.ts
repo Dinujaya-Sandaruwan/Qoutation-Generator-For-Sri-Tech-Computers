@@ -7,12 +7,10 @@ const qutationPdfTemplate = () => {
     id,
     date,
     customerName,
-    buildingBudget,
     advancedPayment,
     mobileNo,
     addressLineOne,
     addressLineTwo,
-    additionalNotes,
     buildItems,
   } = useBuildData();
 
@@ -47,9 +45,7 @@ const qutationPdfTemplate = () => {
 
   const currentYear = new Date().getFullYear();
   const formattedNumber = usePhoneNumberFormatter(mobileNo);
-  const displayNumber = mobileNo
-    ? formattedNumber
-    : "...........................";
+  const displayNumber = mobileNo ? mobileNo : "...........................";
 
   const address =
     [addressLineOne || "", addressLineTwo || ""]
