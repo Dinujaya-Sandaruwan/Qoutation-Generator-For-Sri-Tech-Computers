@@ -140,7 +140,10 @@ const QuotationInfo = ({ route }: any) => {
 
   return (
     <>
-      {loading || (firebaseLoading && <Loading />)}
+      {loading && <Loading message="Order Data Loading" />}
+      {firebaseLoading && (
+        <Loading message="Marking Selected Order as Complete" />
+      )}
       <QuotationDeleteModel
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}

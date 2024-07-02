@@ -87,7 +87,9 @@ const CompletdOrderInfoScreen = ({ route }: any) => {
 
   return (
     <>
-      {loading && <Loading />}
+      {loading && (
+        <Loading message="Deleting Selected Order From Cloud Server" />
+      )}
       <QuotationDeleteModel
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}

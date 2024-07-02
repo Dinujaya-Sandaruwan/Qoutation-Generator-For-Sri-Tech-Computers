@@ -16,7 +16,6 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { ToastProvider } from "react-native-toast-notifications";
 
 import HomeScreen from "./screens/Home";
-import ProfileScreen from "./screens/Profile";
 import Colors from "./constants/Colors";
 import Menu from "./screens/Menu";
 import BuyerInfo from "./screens/create/BuyerInfo";
@@ -69,11 +68,6 @@ function MainStack() {
           ),
         }}
         component={HomeScreen}
-      />
-      <Stack.Screen
-        name="profile"
-        component={ProfileScreen}
-        options={{ ...TransitionPresets.SlideFromRightIOS }}
       />
       {/* <Stack.Screen
         name="createPage01"

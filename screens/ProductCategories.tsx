@@ -131,7 +131,7 @@ const ProductCategories = () => {
 
   return (
     <>
-      {loading && <Loading />}
+      {loading && <Loading message="Loading Products" />}
       <ProductDeleteModel
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}

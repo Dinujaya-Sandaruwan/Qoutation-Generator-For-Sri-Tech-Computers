@@ -156,7 +156,7 @@ export default function GeneratingQutation({ route }: any) {
 
   return (
     <>
-      {loadingHandleHome && <Loading />}
+      {loadingHandleHome && <Loading message="Loading Operations" />}
       <View style={styles.animationContainer}>
         {loading ? (
           <LottieView

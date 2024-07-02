@@ -116,7 +116,7 @@ const AddDataScreen = () => {
 
   return (
     <>
-      {loading && <Loading />}
+      {loading && <Loading message="Adding Stock Item" />}
 
       <KeyboardAvoidingView
         style={styles.container}

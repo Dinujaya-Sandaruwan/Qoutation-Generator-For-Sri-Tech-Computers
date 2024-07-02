@@ -37,7 +37,9 @@ const CompletedOrdersScreen = () => {
 
   return (
     <>
-      {loading && data.length === 0 && <Loading />}
+      {loading && data.length === 0 && (
+        <Loading message="Loading Orders From Cloud Server" />
+      )}
       <View style={styles.container}>
         <Text style={styles.title}>Completed Orders List</Text>
         <FlatList

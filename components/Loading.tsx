@@ -3,11 +3,15 @@ import React from "react";
 
 import Colors from "@/constants/Colors";
 
-const Loading = () => {
+interface LoadingProps {
+  message: string;
+}
+
+const Loading = ({ message }: LoadingProps) => {
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color={Colors.white} />
-      <Text style={styles.loadingText}>Loading</Text>
+      <Text style={styles.loadingText}>{message}</Text>
     </View>
   );
 };

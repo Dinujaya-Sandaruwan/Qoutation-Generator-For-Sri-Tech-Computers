@@ -108,18 +108,15 @@ const BackupScreen = () => {
       setLoading(false);
       return;
     }
-    setLoading(true);
 
     await fetchStockData();
     await fetchProductData();
 
     if (firebaseStockDataError || firebaseProductDataError) {
-      setLoading(false);
       return toast.show("Something went wrong. Try again.", { type: "danger" });
     }
 
     if (firebaseStockDataLoading || firebaseProductDataLoading) {
-      setLoading(false);
       return;
     }
 
@@ -127,7 +124,6 @@ const BackupScreen = () => {
       const jsonValueStocks = JSON.stringify(firebaseStockData);
       await AsyncStorage.setItem(STORAGE_KEYS.stocks, jsonValueStocks);
     } catch (e) {
-      setLoading(false);
       return toast.show("Something went wrong. Try again.", { type: "danger" });
     }
 
@@ -135,11 +131,9 @@ const BackupScreen = () => {
       const jsonValueProducts = JSON.stringify(firebaseProductData);
       await AsyncStorage.setItem(STORAGE_KEYS.products, jsonValueProducts);
     } catch (e) {
-      setLoading(false);
       return toast.show("Something went wrong. Try again.", { type: "danger" });
     }
 
-    setLoading(false);
     return toast.show("Data restored successfully.", { type: "success" });
   };
 
@@ -174,11 +168,12 @@ const BackupScreen = () => {
 
   return (
     <>
-      {(dataAdding ||
-        loading ||
-        firebaseStockDataLoading ||
-        firebaseProductDataLoading ||
-        deleteLoading) && <Loading />}
+      {dataAdding && <Loading message="Uploading Data to DB" />}
+      {loading && <Loading message="Checking Internet Connection" />}
+      {firebaseStockDataLoading && <Loading message="Stock Data Loading" />}
+      {firebaseProductDataLoading && <Loading message="Product Data Loading" />}
+      {deleteLoading && <Loading message="Deleting Data from Cloud Server" />}
+
       <View style={styles.container}>
         <Text style={styles.title}>Cloud Databse</Text>
         <Text style={styles.categoryTitle}>Backup Actions</Text>

@@ -76,7 +76,9 @@ const TemplateScreen = () => {
 
   return (
     <>
-      {loading && <Loading />}
+      {loading && (
+        <Loading message="Loading New Quotation From Selected Template" />
+      )}
       <TemplateDeleteModel
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
