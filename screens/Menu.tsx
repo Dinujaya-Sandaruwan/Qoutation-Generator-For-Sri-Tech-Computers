@@ -111,6 +111,19 @@ const Menu = (props: DrawerContentComponentProps) => {
         />
         <Text style={styles.menuItemText}>Product Categories</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("backups")}
+        style={[
+          styles.menuItemContainer,
+          {
+            backgroundColor:
+              page === "backups" ? Colors.componentBg : Colors.darkBg,
+          },
+        ]}
+      >
+        <Ionicons name="server-sharp" size={24} color={Colors.white} />
+        <Text style={styles.menuItemText}>Cloud Database</Text>
+      </TouchableOpacity>
     </DrawerContentScrollView>
   );
 };

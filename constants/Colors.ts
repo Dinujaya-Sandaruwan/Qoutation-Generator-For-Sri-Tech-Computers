@@ -12,4 +12,5 @@ export default {
   red: "#fc3d4d",
   yellow: "#fcff59",
   btnGreen: "#51a34d",
+  btnYellow: "#f2b707",
 };

@@ -29,6 +29,7 @@ import GeneratingQutation from "./screens/GeneratingQutation";
 import ProductCategories from "./screens/ProductCategories";
 import QuotationInfo from "./screens/QuotationInfo";
 import TemplateScreen from "./screens/Templates";
+import BackupScreen from "./screens/Backups";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -163,6 +164,14 @@ function MainStack() {
         component={TemplateScreen}
         options={{
           title: "Quotation Templates",
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="backups"
+        component={BackupScreen}
+        options={{
+          title: "Create & Restore Backups",
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />
