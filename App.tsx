@@ -31,6 +31,7 @@ import QuotationInfo from "./screens/QuotationInfo";
 import TemplateScreen from "./screens/Templates";
 import BackupScreen from "./screens/Backups";
 import CompletedOrdersScreen from "./screens/CompletedOrders";
+import CompletdOrderInfoScreen from "./screens/CompletedOrderInfo";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -181,6 +182,14 @@ function MainStack() {
         component={CompletedOrdersScreen}
         options={{
           title: "Completed Orders",
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="CompletdOrderInfoScreen"
+        component={CompletdOrderInfoScreen}
+        options={{
+          title: "Order Details",
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />

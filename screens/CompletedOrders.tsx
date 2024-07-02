@@ -15,6 +15,8 @@ import { DATABASE_ID } from "@/constants/databaseCollections";
 import Loading from "@/components/Loading";
 import { BuildData } from "@/interfaces/buildData";
 import SavedQutationItem from "@/components/SavedQutationItem";
+import CompletedOrdersItem from "@/components/CompletedOrdersItem";
+import { useToast } from "react-native-toast-notifications";
 
 const CompletedOrdersScreen = () => {
   const isThisPage = useIsFocused();
@@ -23,8 +25,6 @@ const CompletedOrdersScreen = () => {
   useEffect(() => {
     isThisPage && setPage("completedOrders");
   }, [isThisPage]);
-
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const { data, loading, error, fetchData, hasMore } =
     useFirestoreData<BuildData>(DATABASE_ID.qutations);
@@ -45,7 +45,7 @@ const CompletedOrdersScreen = () => {
           keyExtractor={(item) => item.id}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.5}
-          renderItem={(item) => <SavedQutationItem data={item} />}
+          renderItem={(item) => <CompletedOrdersItem data={item} />}
         />
       </View>
     </>
