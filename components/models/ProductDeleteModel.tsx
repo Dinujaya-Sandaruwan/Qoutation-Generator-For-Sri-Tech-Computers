@@ -20,7 +20,12 @@ const ProductDeleteModel = ({
     <Modal isVisible={isModalVisible}>
       <View style={styles.modelContainer}>
         <Text style={styles.modellabel}>
-          Do you want to delete this item permanently?
+          Do you want to delete this product category permanently?
+        </Text>
+        <Text style={styles.warningText}>
+          <Text style={{ fontWeight: "900" }}>Warning:</Text> This action will
+          delete every item inside this product category from your local
+          storage.
         </Text>
 
         <View style={styles.modelbtnContainer}>
@@ -57,8 +62,13 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontWeight: "700",
     fontSize: 20,
+    marginBottom: 10,
+  },
+  warningText: {
+    color: Colors.btnYellow,
     marginBottom: 20,
   },
+
   modelbtnContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
