@@ -29,6 +29,7 @@ import Loading from "@/components/Loading";
 import { ProductData } from "@/interfaces/productsData";
 import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
+import useCheckInternetConnection from "@/hooks/useCheckInternetConnection";
 
 const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -122,7 +123,13 @@ const BuildItems = () => {
     setModelOpen(false);
   };
 
-  const goToGeneratingQutationScreen = () => {
+  const checkInternetConnection = useCheckInternetConnection();
+
+  const goToGeneratingQutationScreen = async () => {
+    const result = await checkInternetConnection();
+    if (result.status !== "ok") {
+      return;
+    }
     if (buildItems.length === 0) {
       return toast.show(
         "You must need to add at least one item to generate a quotation 🥲",
@@ -131,6 +138,7 @@ const BuildItems = () => {
         }
       );
     }
+
     navigation.navigate("generatingQutation", {
       id: id,
     });

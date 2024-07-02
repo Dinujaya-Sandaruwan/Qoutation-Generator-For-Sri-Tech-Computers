@@ -23,6 +23,7 @@ import useFirestoreData from "@/hooks/firebase/useReadAllFirebaseData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import useDeleteCollectionData from "@/hooks/firebase/udeDeleteFirebaseData";
 import { ProductData } from "@/interfaces/productsData";
+import useCheckInternetConnection from "@/hooks/useCheckInternetConnection";
 
 const BackupScreen = () => {
   const isThisPage = useIsFocused();
@@ -31,6 +32,8 @@ const BackupScreen = () => {
   useEffect(() => {
     isThisPage && setPage("backups");
   }, [isThisPage]);
+
+  const checkInternetConnection = useCheckInternetConnection();
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [loading, setLoading] = React.useState(false);
@@ -44,6 +47,13 @@ const BackupScreen = () => {
   const readDataAsyncStorage = useReadAscyncStorage();
 
   const handleBackupStockData = async () => {
+    setLoading(true);
+    const result = await checkInternetConnection();
+    setLoading(false);
+    if (result.status !== "ok") {
+      setLoading(false);
+      return;
+    }
     const data = await readDataAsyncStorage(STORAGE_KEYS.stocks);
     await addDataToFirebase(data, DATABASE_ID.stocks);
 
@@ -57,6 +67,13 @@ const BackupScreen = () => {
   };
 
   const handleBackupProcuctData = async () => {
+    setLoading(true);
+    const result = await checkInternetConnection();
+    setLoading(false);
+    if (result.status !== "ok") {
+      setLoading(false);
+      return;
+    }
     const data = await readDataAsyncStorage(STORAGE_KEYS.products);
     await addDataToFirebase(data, DATABASE_ID.products);
 
@@ -84,6 +101,13 @@ const BackupScreen = () => {
   } = useFirestoreData<ProductData>(DATABASE_ID.products);
 
   const handleRestoreData = async () => {
+    setLoading(true);
+    const result = await checkInternetConnection();
+    setLoading(false);
+    if (result.status !== "ok") {
+      setLoading(false);
+      return;
+    }
     setLoading(true);
 
     await fetchStockData();
@@ -127,6 +151,13 @@ const BackupScreen = () => {
   } = useDeleteCollectionData();
 
   const handleFlushData = async () => {
+    setLoading(true);
+    const result = await checkInternetConnection();
+    setLoading(false);
+    if (result.status !== "ok") {
+      setLoading(false);
+      return;
+    }
     deleteCollectionData(DATABASE_ID.stocks);
     deleteCollectionData(DATABASE_ID.products);
 

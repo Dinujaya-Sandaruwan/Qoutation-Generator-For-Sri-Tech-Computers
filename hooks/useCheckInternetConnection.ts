@@ -1,10 +1,11 @@
+import { useCallback } from "react";
 import NetInfo from "@react-native-community/netinfo";
 import { useToast } from "react-native-toast-notifications";
 
-const useCheckInternetConnection = async () => {
+const useCheckInternetConnection = () => {
   const toast = useToast();
 
-  const checkConnection = async () => {
+  const checkConnection = useCallback(async () => {
     try {
       // Check the network state
       const state = await NetInfo.fetch();
@@ -18,32 +19,32 @@ const useCheckInternetConnection = async () => {
         if (response.ok) {
           return { status: "ok" };
         } else {
-          return toast.show(
+          toast.show(
             "Internet connection is active, but cloud server is not reachable.",
             {
               type: "danger",
             }
           );
+          return { status: "server unreachable" };
         }
       } else {
-        return toast.show(
-          "No internet connection. Please check your connection and try again",
+        toast.show(
+          "No internet connection. Please check your connection and try again.",
           {
             type: "danger",
           }
         );
+        return { status: "no internet" };
       }
     } catch (error) {
-      return toast.show(
-        "No internet connection. Please check your connection and try again",
-        {
-          type: "danger",
-        }
-      );
+      toast.show("An error occurred while checking the internet connection.", {
+        type: "danger",
+      });
+      return { status: "error", error };
     }
-  };
+  }, [toast]);
 
   return checkConnection;
 };
 
-useCheckInternetConnection();
+export default useCheckInternetConnection;
