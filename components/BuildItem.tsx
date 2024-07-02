@@ -24,8 +24,6 @@ const BuildItem = ({
   setModelOpen,
   setDeleteBuildItem,
 }: Props) => {
-  console.log(itemType);
-
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const handlePressIn = () => {

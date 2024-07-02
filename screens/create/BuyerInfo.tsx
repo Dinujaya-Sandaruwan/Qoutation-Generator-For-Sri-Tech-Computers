@@ -75,7 +75,7 @@ const BuyerInfo = () => {
   const navigateToPageTwo = () => {
     if (customerName === "") {
       return toast.show(
-        "You must need to add a customer name to generate a quotation. 🥲",
+        "You must need to add a customer name to generate a quotation.",
         {
           type: "warning",
         }

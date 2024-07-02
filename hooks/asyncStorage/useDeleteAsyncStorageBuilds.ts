@@ -11,8 +11,6 @@ const useDeleteAscyncStorage = () => {
       storageKey
     );
 
-    console.log("existingData", existingData);
-
     if (existingData) {
       const updatedData = existingData.filter((item) => item.id !== itemId);
 

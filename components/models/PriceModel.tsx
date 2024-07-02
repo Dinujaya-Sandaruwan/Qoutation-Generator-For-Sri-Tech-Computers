@@ -50,7 +50,7 @@ const PriceModel = ({
 
   const handleaddDetails = () => {
     if (!price) {
-      toast.show("You can't have an item without a price 😁", {
+      toast.show("You can't have an item without a price.", {
         type: "warning",
       });
       return;
@@ -74,7 +74,6 @@ const PriceModel = ({
     } else {
       setItemQuantity(itemId, 1);
     }
-    console.log(itemName);
     setItemName(itemId, itemName);
     setModalVisible(false);
     navigation.goBack();

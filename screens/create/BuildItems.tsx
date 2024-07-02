@@ -57,10 +57,6 @@ const BuildItems = () => {
 
   const toast = useToast();
 
-  // toast.show("Please fill all fields 🥲👍", {
-  //   type: "warning",
-  // });
-
   const { id, buildingBudget, buildItems, addBuildItem, deleteBuildItem } =
     useBuildData();
 
@@ -68,7 +64,7 @@ const BuildItems = () => {
 
   const handleDropdownChange = (value: any) => {
     if (!value) {
-      return toast.show("You can't add without selecting an item 🥲", {
+      return toast.show("You can't add without selecting an item.", {
         type: "warning",
       });
     }
@@ -85,7 +81,6 @@ const BuildItems = () => {
     };
 
     addBuildItem(newItem);
-    console.log(buildItems);
   };
 
   const [dynamicBudget, setDynamicBudget] = useState<number>(buildingBudget);
@@ -131,7 +126,7 @@ const BuildItems = () => {
     }
     if (buildItems.length === 0) {
       return toast.show(
-        "You must need to add at least one item to generate a quotation 🥲",
+        "You must need to add at least one item to generate a quotation.",
         {
           type: "warning",
         }

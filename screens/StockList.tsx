@@ -45,7 +45,6 @@ const StockList = () => {
       const filteredData = data.filter(
         (item: StockData) => item.itemType === value?.productId
       );
-      // console.log(filteredData);
       setStockItemList(filteredData);
     };
     getData();

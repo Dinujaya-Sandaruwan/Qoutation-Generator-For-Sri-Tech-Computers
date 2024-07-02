@@ -82,7 +82,7 @@ const ProductCategories = () => {
       await fetchData();
     } else {
       toast.show("Failed to add product. Something went wrong.", {
-        type: "error",
+        type: "danger",
       });
     }
     setLoading(false);
@@ -106,7 +106,7 @@ const ProductCategories = () => {
           setLoading(false);
           setModalVisible(false);
           return toast.show("Failed to delete product. Something went wrong.", {
-            type: "error",
+            type: "danger",
           });
         }
       }
@@ -121,7 +121,7 @@ const ProductCategories = () => {
       await fetchData();
     } else {
       toast.show("Failed to delete product. Something went wrong.", {
-        type: "error",
+        type: "danger",
       });
     }
     await fetchData();

@@ -63,7 +63,6 @@ const CompletdOrderInfoScreen = ({ route }: any) => {
 
   const handleDelete = async () => {
     setModalVisible(false);
-    console.log(data.id, DATABASE_ID.qutations);
     const result = await deleteBuildDataFromFirebase(
       data.id,
       DATABASE_ID.qutations
