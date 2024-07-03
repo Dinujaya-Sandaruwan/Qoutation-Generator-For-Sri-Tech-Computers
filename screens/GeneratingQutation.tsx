@@ -92,10 +92,25 @@ export default function GeneratingQutation({ route }: any) {
     }
   };
 
+  const calculateHeight = () => {
+    let height = 805;
+
+    if (!buildItems) return height;
+
+    buildItems?.forEach((item) => {
+      height += 26.9775;
+    });
+    return height;
+  };
+
   const printToPdf = async () => {
     setLoading(true);
     try {
-      const response = await Print.printToFileAsync({ html });
+      const response = await Print.printToFileAsync({
+        html,
+        width: 612,
+        height: calculateHeight(),
+      });
       const pdfName = `${response.uri.slice(
         0,
         response.uri.lastIndexOf("/") + 1

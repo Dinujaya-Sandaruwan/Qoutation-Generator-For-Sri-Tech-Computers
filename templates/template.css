@@ -57,3 +57,24 @@ p {
   font-weight: 600;
   color: #171717;
 }
+
+.terms {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.termsTitle {
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.terms ol {
+  font-size: 14px;
+  line-height: 1.05;
+  background-color: green;
+}
+
+ol {
+  margin-bottom: 5px;
+}
