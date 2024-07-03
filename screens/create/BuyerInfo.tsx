@@ -35,7 +35,7 @@ const BuyerInfo = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const keyboardVisible = useKeyboardVisibility();
-  const marginBottom = keyboardVisible ? 10 : 30;
+  const marginBottom = keyboardVisible ? 10 : 20;
 
   const {
     setId,
@@ -174,7 +174,7 @@ const BuyerInfo = () => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.navBtn} onPress={navigateToPageTwo}>
           <Text style={[styles.navBtnText, { marginRight: 5 }]}>
-            Go to next page
+            Go to next
           </Text>
           <Feather name="chevron-right" size={19} color={Colors.white} />
         </TouchableOpacity>

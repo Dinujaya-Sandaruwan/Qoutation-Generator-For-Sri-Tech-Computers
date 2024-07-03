@@ -30,8 +30,7 @@ const CompletdOrderInfoScreen = ({ route }: any) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const formatMoney = useFormatMoney();
-  const formattedNumber = usePhoneNumberFormatter(data?.mobileNo);
-  const mobileNumber = formattedNumber ? formattedNumber : "N/A";
+  const mobileNumber = data?.mobileNo ? data?.mobileNo : "N/A";
   const address =
     [data?.addressLineOne || "", data?.addressLineTwo || ""]
       ?.filter((line) => line?.trim() !== "")

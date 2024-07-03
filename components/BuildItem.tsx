@@ -7,6 +7,7 @@ import { RootStackParamList } from "@/types/navigation";
 import useBuildData from "@/zustand/buildDataStore";
 import Feather from "@expo/vector-icons/Feather";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import useReducedString from "@/hooks/useReducedString";
 
 interface Props {
   itemValue: string;
@@ -53,6 +54,8 @@ const BuildItem = ({
   const format = useFormatMoney();
   const formatedPrice = format(currentItem[0]?.itemPrice);
 
+  const reducedString = useReducedString();
+
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
       <Pressable
@@ -66,7 +69,9 @@ const BuildItem = ({
       >
         {currentItem[0]?.itemName && currentItem[0]?.itemPrice ? (
           <View>
-            <Text style={styles.itemTitle}>{currentItem[0]?.itemName}</Text>
+            <Text style={styles.itemTitle}>
+              {reducedString(currentItem[0]?.itemName, 27)}
+            </Text>
             <Text style={styles.itemPrice}>
               {formatedPrice} x {currentItem[0]?.itemQuantity} ={" "}
               {format(currentItem[0]?.itemPrice * currentItem[0]?.itemQuantity)}

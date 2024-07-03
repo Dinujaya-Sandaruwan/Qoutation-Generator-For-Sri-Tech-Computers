@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React, { useState } from "react";
 
 import { TextInput } from "react-native-gesture-handler";
@@ -80,8 +86,8 @@ const PriceModel = ({
   };
 
   return (
-    <Modal isVisible={isModalVisible}>
-      <View style={styles.modelContainer}>
+    <Modal isVisible={isModalVisible} style={{ maxHeight: 580 }}>
+      <ScrollView style={styles.modelContainer}>
         <Text style={styles.modellabel}>Enter item price</Text>
 
         <View style={styles.priceInputContainer}>
@@ -180,12 +186,15 @@ const PriceModel = ({
           <Text style={styles.modelBtnText}>Add details</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.modelButtons, { backgroundColor: Colors.red }]}
+          style={[
+            styles.modelButtons,
+            { backgroundColor: Colors.red, marginBottom: 40 },
+          ]}
           onPress={() => setModalVisible(false)}
         >
           <Text style={styles.modelBtnText}>Close</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </Modal>
   );
 };
@@ -217,7 +226,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   priceInputBtn: {
-    width: 50,
+    width: "15%",
     height: 50,
     backgroundColor: Colors.buttonBg,
     borderRadius: 10,
@@ -226,7 +235,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   priceInput: {
-    width: 200,
+    width: "67%",
     height: 50,
     backgroundColor: Colors.componentBg,
     borderRadius: 10,

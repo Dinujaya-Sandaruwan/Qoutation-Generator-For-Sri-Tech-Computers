@@ -31,7 +31,7 @@ import Loading from "@/components/Loading";
 const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const keyboardVisible = useKeyboardVisibility();
-  const marginBottom = keyboardVisible ? 10 : 30;
+  const marginBottom = keyboardVisible ? 10 : 20;
 
   const renderItem = (
     item: {
@@ -237,7 +237,7 @@ const BuildItems = () => {
           >
             <Feather name="chevron-left" size={19} color={Colors.white} />
             <Text style={[styles.navBtnText, { marginLeft: 5 }]}>
-              Go to previous page
+              Go to previous
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -245,9 +245,7 @@ const BuildItems = () => {
             onPress={goToGeneratingQutationScreen}
           >
             <FontAwesome name="gear" size={19} color={Colors.white} />
-            <Text style={[styles.navBtnText, { marginLeft: 5 }]}>
-              Generate Quotation
-            </Text>
+            <Text style={[styles.navBtnText, { marginLeft: 5 }]}>Generate</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

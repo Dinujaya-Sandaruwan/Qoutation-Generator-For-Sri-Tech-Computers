@@ -66,9 +66,8 @@ const BuildItemList = ({ route }: any) => {
                 setModalVisible(!isModalVisible);
               }}
             >
-              <Text style={styles.itemText}>
-                {index + 1}. {item?.itemName}
-              </Text>
+              <Text style={styles.itemText}>{index + 1}.</Text>
+              <Text style={styles.itemText}>{item?.itemName}</Text>
             </TouchableOpacity>
           )}
         />
@@ -96,11 +95,15 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.componentBorder,
     elevation: 5,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 5,
   },
   itemText: {
     color: Colors.white,
     fontSize: 16,
     fontWeight: "600",
+    maxWidth: "95%",
   },
   itemList: {
     marginBottom: 20,

@@ -7,7 +7,6 @@ import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorageBu
 import useAddBuildDataToFirebase from "@/hooks/firebase/useAddBuildsToFirebase";
 import useCheckInternetConnection from "@/hooks/useCheckInternetConnection";
 import useFormatMoney from "@/hooks/useFormatMoney";
-import usePhoneNumberFormatter from "@/hooks/usePhoneNumberFormatter";
 import { BuildData, BuildItem } from "@/interfaces/buildData";
 import { RootStackParamList } from "@/types/navigation";
 import useBuildData from "@/zustand/buildDataStore";
@@ -37,8 +36,7 @@ const QuotationInfo = ({ route }: any) => {
   const [loading, setLoading] = React.useState(false);
 
   const formatMoney = useFormatMoney();
-  const formattedNumber = usePhoneNumberFormatter(data.mobileNo);
-  const mobileNumber = formattedNumber ? formattedNumber : "N/A";
+  const mobileNumber = data?.mobileNo ? data?.mobileNo : "N/A";
   const address =
     [data.addressLineOne || "", data?.addressLineTwo || ""]
       ?.filter((line) => line?.trim() !== "")
@@ -286,7 +284,7 @@ const styles = StyleSheet.create({
     borderBlockColor: Colors.componentBorder,
     borderWidth: StyleSheet.hairlineWidth,
     padding: 10,
-    minWidth: 150,
+    minWidth: 155,
 
     flexDirection: "row",
     gap: 10,
