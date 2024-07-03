@@ -222,6 +222,6 @@ const styles = StyleSheet.create({
   noDataImage: {
     width: "80%",
     opacity: 0.1,
-    marginTop: -30,
+    marginTop: -75,
   },
 });
