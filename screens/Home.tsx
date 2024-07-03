@@ -121,7 +121,11 @@ function HomeScreen() {
   return (
     <>
       {loadingPage && <Loading message="Loading Quotation Data" />}
-      <NavSearch searchText={searchText} setSearchText={setSearchText} />
+      <NavSearch
+        placeholder="Search draft qutations..."
+        searchText={searchText}
+        setSearchText={setSearchText}
+      />
       <KeyboardAvoidingView style={styles.container}>
         {data?.length === 0 ? (
           <>

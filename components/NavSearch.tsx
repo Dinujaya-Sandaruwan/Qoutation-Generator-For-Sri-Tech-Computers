@@ -6,15 +6,16 @@ import Colors from "@/constants/Colors";
 interface Props {
   setSearchText: (text: string) => void;
   searchText: string;
+  placeholder: string;
 }
 
-const NavSearch = ({ setSearchText, searchText }: Props) => {
+const NavSearch = ({ setSearchText, searchText, placeholder }: Props) => {
   return (
     <View style={styles.navBottom}>
       <View style={styles.searchBox}>
         <TextInput
           style={styles.search}
-          placeholder="Search Saved Quotations..."
+          placeholder={placeholder}
           placeholderTextColor={Colors.border}
           value={searchText}
           onChangeText={setSearchText}

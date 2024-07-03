@@ -44,7 +44,11 @@ const BuildItemList = ({ route }: any) => {
   );
   return (
     <>
-      <NavSearch searchText={searchText} setSearchText={setSearchText} />
+      <NavSearch
+        placeholder="Search stock items..."
+        searchText={searchText}
+        setSearchText={setSearchText}
+      />
 
       <KeyboardAvoidingView style={styles.container}>
         <FlatList

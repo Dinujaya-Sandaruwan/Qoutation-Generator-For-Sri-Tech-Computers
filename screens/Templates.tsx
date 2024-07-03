@@ -78,7 +78,11 @@ const TemplateScreen = () => {
         setModalVisible={setModalVisible}
         handleDelete={handleDelete}
       />
-      <NavSearch searchText={searchText} setSearchText={setSearchText} />
+      <NavSearch
+        placeholder="Search quotation templates..."
+        searchText={searchText}
+        setSearchText={setSearchText}
+      />
       <KeyboardAvoidingView style={styles.container}>
         <Text style={styles.title}>Your Saved Templates</Text>
         <FlatList

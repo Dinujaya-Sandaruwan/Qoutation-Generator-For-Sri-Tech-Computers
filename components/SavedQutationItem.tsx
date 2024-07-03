@@ -21,7 +21,7 @@ const SavedQutationItem = ({ data: { item } }: Props) => {
     totalPrice += item?.itemPrice * item?.itemQuantity;
   });
 
-  const finalPrice = totalPrice + item?.advancedPayment;
+  const finalPrice = totalPrice - item?.advancedPayment;
 
   return (
     <View style={styles.qutationItem}>
