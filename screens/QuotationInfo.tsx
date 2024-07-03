@@ -5,6 +5,7 @@ import { DATABASE_ID } from "@/constants/databaseCollections";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
 import useDeleteAscyncStorage from "@/hooks/asyncStorage/useDeleteAsyncStorageBuilds";
 import useAddBuildDataToFirebase from "@/hooks/firebase/useAddBuildsToFirebase";
+import useCheckInternetConnection from "@/hooks/useCheckInternetConnection";
 import useFormatMoney from "@/hooks/useFormatMoney";
 import usePhoneNumberFormatter from "@/hooks/usePhoneNumberFormatter";
 import { BuildData, BuildItem } from "@/interfaces/buildData";
@@ -120,7 +121,16 @@ const QuotationInfo = ({ route }: any) => {
     error,
   } = useAddBuildDataToFirebase();
 
+  const checkInternetConnection = useCheckInternetConnection();
+  const [checkingInternet, setCheckingInternet] = React.useState(false);
+
   const handleComplete = async () => {
+    setCheckingInternet(true);
+    const result = await checkInternetConnection();
+    setCheckingInternet(false);
+    if (result.status !== "ok") {
+      return;
+    }
     await addBuildDataToFirebase(data, DATABASE_ID.qutations);
     if (error) {
       return toast.show("Something went wrong. Try again.", {
@@ -140,6 +150,7 @@ const QuotationInfo = ({ route }: any) => {
 
   return (
     <>
+      {checkingInternet && <Loading message="Checking Internet Connection" />}
       {loading && <Loading message="Order Data Loading" />}
       {firebaseLoading && (
         <Loading message="Marking Selected Order as Complete" />

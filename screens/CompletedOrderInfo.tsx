@@ -3,6 +3,7 @@ import QuotationDeleteModel from "@/components/models/QuotationDeleteModel";
 import Colors from "@/constants/Colors";
 import { DATABASE_ID } from "@/constants/databaseCollections";
 import useDeleteBuildDataFromFirebase from "@/hooks/firebase/useDeleteBuildDataFromFirebase";
+import useCheckInternetConnection from "@/hooks/useCheckInternetConnection";
 import useFormatMoney from "@/hooks/useFormatMoney";
 import usePhoneNumberFormatter from "@/hooks/usePhoneNumberFormatter";
 import { BuildData, BuildItem } from "@/interfaces/buildData";
@@ -55,7 +56,16 @@ const CompletdOrderInfoScreen = ({ route }: any) => {
   const { deleteBuildDataFromFirebase, loading, error } =
     useDeleteBuildDataFromFirebase();
 
+  const checkInternetConnection = useCheckInternetConnection();
+  const [checkingInternet, setCheckingInternet] = React.useState(false);
+
   const handleDelete = async () => {
+    setCheckingInternet(true);
+    const resultInternet = await checkInternetConnection();
+    setCheckingInternet(false);
+    if (resultInternet.status !== "ok") {
+      return;
+    }
     setModalVisible(false);
     const result = await deleteBuildDataFromFirebase(
       data.id,
@@ -80,9 +90,8 @@ const CompletdOrderInfoScreen = ({ route }: any) => {
 
   return (
     <>
-      {loading && (
-        <Loading message="Deleting Selected Order From Cloud Server" />
-      )}
+      {loading && <Loading message="Deleting Selected Order From Cloud" />}
+      {checkingInternet && <Loading message="Checking Internet Connection" />}
       <QuotationDeleteModel
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
