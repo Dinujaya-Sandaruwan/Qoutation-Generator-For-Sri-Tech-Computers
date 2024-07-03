@@ -272,8 +272,6 @@ const styles = StyleSheet.create({
   btnContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // marginBottom: 20,
-    width: "100%",
     marginTop: 10,
   },
   btnText: {
@@ -282,14 +280,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   button: {
-    paddingVertical: 12,
     borderRadius: 10,
     elevation: 5,
     backgroundColor: Colors.buttonBg,
     borderBlockColor: Colors.componentBorder,
     borderWidth: StyleSheet.hairlineWidth,
     padding: 10,
-    paddingHorizontal: "14%",
+    minWidth: 150,
 
     flexDirection: "row",
     gap: 10,
