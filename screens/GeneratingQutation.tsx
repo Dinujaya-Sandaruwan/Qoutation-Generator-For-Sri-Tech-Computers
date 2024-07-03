@@ -23,7 +23,7 @@ import { useToast } from "react-native-toast-notifications";
 
 export default function GeneratingQutation({ route }: any) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { id } = route.params;
+  const { id } = route?.params;
   const animation = useRef(null);
 
   const html = qutationPdfTemplate();

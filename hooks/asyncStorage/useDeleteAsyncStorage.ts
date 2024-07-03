@@ -11,7 +11,9 @@ const useDeleteAscyncStorage = () => {
     );
 
     if (existingData) {
-      const updatedData = existingData.filter((item) => item.itemId !== itemId);
+      const updatedData = existingData.filter(
+        (item) => item?.itemId !== itemId
+      );
 
       try {
         const jsonValue = JSON.stringify(updatedData);

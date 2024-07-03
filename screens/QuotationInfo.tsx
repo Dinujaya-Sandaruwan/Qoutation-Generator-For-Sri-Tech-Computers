@@ -30,7 +30,7 @@ interface Route {
 }
 
 const QuotationInfo = ({ route }: any) => {
-  const data = route.params.item;
+  const data = route?.params?.item;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const [loading, setLoading] = React.useState(false);
@@ -39,9 +39,9 @@ const QuotationInfo = ({ route }: any) => {
   const formattedNumber = usePhoneNumberFormatter(data.mobileNo);
   const mobileNumber = formattedNumber ? formattedNumber : "N/A";
   const address =
-    [data.addressLineOne || "", data.addressLineTwo || ""]
-      .filter((line) => line.trim() !== "")
-      .join(", ") || "N/A";
+    [data.addressLineOne || "", data?.addressLineTwo || ""]
+      ?.filter((line) => line?.trim() !== "")
+      ?.join(", ") || "N/A";
 
   const formatWarranty = (warranty: number, type: string) => {
     if (!warranty) return "N/A";
@@ -100,16 +100,16 @@ const QuotationInfo = ({ route }: any) => {
 
   const handleEditQuotation = () => {
     setLoading(true);
-    setId(data.id);
-    setDate(data.date);
-    setCustomerName(data.customerName);
-    setBuildingBudget(data.buildingBudget);
-    setAdvancedPayment(data.advancedPayment);
-    setMobileNo(data.mobileNo);
-    setAddressLineOne(data.addressLineOne);
-    setAddressLineTwo(data.addressLineTwo);
-    setAdditionalNotes(data.additionalNotes);
-    setBuildItems(data.buildItems);
+    setId(data?.id);
+    setDate(data?.date);
+    setCustomerName(data?.customerName);
+    setBuildingBudget(data?.buildingBudget);
+    setAdvancedPayment(data?.advancedPayment);
+    setMobileNo(data?.mobileNo);
+    setAddressLineOne(data?.addressLineOne);
+    setAddressLineTwo(data?.addressLineTwo);
+    setAdditionalNotes(data?.additionalNotes);
+    setBuildItems(data?.buildItems);
     setLoading(false);
     navigation.navigate("createPage01");
   };
@@ -151,7 +151,7 @@ const QuotationInfo = ({ route }: any) => {
       />
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Order Actions</Text>
-        <Text style={styles.orderId}>#{data.id}</Text>
+        <Text style={styles.orderId}>#{data?.id}</Text>
         <TouchableOpacity
           onPress={handleComplete}
           style={[styles.completeButton]}

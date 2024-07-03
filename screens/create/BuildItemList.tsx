@@ -16,7 +16,7 @@ import useReadAscyncStorage from "@/hooks/asyncStorage/useReadAscyncStorage";
 import { StockData } from "@/interfaces/stockData";
 
 const BuildItemList = ({ route }: any) => {
-  const { itemValue, itemId } = route.params;
+  const { itemValue, itemId } = route?.params;
 
   const [itemList, setItemList] = useState<StockData[]>([]);
   const readDataAsyncStorage = useReadAscyncStorage();
@@ -25,8 +25,8 @@ const BuildItemList = ({ route }: any) => {
     const getData = async () => {
       const data = await readDataAsyncStorage(STORAGE_KEYS.stocks);
 
-      const filteredData = data.filter(
-        (item: StockData) => item.itemType === itemValue
+      const filteredData = data?.filter(
+        (item: StockData) => item?.itemType === itemValue
       );
       setItemList(filteredData);
     };
@@ -39,8 +39,8 @@ const BuildItemList = ({ route }: any) => {
   // const { setItemName } = useBuildData();
 
   const [searchText, setSearchText] = React.useState("");
-  const filteredData = itemList.filter((item) =>
-    item.itemName.toLowerCase().includes(searchText.toLowerCase())
+  const filteredData = itemList?.filter((item) =>
+    item?.itemName?.toLowerCase()?.includes(searchText?.toLowerCase())
   );
   return (
     <>
@@ -48,8 +48,8 @@ const BuildItemList = ({ route }: any) => {
 
       <KeyboardAvoidingView style={styles.container}>
         <FlatList
-          data={filteredData.reverse()}
-          keyExtractor={(item) => item.itemId.toString()} // Use itemId instead of index
+          data={filteredData?.reverse()}
+          keyExtractor={(item) => item?.itemId?.toString()} // Use itemId instead of index
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
@@ -58,12 +58,12 @@ const BuildItemList = ({ route }: any) => {
             <TouchableOpacity
               style={styles.item}
               onPress={() => {
-                setItemNameState(item.itemName);
+                setItemNameState(item?.itemName);
                 setModalVisible(!isModalVisible);
               }}
             >
               <Text style={styles.itemText}>
-                {index + 1}. {item.itemName}
+                {index + 1}. {item?.itemName}
               </Text>
             </TouchableOpacity>
           )}

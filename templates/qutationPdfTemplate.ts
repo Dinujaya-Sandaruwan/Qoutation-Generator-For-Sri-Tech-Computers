@@ -24,8 +24,8 @@ const qutationPdfTemplate = () => {
     return formatMoney(price);
   };
 
-  const total = buildItems.reduce(
-    (acc, item) => acc + item.itemPrice * item.itemQuantity,
+  const total = buildItems?.reduce(
+    (acc, item) => acc + item?.itemPrice * item?.itemQuantity,
     0
   );
   const toPay = total - advancedPayment;
@@ -43,14 +43,14 @@ const qutationPdfTemplate = () => {
     return `${itemWarranty} ${itemWarrantyType}`;
   };
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date()?.getFullYear();
   const formattedNumber = usePhoneNumberFormatter(mobileNo);
   const displayNumber = mobileNo ? mobileNo : "...........................";
 
   const address =
     [addressLineOne || "", addressLineTwo || ""]
-      .filter((line) => line.trim() !== "")
-      .join(", ") || "...........................";
+      ?.filter((line) => line?.trim() !== "")
+      ?.join(", ") || "...........................";
 
   const template = `
 <html>
@@ -176,7 +176,7 @@ const qutationPdfTemplate = () => {
         </thead>
         <tbody>
           ${buildItems
-            .map((item, index) => {
+            ?.map((item, index) => {
               return `
                 <tr>
                   <td>${index + 1}</td>

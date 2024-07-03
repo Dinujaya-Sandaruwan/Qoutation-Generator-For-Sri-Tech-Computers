@@ -44,7 +44,7 @@ const BuildItems = () => {
       style={[styles.itemContainer, selected && styles.selectedItemContainer]}
     >
       <Text style={[styles.itemText, selected && styles.selectedItemText]}>
-        {item.productName}
+        {item?.productName}
       </Text>
     </View>
   );
@@ -68,9 +68,9 @@ const BuildItems = () => {
 
     const newItem: BuildItemInterface = {
       itemId: generateUniqueId(),
-      itemValue: value.productId,
+      itemValue: value?.productId,
       itemName: "",
-      itemType: value.productName,
+      itemType: value?.productName,
       itemPrice: 0,
       itemQuantity: 0,
       itemWarranty: 0,
@@ -84,7 +84,7 @@ const BuildItems = () => {
 
   useEffect(() => {
     let total = 0;
-    buildItems.forEach((item) => {
+    buildItems?.forEach((item) => {
       total += item?.itemPrice * item?.itemQuantity;
     });
 
@@ -126,7 +126,7 @@ const BuildItems = () => {
       return;
     }
 
-    if (buildItems.length === 0) {
+    if (buildItems?.length === 0) {
       return toast.show(
         "You must need to add at least one item to generate a quotation.",
         {
@@ -198,7 +198,7 @@ const BuildItems = () => {
                 setIsFocus(false);
               }}
               renderItem={(item: ProductData) =>
-                renderItem(item, item.productId === dropDownValue?.productId)
+                renderItem(item, item?.productId === dropDownValue?.productId)
               }
               renderLeftIcon={() => (
                 <AntDesign
@@ -219,12 +219,12 @@ const BuildItems = () => {
             </TouchableOpacity>
           </View>
 
-          {buildItems.map((item, index) => (
+          {buildItems?.map((item, index) => (
             <BuildItem
               key={index}
-              itemValue={item.itemValue}
-              itemType={item.itemType}
-              itemId={item.itemId}
+              itemValue={item?.itemValue}
+              itemType={item?.itemType}
+              itemId={item?.itemId}
               setDeleteBuildItem={setDeleteBuildItemState}
               setModelOpen={setModelOpen}
             />

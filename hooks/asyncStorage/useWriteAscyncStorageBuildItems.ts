@@ -14,8 +14,8 @@ const useWriteAscyncStorage = () => {
     // Filter out any existing data that matches the new value based on id or
     let filteredData: BuildData[] = [];
     if (existingData) {
-      filteredData = existingData.filter(
-        (item: BuildData) => item.id !== value.id
+      filteredData = existingData?.filter(
+        (item: BuildData) => item?.id !== value?.id
       );
     }
 

@@ -1,15 +1,16 @@
 {
   "expo": {
-    "name": "sri-tech-qutation-app-3",
-    "slug": "sri-tech-qutation-app-3",
-    "version": "1.0.0",
+    "name": "Quotations",
+    "slug": "quotation-generator",
+    "version": "1.1.0",
     "orientation": "portrait",
+    "backgroundColor": "#1C1C1C",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1C1C1C"
+      "backgroundColor": "#151515"
     },
     "ios": {
       "supportsTablet": true
@@ -17,11 +18,17 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#000000"
+      },
+      "package": "com.dinujaya_s.quotationgenerator"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "94a4bc8f-7ac8-4bac-b337-bae1d4a7384f"
+      }
     }
   }
 }

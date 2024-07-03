@@ -95,11 +95,11 @@ const ProductCategories = () => {
     setLoading(true);
     const items = await readDataAsyncStorage(STORAGE_KEYS.stocks);
 
-    const check = items.filter((item: StockData) => item.itemType === id);
-    if (check.length > 0) {
-      for (let i = 0; i < check.length; i++) {
+    const check = items?.filter((item: StockData) => item.itemType === id);
+    if (check?.length > 0) {
+      for (let i = 0; i < check?.length; i++) {
         const result = await deleteDataAsyncStorage(
-          check[i].itemId,
+          check[i]?.itemId,
           STORAGE_KEYS.stocks
         );
         if (result.status === "failed") {
@@ -161,7 +161,7 @@ const ProductCategories = () => {
 
         <FlatList
           data={products}
-          keyExtractor={(item) => item.productId}
+          keyExtractor={(item) => item?.productId}
           style={{ marginTop: 20 }}
           renderItem={({ item }) => (
             <ProductCategory

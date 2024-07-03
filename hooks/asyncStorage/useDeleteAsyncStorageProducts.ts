@@ -14,8 +14,8 @@ const useDeleteAscyncStorageProducts = () => {
     );
 
     if (existingData) {
-      const updatedData = existingData.filter(
-        (item) => item.productId !== itemId
+      const updatedData = existingData?.filter(
+        (item) => item?.productId !== itemId
       );
 
       try {

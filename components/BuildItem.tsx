@@ -48,7 +48,7 @@ const BuildItem = ({
   const state = true;
   const { buildItems } = useBuildData();
 
-  const currentItem = buildItems.filter((item) => item.itemId === itemId);
+  const currentItem = buildItems?.filter((item) => item.itemId === itemId);
 
   const format = useFormatMoney();
   const formatedPrice = format(currentItem[0]?.itemPrice);
@@ -64,7 +64,7 @@ const BuildItem = ({
           setDeleteBuildItem(itemId);
         }}
       >
-        {currentItem[0].itemName && currentItem[0]?.itemPrice ? (
+        {currentItem[0]?.itemName && currentItem[0]?.itemPrice ? (
           <View>
             <Text style={styles.itemTitle}>{currentItem[0]?.itemName}</Text>
             <Text style={styles.itemPrice}>

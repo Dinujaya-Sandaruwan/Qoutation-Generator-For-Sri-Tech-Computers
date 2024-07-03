@@ -64,8 +64,8 @@ const TemplateScreen = () => {
   };
 
   const [searchText, setSearchText] = useState("");
-  const filteredTemplates = templates.filter((template) =>
-    template.customerName.toLowerCase().includes(searchText.toLowerCase())
+  const filteredTemplates = templates?.filter((template) =>
+    template?.customerName?.toLowerCase()?.includes(searchText?.toLowerCase())
   );
 
   return (

@@ -35,11 +35,11 @@ const StockItem = (props: StockItemProps) => {
         onPressOut={handlePressOut}
         style={styles.flatlistItemContainer}
         onLongPress={() => {
-          props.setModalVisible(true);
-          props.setDeleteItemId(props.item.itemId);
+          props?.setModalVisible(true);
+          props?.setDeleteItemId(props?.item?.itemId);
         }}
       >
-        <Text style={styles.flatlistItelabel}>{props.item.itemName}</Text>
+        <Text style={styles.flatlistItelabel}>{props?.item?.itemName}</Text>
       </Pressable>
     </Animated.View>
   );

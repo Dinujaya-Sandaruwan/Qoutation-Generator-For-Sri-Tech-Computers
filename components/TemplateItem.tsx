@@ -51,7 +51,7 @@ const TemplateItem = (props: TemplateItemProps) => {
   } = useBuildData();
 
   const handleCreateNewQuotation = () => {
-    props.setLoading(true);
+    props?.setLoading(true);
     setId("");
     setDate("");
     setCustomerName("");
@@ -63,7 +63,7 @@ const TemplateItem = (props: TemplateItemProps) => {
 
     setBuildItems(props?.data?.buildItems);
     setAdditionalNotes(props?.data?.additionalNotes);
-    props.setLoading(false);
+    props?.setLoading(false);
     navigation.navigate("createPage01");
   };
 
@@ -74,8 +74,8 @@ const TemplateItem = (props: TemplateItemProps) => {
         onPressOut={handlePressOut}
         style={styles.flatlistItemContainer}
         onLongPress={() => {
-          props.setModalVisible(true);
-          props.setDeleteItemId(props?.data?.id);
+          props?.setModalVisible(true);
+          props?.setDeleteItemId(props?.data?.id);
         }}
       >
         <Text style={styles.flatlistItelabel}>{props?.data?.customerName}</Text>

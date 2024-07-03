@@ -26,7 +26,7 @@ import { useToast } from "react-native-toast-notifications";
 
 const BackupScreen = () => {
   const isThisPage = useIsFocused();
-  const setPage = useNavigationStore((state) => state.setPage);
+  const setPage = useNavigationStore((state) => state?.setPage);
 
   useEffect(() => {
     isThisPage && setPage("backups");
@@ -110,31 +110,39 @@ const BackupScreen = () => {
 
     await fetchStockData();
     await fetchProductData();
-
-    if (firebaseStockDataError || firebaseProductDataError) {
-      return toast.show("Something went wrong. Try again.", { type: "danger" });
-    }
-
-    if (firebaseStockDataLoading || firebaseProductDataLoading) {
-      return;
-    }
-
-    try {
-      const jsonValueStocks = JSON.stringify(firebaseStockData);
-      await AsyncStorage.setItem(STORAGE_KEYS.stocks, jsonValueStocks);
-    } catch (e) {
-      return toast.show("Something went wrong. Try again.", { type: "danger" });
-    }
-
-    try {
-      const jsonValueProducts = JSON.stringify(firebaseProductData);
-      await AsyncStorage.setItem(STORAGE_KEYS.products, jsonValueProducts);
-    } catch (e) {
-      return toast.show("Something went wrong. Try again.", { type: "danger" });
-    }
-
-    return toast.show("Data restored successfully.", { type: "success" });
   };
+
+  useEffect(() => {
+    if (firebaseStockDataError || firebaseProductDataError) {
+      toast.show("Something went wrong. Try again.", { type: "danger" });
+    }
+  }, [firebaseStockDataError, firebaseProductDataError]);
+
+  useEffect(() => {
+    const saveData = async () => {
+      try {
+        const jsonValueStocks = JSON.stringify(firebaseStockData);
+        await AsyncStorage.setItem(STORAGE_KEYS.stocks, jsonValueStocks);
+      } catch (e) {
+        toast.show("Something went wrong. Try again.", { type: "danger" });
+      }
+
+      try {
+        const jsonValueProducts = JSON.stringify(firebaseProductData);
+        await AsyncStorage.setItem(STORAGE_KEYS.products, jsonValueProducts);
+      } catch (e) {
+        toast.show("Something went wrong. Try again.", { type: "danger" });
+      }
+
+      if (firebaseStockData.length && firebaseProductData.length) {
+        toast.show("Data restored successfully.", { type: "success" });
+      }
+    };
+
+    if (firebaseStockData.length || firebaseProductData.length) {
+      saveData();
+    }
+  }, [firebaseStockData, firebaseProductData]);
 
   const {
     deleteCollectionData,

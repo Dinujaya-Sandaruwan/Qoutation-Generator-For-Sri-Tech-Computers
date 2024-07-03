@@ -40,8 +40,8 @@ const StockList = () => {
   useEffect(() => {
     const getData = async () => {
       const data = await readDataAsyncStorage(STORAGE_KEYS.stocks);
-      const filteredData = data.filter(
-        (item: StockData) => item.itemType === value?.productId
+      const filteredData = data?.filter(
+        (item: StockData) => item?.itemType === value?.productId
       );
       setStockItemList(filteredData);
     };

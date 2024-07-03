@@ -104,12 +104,12 @@ function HomeScreen() {
 
   const searchQutations = (data: BuildData[], searchText: string) => {
     if (searchText === "") return data;
-    return data.filter((item) => {
-      const searchString = searchText.toLowerCase();
+    return data?.filter((item) => {
+      const searchString = searchText?.toLowerCase();
       return (
-        item.customerName.toLowerCase().includes(searchString) ||
-        item.date.toLowerCase().includes(searchString) ||
-        item.buildingBudget.toString().includes(searchString)
+        item?.customerName?.toLowerCase()?.includes(searchString) ||
+        item?.date?.toLowerCase()?.includes(searchString) ||
+        item?.buildingBudget?.toString()?.includes(searchString)
       );
     });
   };
@@ -123,7 +123,7 @@ function HomeScreen() {
       {loadingPage && <Loading message="Loading Quotation Data" />}
       <NavSearch searchText={searchText} setSearchText={setSearchText} />
       <KeyboardAvoidingView style={styles.container}>
-        {data.length === 0 ? (
+        {data?.length === 0 ? (
           <>
             <Text style={styles.title}>No Draft Quotations</Text>
             <View style={styles.noDataContainer}>
@@ -136,14 +136,14 @@ function HomeScreen() {
           </>
         ) : (
           <FlatList
-            data={filteredData.reverse()}
+            data={filteredData?.reverse()}
             ListHeaderComponent={() => (
               <Text style={styles.title}>Draft Quotations</Text>
             )}
             renderItem={(item) => <SavedQutationItem data={item} />}
             ListFooterComponent={() => <View style={{ height: 55 }} />}
             ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => index?.toString()}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             initialNumToRender={5}

@@ -28,7 +28,7 @@ type Item = {
 
 const AddDataScreen = () => {
   const isThisPage = useIsFocused();
-  const setPage = useNavigationStore((state) => state.setPage);
+  const setPage = useNavigationStore((state) => state?.setPage);
 
   useEffect(() => {
     isThisPage && setPage("addData");
@@ -55,7 +55,7 @@ const AddDataScreen = () => {
       style={[styles.itemContainer, selected && styles.selectedItemContainer]}
     >
       <Text style={[styles.itemText, selected && styles.selectedItemText]}>
-        {item.productName}
+        {item?.productName}
       </Text>
     </View>
   );
@@ -73,7 +73,7 @@ const AddDataScreen = () => {
     const data = await storeDataAsyncStorage(
       {
         itemId: uniqueId,
-        itemType: itemType.productId,
+        itemType: itemType?.productId,
         itemName: itemName,
       },
       STORAGE_KEYS.stocks
@@ -161,7 +161,7 @@ const AddDataScreen = () => {
               setIsFocus(false);
             }}
             renderItem={(item: ProductData) =>
-              renderItem(item, item.productId === itemType?.productId)
+              renderItem(item, item?.productId === itemType?.productId)
             }
             renderLeftIcon={() => (
               <AntDesign

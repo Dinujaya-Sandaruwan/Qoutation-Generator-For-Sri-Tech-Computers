@@ -25,16 +25,16 @@ interface Route {
 }
 
 const CompletdOrderInfoScreen = ({ route }: any) => {
-  const data = route.params.item;
+  const data = route?.params?.item;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const formatMoney = useFormatMoney();
-  const formattedNumber = usePhoneNumberFormatter(data.mobileNo);
+  const formattedNumber = usePhoneNumberFormatter(data?.mobileNo);
   const mobileNumber = formattedNumber ? formattedNumber : "N/A";
   const address =
-    [data.addressLineOne || "", data.addressLineTwo || ""]
-      .filter((line) => line.trim() !== "")
-      .join(", ") || "N/A";
+    [data?.addressLineOne || "", data?.addressLineTwo || ""]
+      ?.filter((line) => line?.trim() !== "")
+      ?.join(", ") || "N/A";
 
   const formatWarranty = (warranty: number, type: string) => {
     if (!warranty) return "N/A";
@@ -149,8 +149,8 @@ const CompletdOrderInfoScreen = ({ route }: any) => {
               Price: {formatMoney(item?.itemPrice)} x {item?.itemQuantity} ={" "}
               {formatMoney(item?.itemPrice * item?.itemQuantity)} {"\n"}
               {`Warranty: ${formatWarranty(
-                item.itemWarranty,
-                item.itemWarrantyType
+                item?.itemWarranty,
+                item?.itemWarrantyType
               )}`}
             </Text>
           </View>
