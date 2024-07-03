@@ -194,10 +194,16 @@ function MainStack() {
 const App = () => {
   const MyTheme = {
     ...DefaultTheme,
+
     colors: {
-      ...DefaultTheme.colors,
-      background: Colors.darkBg,
+      primary: Colors.white,
+      background: Colors.background,
+      card: Colors.componentBg,
+      text: Colors.white,
+      border: Colors.border,
+      notification: Colors.green,
     },
+    background: Colors.darkBg,
   };
 
   return (
