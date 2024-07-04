@@ -86,11 +86,7 @@ const PriceModel = ({
   };
 
   return (
-    <Modal
-      isVisible={isModalVisible}
-      style={{ maxHeight: 580 }}
-      backdropTransitionOutTiming={0}
-    >
+    <Modal isVisible={isModalVisible} backdropTransitionOutTiming={0}>
       <ScrollView style={styles.modelContainer}>
         <Text style={styles.modellabel}>Enter item price</Text>
 
@@ -208,6 +204,7 @@ export default PriceModel;
 const styles = StyleSheet.create({
   modelContainer: {
     backgroundColor: Colors.darkBg,
+    maxHeight: 580,
 
     borderRadius: 10,
     elevation: 5,
