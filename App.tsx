@@ -69,6 +69,16 @@ function MainStack() {
         }}
         component={HomeScreen}
       />
+      <Stack.Screen
+        name="homeWithoutSlide"
+        options={{
+          title: "Quotations By Sri Tech",
+          headerLeft: () => (
+            <Image source={require("@img/logo.png")} style={styles.logo} />
+          ),
+        }}
+        component={HomeScreen}
+      />
       {/* <Stack.Screen
         name="createPage01"
         component={BuyerInfo}
