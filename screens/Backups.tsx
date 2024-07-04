@@ -1,4 +1,5 @@
 import Loading from "@/components/Loading";
+import CloudDBModel from "@/components/models/CloudDBModel";
 import Colors from "@/constants/Colors";
 import { DATABASE_ID } from "@/constants/databaseCollections";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
@@ -21,7 +22,13 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import React, { useEffect } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useToast } from "react-native-toast-notifications";
 
 const BackupScreen = () => {
@@ -159,8 +166,8 @@ const BackupScreen = () => {
       setLoading(false);
       return;
     }
-    deleteCollectionData(DATABASE_ID.stocks);
-    deleteCollectionData(DATABASE_ID.products);
+    await deleteCollectionData(DATABASE_ID.stocks);
+    await deleteCollectionData(DATABASE_ID.products);
 
     if (deleteError) {
       setLoading(false);
@@ -173,6 +180,16 @@ const BackupScreen = () => {
     }
   };
 
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [warning, setWarning] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [warningType, setWarningType] = React.useState<"red" | "yellow">(
+    "yellow"
+  );
+  const [exeFunction, setExeFunction] = React.useState<() => void>(
+    () => () => {}
+  );
+
   return (
     <>
       {dataAdding && <Loading message="Uploading Data to DB" />}
@@ -181,18 +198,44 @@ const BackupScreen = () => {
       {firebaseProductDataLoading && <Loading message="Product Data Loading" />}
       {deleteLoading && <Loading message="Deleting Data from Cloud Server" />}
 
-      <View style={styles.container}>
+      <CloudDBModel
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        callBack={exeFunction}
+        title={title}
+        warning={warning}
+        warningType={warningType}
+      />
+
+      <ScrollView style={styles.container}>
         <Text style={styles.title}>Cloud Databse</Text>
         <Text style={styles.categoryTitle}>Backup Actions</Text>
         <TouchableOpacity
-          onPress={handleBackupStockData}
+          onPress={() => {
+            setModalVisible(true);
+            setTitle("Backup Stock Data");
+            setWarning(
+              "This action will replace all your stock items (not product categories) in cloud server with the local data."
+            );
+            setWarningType("yellow");
+            setExeFunction(() => handleBackupStockData);
+          }}
           style={[styles.button]}
         >
           <Entypo name="upload-to-cloud" size={24} color={Colors.white} />
           <Text style={styles.btnText}>Backup stock data</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleBackupProcuctData}
+          // onPress={handleBackupProcuctData}
+          onPress={() => {
+            setModalVisible(true);
+            setTitle("Backup Product Categories");
+            setWarning(
+              "This action will replace all your product categories (not stock items) in cloud server with the local data."
+            );
+            setWarningType("yellow");
+            setExeFunction(() => handleBackupProcuctData);
+          }}
           style={[styles.button]}
         >
           <Entypo name="upload-to-cloud" size={24} color={Colors.white} />
@@ -201,7 +244,15 @@ const BackupScreen = () => {
         <View style={{ height: 20 }} />
         <Text style={styles.categoryTitle}>Delete Actions</Text>
         <TouchableOpacity
-          onPress={handleFlushData}
+          onPress={() => {
+            setModalVisible(true);
+            setTitle("Flush all data from DB");
+            setWarning(
+              "This action will delete all your data from the cloud server. If you accidentally deleted all the data (from the server) and you still have the data on your phone, you can restore them to the cloud by using Backup Actions. In such cases, never use Restore Actions."
+            );
+            setWarningType("red");
+            setExeFunction(() => handleFlushData);
+          }}
           style={[styles.button, { backgroundColor: Colors.red }]}
         >
           <FontAwesome5 name="trash-restore" size={24} color={Colors.white} />
@@ -210,7 +261,16 @@ const BackupScreen = () => {
         <View style={{ height: 20 }} />
         <Text style={styles.categoryTitle}>Restore Actions</Text>
         <TouchableOpacity
-          onPress={handleRestoreData}
+          // onPress={handleRestoreData}
+          onPress={() => {
+            setModalVisible(true);
+            setTitle("Restore all data from Cloud");
+            setWarning(
+              "This action will replace all your local data with the data from cloud server. All unsaved data will be lost."
+            );
+            setWarningType("yellow");
+            setExeFunction(() => handleRestoreData);
+          }}
           style={[styles.button, { backgroundColor: Colors.btnYellow }]}
         >
           <MaterialIcons
@@ -227,7 +287,11 @@ const BackupScreen = () => {
           storage and they will synchronize all your local data with cloud
           storage at once.
         </Text>
-      </View>
+        <Text style={styles.impText}>
+          Do not interrupt these actions unless you are sure of what you going
+          to do. Because such interference can damage your data.
+        </Text>
+      </ScrollView>
     </>
   );
 };
