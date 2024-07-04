@@ -77,6 +77,14 @@ const BuildItemList = ({ route }: any) => {
           itemId={itemId}
           itemName={itemNameState}
         />
+        <View
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            backgroundColor: Colors.black,
+            zIndex: isModalVisible ? 1 : -1,
+            opacity: isModalVisible ? 0.5 : 0,
+          }}
+        />
       </KeyboardAvoidingView>
     </>
   );

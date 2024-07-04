@@ -86,7 +86,11 @@ const PriceModel = ({
   };
 
   return (
-    <Modal isVisible={isModalVisible} style={{ maxHeight: 580 }}>
+    <Modal
+      isVisible={isModalVisible}
+      style={{ maxHeight: 580 }}
+      backdropOpacity={0}
+    >
       <ScrollView style={styles.modelContainer}>
         <Text style={styles.modellabel}>Enter item price</Text>
 

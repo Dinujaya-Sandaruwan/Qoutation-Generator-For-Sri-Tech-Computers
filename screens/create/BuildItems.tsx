@@ -163,6 +163,14 @@ const BuildItems = () => {
           setModalVisible={setModelOpen}
           handleDelete={handleDeleteItem}
         />
+        <View
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            backgroundColor: Colors.black,
+            zIndex: isModelOpen ? 1 : -1,
+            opacity: isModelOpen ? 0.5 : 0,
+          }}
+        />
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.title}>Add Order Details</Text>
           <Text style={styles.orderId}>#{id}</Text>

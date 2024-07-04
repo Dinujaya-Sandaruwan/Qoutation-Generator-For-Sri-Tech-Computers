@@ -10,7 +10,13 @@ import { BuildData } from "@/interfaces/buildData";
 import useNavigationStore from "@/zustand/navigationStore";
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { FlatList, KeyboardAvoidingView, StyleSheet, Text } from "react-native";
+import {
+  FlatList,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useToast } from "react-native-toast-notifications";
 
 const TemplateScreen = () => {
@@ -77,6 +83,14 @@ const TemplateScreen = () => {
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         handleDelete={handleDelete}
+      />
+      <View
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: Colors.black,
+          zIndex: isModalVisible ? 1 : -1,
+          opacity: isModalVisible ? 0.5 : 0,
+        }}
       />
       <NavSearch
         placeholder="Search quotation templates..."

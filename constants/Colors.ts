@@ -13,4 +13,5 @@ export default {
   yellow: "#fcff59",
   btnGreen: "#51a34d",
   btnYellow: "#f2b707",
+  black: "#000000",
 };
