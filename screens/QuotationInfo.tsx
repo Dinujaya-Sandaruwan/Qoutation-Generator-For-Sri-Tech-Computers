@@ -158,14 +158,6 @@ const QuotationInfo = ({ route }: any) => {
         setModalVisible={setModalVisible}
         handleDelete={handleDelereQuotation}
       />
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: Colors.black,
-          zIndex: isModalVisible ? 1 : -1,
-          opacity: isModalVisible ? 0.5 : 0,
-        }}
-      />
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Order Actions</Text>
         <Text style={styles.orderId}>#{data?.id}</Text>

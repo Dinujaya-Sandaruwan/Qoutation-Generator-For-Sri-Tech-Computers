@@ -84,14 +84,6 @@ const TemplateScreen = () => {
         setModalVisible={setModalVisible}
         handleDelete={handleDelete}
       />
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: Colors.black,
-          zIndex: isModalVisible ? 1 : -1,
-          opacity: isModalVisible ? 0.5 : 0,
-        }}
-      />
       <NavSearch
         placeholder="Search quotation templates..."
         searchText={searchText}

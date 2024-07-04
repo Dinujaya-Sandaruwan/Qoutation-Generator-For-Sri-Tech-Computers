@@ -111,14 +111,6 @@ const StockList = () => {
         setModalVisible={setModalVisible}
         handleDelete={handleDelete}
       />
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: Colors.black,
-          zIndex: isModalVisible ? 1 : -1,
-          opacity: isModalVisible ? 0.5 : 0,
-        }}
-      />
       <View style={styles.container}>
         <Text style={styles.title}>Edit Stock Item List</Text>
         <Text style={styles.dropdownTitle}>Select the item category</Text>

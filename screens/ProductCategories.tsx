@@ -137,14 +137,6 @@ const ProductCategories = () => {
         setModalVisible={setModalVisible}
         handleDelete={() => deleteProduct(deleteItemId)}
       />
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: Colors.black,
-          zIndex: isModalVisible ? 1 : -1,
-          opacity: isModalVisible ? 0.5 : 0,
-        }}
-      />
 
       <KeyboardAvoidingView style={styles.container}>
         <Text style={styles.title}>Product Categories</Text>

@@ -21,7 +21,7 @@ const OrderDeleteModel = ({
   handleDelete,
 }: Props) => {
   return (
-    <Modal isVisible={isModalVisible} backdropOpacity={0}>
+    <Modal isVisible={isModalVisible} backdropTransitionOutTiming={0}>
       <View style={styles.modelContainer}>
         <Text style={styles.modellabel}>
           Do you want to delete this order permanently?
