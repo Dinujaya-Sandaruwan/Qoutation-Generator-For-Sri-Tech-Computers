@@ -66,6 +66,10 @@ const BuildItems = () => {
       });
     }
 
+    toast.show(`${value?.productName} added to the build item list`, {
+      type: "success",
+    });
+
     const newItem: BuildItemInterface = {
       itemId: generateUniqueId(),
       itemValue: value?.productId,
@@ -110,7 +114,17 @@ const BuildItems = () => {
   const [deleteBuildItemState, setDeleteBuildItemState] = React.useState("");
 
   const handleDeleteItem = () => {
-    deleteBuildItem(deleteBuildItemState);
+    try {
+      deleteBuildItem(deleteBuildItemState);
+      toast.show("Item deleted successfully.", {
+        type: "success",
+      });
+    } catch (error) {
+      toast.show("Failed to delete the item.", {
+        type: "danger",
+      });
+    }
+
     setModelOpen(false);
   };
 
