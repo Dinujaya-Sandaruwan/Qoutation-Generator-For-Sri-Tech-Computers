@@ -43,7 +43,7 @@ const StockList = () => {
       const filteredData = data?.filter(
         (item: StockData) => item?.itemType === value?.productId
       );
-      setStockItemList(filteredData);
+      setStockItemList(filteredData?.reverse() || []);
     };
     getData();
   }, [value, deleteItemId]);
@@ -152,7 +152,7 @@ const StockList = () => {
         />
 
         <FlatList
-          data={stockItemList.reverse()}
+          data={stockItemList}
           keyExtractor={(item) => item.itemId}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}

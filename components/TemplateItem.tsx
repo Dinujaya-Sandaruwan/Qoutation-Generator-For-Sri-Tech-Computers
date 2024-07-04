@@ -64,7 +64,7 @@ const TemplateItem = (props: TemplateItemProps) => {
     setBuildItems(props?.data?.buildItems);
     setAdditionalNotes(props?.data?.additionalNotes);
     props?.setLoading(false);
-    navigation.navigate("createPage01");
+    navigation.navigate("createPage01slide");
   };
 
   return (
