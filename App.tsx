@@ -62,6 +62,17 @@ function MainStack() {
         name="home"
         options={{
           title: "Quotations By Sri Tech",
+          // ...TransitionPresets.SlideFromRightIOS,
+          headerLeft: () => (
+            <Image source={require("@img/logo.png")} style={styles.logo} />
+          ),
+        }}
+        component={HomeScreen}
+      />
+      <Stack.Screen
+        name="homeslide"
+        options={{
+          title: "Quotations By Sri Tech",
           ...TransitionPresets.SlideFromRightIOS,
           headerLeft: () => (
             <Image source={require("@img/logo.png")} style={styles.logo} />

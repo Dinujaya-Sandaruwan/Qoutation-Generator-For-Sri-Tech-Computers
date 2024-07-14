@@ -17,6 +17,7 @@ export type RootStackParamList = {
   backups: undefined;
   completedOrders: undefined;
   CompletdOrderInfoScreen: { item: BuildData };
+  homeslide: undefined;
 };
 
 // export type RootStackParamList = {

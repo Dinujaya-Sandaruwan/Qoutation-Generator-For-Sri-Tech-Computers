@@ -7,6 +7,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "@/types/navigation";
 import { BuildData } from "@/interfaces/buildData";
 import useFormatMoney from "@/hooks/useFormatMoney";
+import useReducedString from "@/hooks/useReducedString";
 
 interface Props {
   data: { item: BuildData; index: number };
@@ -22,11 +23,14 @@ const CompletedOrdersItem = ({ data: { item } }: Props) => {
   });
 
   const finalPrice = totalPrice + item?.advancedPayment;
+  const reducedString = useReducedString();
 
   return (
     <View style={styles.qutationItem}>
       <View style={styles.qutationItemLeft}>
-        <Text style={styles.qutationItemTitle}>For: {item?.customerName}</Text>
+        <Text style={styles.qutationItemTitle}>
+          For: {reducedString(item?.customerName, 26)}
+        </Text>
         <Text style={styles.qutationItemDate}>Date: {item?.date}</Text>
         <Text style={styles.qutationItemBudget}>
           Price: {formatMoney(finalPrice)}

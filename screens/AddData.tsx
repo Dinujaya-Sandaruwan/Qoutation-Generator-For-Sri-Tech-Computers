@@ -5,6 +5,7 @@ import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -117,65 +118,63 @@ const AddDataScreen = () => {
     <>
       {loading && <Loading message="Adding Stock Item" />}
 
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior="padding"
-        keyboardVerticalOffset={60}
-      >
-        <Text style={styles.title}>Enter Items to Build PC</Text>
+      <KeyboardAvoidingView style={styles.container}>
+        <ScrollView>
+          <Text style={styles.title}>Enter Items to Build PC</Text>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Item Name</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Enter item name here..."
-            placeholderTextColor={Colors.border}
-            onChangeText={(text) => setItemName(text)}
-            value={itemName}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Item Type</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            containerStyle={styles.dropdownContainer}
-            itemTextStyle={styles.itemTextStyle}
-            itemContainerStyle={styles.itemContainerStyle}
-            data={products}
-            search
-            maxHeight={300}
-            labelField="productName"
-            valueField="productId"
-            placeholder={!isFocus ? "Select item" : "..."}
-            searchPlaceholder="Search..."
-            value={itemType}
-            dropdownPosition="bottom"
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-            onChange={(item: ProductData) => {
-              setItemType(item);
-              setIsFocus(false);
-            }}
-            renderItem={(item: ProductData) =>
-              renderItem(item, item?.productId === itemType?.productId)
-            }
-            renderLeftIcon={() => (
-              <AntDesign
-                style={styles.icon}
-                color={Colors.border}
-                name="search1"
-                size={20}
-              />
-            )}
-          />
-        </View>
-        <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
-          <Text style={styles.submitBtnText}>Add item</Text>
-        </TouchableOpacity>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputLabel}>Item Name</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Enter item name here..."
+              placeholderTextColor={Colors.border}
+              onChangeText={(text) => setItemName(text)}
+              value={itemName}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputLabel}>Item Type</Text>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              containerStyle={styles.dropdownContainer}
+              itemTextStyle={styles.itemTextStyle}
+              itemContainerStyle={styles.itemContainerStyle}
+              data={products}
+              search
+              maxHeight={300}
+              labelField="productName"
+              valueField="productId"
+              placeholder={!isFocus ? "Select item" : "..."}
+              searchPlaceholder="Search..."
+              value={itemType}
+              dropdownPosition="bottom"
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              onChange={(item: ProductData) => {
+                setItemType(item);
+                setIsFocus(false);
+              }}
+              renderItem={(item: ProductData) =>
+                renderItem(item, item?.productId === itemType?.productId)
+              }
+              renderLeftIcon={() => (
+                <AntDesign
+                  style={styles.icon}
+                  color={Colors.border}
+                  name="search1"
+                  size={20}
+                />
+              )}
+            />
+          </View>
+          <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
+            <Text style={styles.submitBtnText}>Add item</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </KeyboardAvoidingView>
     </>
   );
@@ -304,6 +303,7 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.componentBorder,
     marginTop: 10,
+    marginBottom: 30,
 
     alignItems: "center",
     justifyContent: "center",

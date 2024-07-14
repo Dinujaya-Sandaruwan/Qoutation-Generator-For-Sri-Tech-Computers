@@ -27,12 +27,12 @@ const useFirestoreData = <T>(collectionName: string, pageSize: number = 10) => {
       if (lastDoc) {
         q = query(
           collectionRef,
-          orderBy("id"),
+          orderBy("id", "desc"),
           startAfter(lastDoc),
           limit(pageSize)
         );
       } else {
-        q = query(collectionRef, orderBy("id"), limit(pageSize));
+        q = query(collectionRef, orderBy("id", "desc"), limit(pageSize));
       }
 
       const querySnapshot = await getDocs(q);

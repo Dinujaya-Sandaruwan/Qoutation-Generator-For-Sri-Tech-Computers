@@ -9,6 +9,7 @@ import { RootStackParamList } from "@/types/navigation";
 import useBuildData from "@/zustand/buildDataStore";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import useReducedString from "@/hooks/useReducedString";
 
 type TemplateItemProps = {
   data: BuildData;
@@ -67,6 +68,8 @@ const TemplateItem = (props: TemplateItemProps) => {
     navigation.navigate("createPage01slide");
   };
 
+  const reducedString = useReducedString();
+
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
       <Pressable
@@ -78,7 +81,9 @@ const TemplateItem = (props: TemplateItemProps) => {
           props?.setDeleteItemId(props?.data?.id);
         }}
       >
-        <Text style={styles.flatlistItelabel}>{props?.data?.customerName}</Text>
+        <Text style={styles.flatlistItelabel}>
+          {reducedString(props?.data?.customerName, 25)}
+        </Text>
         <TouchableOpacity
           onPress={handleCreateNewQuotation}
           style={styles.creatBtn}

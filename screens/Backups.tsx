@@ -291,6 +291,7 @@ const BackupScreen = () => {
           Do not interrupt these actions unless you are sure of what you going
           to do. Because such interference can damage your data.
         </Text>
+        <View style={{ height: 30 }} />
       </ScrollView>
     </>
   );

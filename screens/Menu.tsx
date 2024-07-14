@@ -7,9 +7,16 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
+  useDrawerStatus,
 } from "@react-navigation/drawer";
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect } from "react";
+import {
+  Keyboard,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import Colors from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
@@ -20,12 +27,19 @@ const Menu = (props: DrawerContentComponentProps) => {
   const page = useNavigationStore((state) => state.page);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const currentYear = new Date().getFullYear();
+  const drawerStatus = useDrawerStatus();
+
+  useEffect(() => {
+    if (drawerStatus === "open") {
+      Keyboard.dismiss();
+    }
+  }, [drawerStatus]);
   return (
     <>
       <DrawerContentScrollView {...props} style={styles.container}>
         <Text style={styles.title}>Navigation Menu</Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate("home")}
+          onPress={() => navigation.navigate("homeslide")}
           style={[
             styles.menuItemContainer,
             {
@@ -48,7 +62,7 @@ const Menu = (props: DrawerContentComponentProps) => {
           ]}
         >
           <Entypo name="circle-with-plus" size={24} color={Colors.white} />
-          <Text style={styles.menuItemText}>Create or Edit Quotations</Text>
+          <Text style={styles.menuItemText}>Create or Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("templates")}
@@ -168,7 +182,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 10,
-    marginBottom: 15,
+    marginBottom: 10,
   },
   menuItemText: {
     color: Colors.white,

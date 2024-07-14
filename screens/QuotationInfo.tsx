@@ -173,15 +173,13 @@ const QuotationInfo = ({ route }: any) => {
             onPress={handleEditQuotation}
             style={[styles.button]}
           >
-            <AntDesign name="edit" size={24} color={Colors.white} />
-            <Text style={styles.btnText}>Edit</Text>
+            <Text style={styles.btnText}>Edit quotation</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setModalVisible(true)}
             style={[styles.button]}
           >
-            <MaterialIcons name="delete" size={24} color={Colors.white} />
-            <Text style={styles.btnText}>Delete</Text>
+            <Text style={styles.btnText}>Delete quotation</Text>
           </TouchableOpacity>
         </View>
 
@@ -268,9 +266,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   btnContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 10,
+    marginTop: 20,
   },
   btnText: {
     color: Colors.white,
@@ -283,8 +279,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.buttonBg,
     borderBlockColor: Colors.componentBorder,
     borderWidth: StyleSheet.hairlineWidth,
-    padding: 10,
-    minWidth: 155,
+    padding: 15,
+    marginTop: 10,
 
     flexDirection: "row",
     gap: 10,

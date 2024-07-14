@@ -14,7 +14,6 @@ import {
 import {
   Animated,
   FlatList,
-  Image,
   KeyboardAvoidingView,
   Pressable,
   StyleSheet,
@@ -95,7 +94,7 @@ function HomeScreen() {
   const [data, setData] = React.useState<BuildData[]>([] as BuildData[]);
   useEffect(() => {
     readDataAsyncStorage(STORAGE_KEYS.qutations).then((data) => {
-      setData(data);
+      setData(data?.reverse());
     });
   }, []);
 
@@ -130,17 +129,10 @@ function HomeScreen() {
         {data?.length === 0 ? (
           <>
             <Text style={styles.title}>No Draft Quotations</Text>
-            <View style={styles.noDataContainer}>
-              <Image
-                source={require("@img/noDraft.png")}
-                style={styles.noDataImage}
-                resizeMode="contain"
-              />
-            </View>
           </>
         ) : (
           <FlatList
-            data={filteredData?.reverse()}
+            data={filteredData}
             ListHeaderComponent={() => (
               <Text style={styles.title}>Draft Quotations</Text>
             )}
@@ -212,16 +204,5 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
-  },
-
-  noDataContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  noDataImage: {
-    width: "80%",
-    opacity: 0.1,
-    marginTop: -120,
   },
 });
