@@ -20,13 +20,15 @@ import { RootStackParamList } from "@/types/navigation";
 import useBuildData from "@/zustand/buildDataStore";
 import LottieView from "lottie-react-native";
 import { useToast } from "react-native-toast-notifications";
+import qutationPdfTemplateMini1 from "@/templates/qutationPdfTemplateMini1";
+import qutationPdfTemplateMini2 from "@/templates/qutationPdfTemplateMini2";
 
 export default function GeneratingQutation({ route }: any) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { id } = route?.params;
   const animation = useRef(null);
 
-  const html = qutationPdfTemplate();
+  const html = qutationPdfTemplateMini1();
   const [loading, setLoading] = useState(false);
 
   const storeDataAsyncStorage = useWriteAscyncStorage();
