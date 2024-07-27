@@ -33,7 +33,7 @@ const useBuildData = create<
   buildingBudget: 0,
   advancedPayment: 0,
   mobileNo: "",
-  warranty: "",
+  warranty: "6 months",
   addressLineOne: "",
   addressLineTwo: "",
   additionalNotes: "",

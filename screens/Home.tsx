@@ -45,6 +45,7 @@ function HomeScreen() {
     setBuildingBudget,
     setAdvancedPayment,
     setMobileNo,
+    setWarranty,
     setAddressLineOne,
     setAddressLineTwo,
     setAdditionalNotes,
@@ -60,6 +61,7 @@ function HomeScreen() {
     setBuildingBudget(0);
     setAdvancedPayment(0);
     setMobileNo("");
+    setWarranty("6 months");
     setAddressLineOne("");
     setAddressLineTwo("");
     setAdditionalNotes("");
