@@ -22,13 +22,21 @@ import LottieView from "lottie-react-native";
 import { useToast } from "react-native-toast-notifications";
 import qutationPdfTemplateMini1 from "@/templates/qutationPdfTemplateMini1";
 import qutationPdfTemplateMini2 from "@/templates/qutationPdfTemplateMini2";
+import quotationDataTypeStore from "@/zustand/quotationDataTypeStore";
 
 export default function GeneratingQutation({ route }: any) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { id } = route?.params;
   const animation = useRef(null);
 
-  const html = qutationPdfTemplateMini1();
+  const { quotationDataType } = quotationDataTypeStore();
+  let html = qutationPdfTemplate();
+  if (quotationDataType === "Minimal") {
+    html = qutationPdfTemplateMini2();
+  } else if (quotationDataType === "With Blanks") {
+    html = qutationPdfTemplateMini1();
+  }
+
   const [loading, setLoading] = useState(false);
 
   const storeDataAsyncStorage = useWriteAscyncStorage();
@@ -39,6 +47,7 @@ export default function GeneratingQutation({ route }: any) {
     buildingBudget,
     advancedPayment,
     mobileNo,
+    warranty,
     addressLineOne,
     addressLineTwo,
     additionalNotes,
@@ -70,6 +79,7 @@ export default function GeneratingQutation({ route }: any) {
           buildingBudget,
           advancedPayment,
           mobileNo,
+          warranty,
           addressLineOne,
           addressLineTwo,
           additionalNotes,

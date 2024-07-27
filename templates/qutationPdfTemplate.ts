@@ -9,6 +9,7 @@ const qutationPdfTemplate = () => {
     customerName,
     advancedPayment,
     mobileNo,
+    warranty,
     addressLineOne,
     addressLineTwo,
     buildItems,
@@ -231,7 +232,12 @@ const qutationPdfTemplate = () => {
           <p class="semiBoldText">&nbsp;${address}</p>
         </div>
       </div>
+      <div>
         <p class="semiBoldText"><span class="boldText">Mobile No:</span> ${displayNumber}</p>
+        <p class="semiBoldText"><span class="boldText">Warranty:</span> ${
+          warranty ? warranty : "..........................."
+        }</p>
+      </div>
       </div>
 <div class="terms">
       <p class="termsTitle">

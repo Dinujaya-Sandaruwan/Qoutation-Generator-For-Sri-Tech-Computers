@@ -89,8 +89,12 @@ const BuyerInfo = () => {
     navigation.navigate("createPage02");
   };
 
-  const { quotationDataType } = quotationDataTypeStore();
+  const { quotationDataType, setQuotationDataType } = quotationDataTypeStore();
   const [isModalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    setQuotationDataType("Minimal");
+  }, []);
 
   return (
     <KeyboardAvoidingView style={styles.container}>

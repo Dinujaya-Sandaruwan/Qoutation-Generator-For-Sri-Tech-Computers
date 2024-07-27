@@ -2,7 +2,7 @@
   "expo": {
     "name": "Quotations",
     "slug": "quotation-generator",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "orientation": "portrait",
     "backgroundColor": "#1C1C1C",
     "icon": "./assets/icon.png",
