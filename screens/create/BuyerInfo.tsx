@@ -152,7 +152,6 @@ const BuyerInfo = () => {
             placeholderTextColor={Colors.border}
             onChangeText={(text) => setWarranty(text)}
             value={warranty}
-            keyboardType="numeric"
           />
         </View>
         <View>
