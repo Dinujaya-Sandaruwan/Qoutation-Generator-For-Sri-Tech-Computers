@@ -9,6 +9,7 @@ const useBuildData = create<
     setBuildingBudget: (buildingBudget: number) => void;
     setAdvancedPayment: (advancedPayment: number) => void;
     setMobileNo: (mobileNo: string) => void;
+    setWarranty: (warranty: string) => void;
     setAddressLineOne: (addressLineOne: string) => void;
     setAddressLineTwo: (addressLineTwo: string) => void;
     setAdditionalNotes: (additionalNotes: string) => void;
@@ -32,6 +33,7 @@ const useBuildData = create<
   buildingBudget: 0,
   advancedPayment: 0,
   mobileNo: "",
+  warranty: "",
   addressLineOne: "",
   addressLineTwo: "",
   additionalNotes: "",
@@ -44,6 +46,7 @@ const useBuildData = create<
   setBuildingBudget: (buildingBudget: number) => set({ buildingBudget }),
   setAdvancedPayment: (advancedPayment: number) => set({ advancedPayment }),
   setMobileNo: (mobileNo: string) => set({ mobileNo }),
+  setWarranty: (warranty: string) => set({ warranty }),
   setAddressLineOne: (addressLineOne: string) => set({ addressLineOne }),
   setAddressLineTwo: (addressLineTwo: string) => set({ addressLineTwo }),
   setAdditionalNotes: (additionalNotes: string) => set({ additionalNotes }),

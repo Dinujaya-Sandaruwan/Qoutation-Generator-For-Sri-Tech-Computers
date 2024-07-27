@@ -4,6 +4,7 @@ import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React, { useEffect, useState } from "react";
 import {
+  FlatList,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
@@ -27,6 +28,8 @@ import useBuildData from "@/zustand/buildDataStore";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useToast } from "react-native-toast-notifications";
 import Loading from "@/components/Loading";
+import { StockData } from "@/interfaces/stockData";
+import PriceModel from "@/components/models/PriceModel";
 
 const BuildItems = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -35,8 +38,8 @@ const BuildItems = () => {
 
   const renderItem = (
     item: {
-      productId: string;
-      productName: string;
+      itemId: string;
+      itemName: string;
     },
     selected: boolean
   ) => (
@@ -44,12 +47,12 @@ const BuildItems = () => {
       style={[styles.itemContainer, selected && styles.selectedItemContainer]}
     >
       <Text style={[styles.itemText, selected && styles.selectedItemText]}>
-        {item?.productName}
+        {item?.itemName}
       </Text>
     </View>
   );
 
-  const [dropDownValue, setDropDownValue] = useState<ProductData | null>(null);
+  const [dropDownValue, setDropDownValue] = useState<StockData | null>(null);
   const [isFocus, setIsFocus] = useState(false);
 
   const toast = useToast();
@@ -66,15 +69,15 @@ const BuildItems = () => {
       });
     }
 
-    toast.show(`${value?.productName} added to the build item list`, {
+    toast.show(`"${value?.itemName}" added to the build item list`, {
       type: "success",
     });
 
     const newItem: BuildItemInterface = {
       itemId: generateUniqueId(),
-      itemValue: value?.productId,
-      itemName: "",
-      itemType: value?.productName,
+      itemValue: value?.itemId,
+      itemName: value?.itemName,
+      itemType: value?.itemName,
       itemPrice: 0,
       itemQuantity: 0,
       itemWarranty: 0,
@@ -155,16 +158,20 @@ const BuildItems = () => {
   };
 
   const readDataAsyncStorage = useReadAscyncStorage();
-  const [products, setProducts] = useState<ProductData[]>([]);
+  const [products, setProducts] = useState<StockData[]>([]);
 
   const fetchData = async () => {
-    const data = await readDataAsyncStorage(STORAGE_KEYS.products);
+    const data = await readDataAsyncStorage(STORAGE_KEYS.stocks);
     setProducts(data || []);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const [itemNameState, setItemNameState] = useState<string>("");
+  const [itemIdState, setItemIdState] = useState<string>("");
 
   return (
     <>
@@ -200,20 +207,20 @@ const BuildItems = () => {
               data={products}
               search
               maxHeight={300}
-              labelField="productName"
-              valueField="productId"
+              labelField="itemName"
+              valueField="itemId"
               placeholder={!isFocus ? "Select item" : "..."}
               searchPlaceholder="Search..."
               value={dropDownValue}
               dropdownPosition="bottom"
               onFocus={() => setIsFocus(true)}
               onBlur={() => setIsFocus(false)}
-              onChange={(item: ProductData) => {
+              onChange={(item: StockData) => {
                 setDropDownValue(item);
                 setIsFocus(false);
               }}
-              renderItem={(item: ProductData) =>
-                renderItem(item, item?.productId === dropDownValue?.productId)
+              renderItem={(item: StockData) =>
+                renderItem(item, item?.itemId === dropDownValue?.itemId)
               }
               renderLeftIcon={() => (
                 <AntDesign
@@ -240,8 +247,12 @@ const BuildItems = () => {
               itemValue={item?.itemValue}
               itemType={item?.itemType}
               itemId={item?.itemId}
+              itemName={item?.itemName}
               setDeleteBuildItem={setDeleteBuildItemState}
               setModelOpen={setModelOpen}
+              setItemNameState={setItemNameState}
+              setItemIdState={setItemIdState}
+              setModalVisible={setModalVisible}
             />
           ))}
         </ScrollView>
@@ -263,6 +274,12 @@ const BuildItems = () => {
             <Text style={[styles.navBtnText, { marginLeft: 5 }]}>Generate</Text>
           </TouchableOpacity>
         </View>
+        <PriceModel
+          isModalVisible={isModalVisible}
+          setModalVisible={setModalVisible}
+          itemId={itemIdState}
+          itemName={itemNameState}
+        />
       </KeyboardAvoidingView>
     </>
   );

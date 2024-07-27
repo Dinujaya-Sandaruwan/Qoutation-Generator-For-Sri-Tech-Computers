@@ -44,6 +44,7 @@ const BuyerInfo = () => {
     setBuildingBudget,
     setAdvancedPayment,
     setMobileNo,
+    setWarranty,
     setAddressLineOne,
     setAddressLineTwo,
     setAdditionalNotes,
@@ -53,6 +54,7 @@ const BuyerInfo = () => {
     buildingBudget,
     advancedPayment,
     mobileNo,
+    warranty,
     addressLineOne,
     addressLineTwo,
     additionalNotes,
@@ -89,7 +91,7 @@ const BuyerInfo = () => {
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Add Order Details</Text>
-        <Text style={styles.orderId}>#{id}</Text>
+
         <View>
           <Text style={styles.inputText}>Customer or Build Name</Text>
           <TextInput
@@ -119,6 +121,17 @@ const BuyerInfo = () => {
             placeholderTextColor={Colors.border}
             onChangeText={(text) => setAdvancedPayment(Number(text))}
             value={advancedPayment ? advancedPayment.toString() : ""}
+            keyboardType="numeric"
+          />
+        </View>
+        <View>
+          <Text style={styles.inputText}>Warannty</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter warranty here..."
+            placeholderTextColor={Colors.border}
+            onChangeText={(text) => setWarranty(text)}
+            value={warranty}
             keyboardType="numeric"
           />
         </View>
@@ -167,7 +180,7 @@ const BuyerInfo = () => {
       <View style={[styles.bottomNavigation, { marginBottom: marginBottom }]}>
         <TouchableOpacity
           style={styles.navBtn}
-          onPress={() => navigation.navigate}
+          onPress={() => navigation.navigate("home")}
         >
           <AntDesign name="home" size={19} color={Colors.white} />
           <Text style={[styles.navBtnText, { marginLeft: 5 }]}>Go to home</Text>

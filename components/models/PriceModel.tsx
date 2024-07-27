@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { TextInput } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
@@ -34,10 +34,32 @@ const PriceModel = ({
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const toast = useToast();
 
-  const [price, setprice] = useState<number | null>(null);
+  const { buildItems } = useBuildData();
+
+  const [price, setprice] = useState<number | undefined>(undefined);
   const [warranty, setWarranty] = useState<number>(0);
   const [warrantyDuration, setWarrantyDuration] = useState("months");
   const [quantity, setQuantity] = useState<number>(1);
+
+  // console.log(buildItems[0]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setprice(
+  //       buildItems?.find((item) => item.itemId === itemId)?.itemPrice ||
+  //         undefined
+  //     );
+  //     setWarranty(
+  //       buildItems?.find((item) => item.itemId === itemId)?.itemWarranty || 0
+  //     );
+  //     setWarrantyDuration(
+  //       buildItems?.find((item) => item.itemId === itemId)?.itemWarrantyType ||
+  //         "months"
+  //     );
+  //     setQuantity(
+  //       buildItems?.find((item) => item.itemId === itemId)?.itemQuantity || 1
+  //     );
+  //   }, 100);
+  // }, []);
 
   const handleAddPrice = () => setprice(price && price + 50);
   const handleSubPrice = () => setprice(price && price - 50);
@@ -82,7 +104,15 @@ const PriceModel = ({
     }
     setItemName(itemId, itemName);
     setModalVisible(false);
-    navigation.goBack();
+    removeInputData();
+    // navigation.goBack();
+  };
+
+  const removeInputData = () => {
+    setprice(undefined);
+    setWarranty(0);
+    setWarrantyDuration("months");
+    setQuantity(1);
   };
 
   return (
@@ -190,7 +220,10 @@ const PriceModel = ({
             styles.modelButtons,
             { backgroundColor: Colors.red, marginBottom: 40 },
           ]}
-          onPress={() => setModalVisible(false)}
+          onPress={() => {
+            setModalVisible(false);
+            removeInputData();
+          }}
         >
           <Text style={styles.modelBtnText}>Close</Text>
         </TouchableOpacity>

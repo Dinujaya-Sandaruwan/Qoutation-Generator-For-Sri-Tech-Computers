@@ -5,6 +5,7 @@ export interface BuildData {
   buildingBudget: number;
   advancedPayment: number;
   mobileNo: string;
+  warranty: string;
   addressLineOne: string;
   addressLineTwo: string;
   additionalNotes: string;

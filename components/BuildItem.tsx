@@ -1,5 +1,14 @@
-import React, { useRef } from "react";
-import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useRef } from "react";
+import {
+  Animated,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import Colors from "@/constants/Colors";
 import useFormatMoney from "@/hooks/useFormatMoney";
@@ -13,16 +22,24 @@ interface Props {
   itemValue: string;
   itemType: string;
   itemId: string;
+  itemName: string;
   setModelOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setDeleteBuildItem: React.Dispatch<React.SetStateAction<string>>;
+  setItemNameState: React.Dispatch<React.SetStateAction<string>>;
+  setItemIdState: React.Dispatch<React.SetStateAction<string>>;
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BuildItem = ({
   itemValue,
   itemType,
   itemId,
+  itemName,
   setModelOpen,
   setDeleteBuildItem,
+  setItemNameState,
+  setItemIdState,
+  setModalVisible,
 }: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -41,10 +58,14 @@ const BuildItem = ({
       useNativeDriver: true,
     }).start();
 
-    // setTimeout(() => {
-    //   navigation.navigate("createPage03");
-    // }, 100);
+    setTimeout(() => {
+      setModalVisible(true);
+    }, 100);
   };
+
+  // useEffect(() => {
+
+  // }, []);
 
   const state = true;
   const { buildItems } = useBuildData();
@@ -56,12 +77,30 @@ const BuildItem = ({
 
   const reducedString = useReducedString();
 
+  const generateWarranty = (itemWarranty: number, itemWarrantyType: string) => {
+    if (itemWarranty === 0) {
+      return "No Warranty";
+    }
+    if (itemWarranty === 1 && itemWarrantyType === "months") {
+      return `Warranty: ${itemWarranty} month`;
+    }
+    if (itemWarranty === 1 && itemWarrantyType === "years") {
+      return `Warranty: ${itemWarranty} year`;
+    }
+    return `Warranty: ${itemWarranty} ${itemWarrantyType}`;
+  };
+
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-      <Pressable
+      <TouchableOpacity
         style={styles.itemView}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
+        // onPressIn={handlePressIn}
+        // onPressOut={handlePressOut}
+        onPress={() => {
+          setModalVisible(true);
+          setItemNameState(itemName);
+          setItemIdState(itemId);
+        }}
         onLongPress={() => {
           setModelOpen(true);
           setDeleteBuildItem(itemId);
@@ -76,20 +115,26 @@ const BuildItem = ({
               {formatedPrice} x {currentItem[0]?.itemQuantity} ={" "}
               {format(currentItem[0]?.itemPrice * currentItem[0]?.itemQuantity)}
             </Text>
+            <Text style={styles.itemPrice}>
+              {generateWarranty(
+                currentItem[0]?.itemWarranty,
+                currentItem[0]?.itemWarrantyType
+              )}
+            </Text>
           </View>
         ) : (
-          <Text style={styles.itemTitle}>{itemType}</Text>
+          <Text style={styles.itemTitle}>{reducedString(itemType, 27)}</Text>
         )}
-
-        <Pressable
-          onPress={() =>
-            navigation.navigate("createPage03", { itemValue, itemId })
-          }
+        {/* <Pressable
+          onPress={() => {
+            setModelOpen(true);
+            setDeleteBuildItem(itemId);
+          }}
           style={styles.nxtPageBtn}
         >
-          <Feather name="chevron-right" size={24} color={Colors.white} />
-        </Pressable>
-      </Pressable>
+          <Ionicons name="close" size={24} color={Colors.white} />
+        </Pressable> */}
+      </TouchableOpacity>
     </Animated.View>
   );
 };
