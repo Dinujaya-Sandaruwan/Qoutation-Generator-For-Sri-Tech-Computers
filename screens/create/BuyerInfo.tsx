@@ -5,7 +5,7 @@ import {
   useIsFocused,
   useNavigation,
 } from "@react-navigation/native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -24,6 +24,8 @@ import useNavigationStore from "@/zustand/navigationStore";
 import { Feather } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useToast } from "react-native-toast-notifications";
+import quotationDataTypeStore from "@/zustand/quotationDataTypeStore";
+import QuotationDataTypeModel from "@/components/models/QuotationDataTypeModel";
 
 const BuyerInfo = () => {
   const isThisPage = useIsFocused();
@@ -87,11 +89,25 @@ const BuyerInfo = () => {
     navigation.navigate("createPage02");
   };
 
+  const { quotationDataType } = quotationDataTypeStore();
+  const [isModalVisible, setModalVisible] = useState(false);
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Add Order Details</Text>
-
+        <Text style={styles.orderId}>#{id}</Text>
+        <View>
+          <Text style={styles.inputText}>Quotation Type</Text>
+          <TouchableOpacity
+            style={styles.quotationType}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={{ color: "#d9d9d9", fontSize: 14 }}>
+              {quotationDataType}
+            </Text>
+          </TouchableOpacity>
+        </View>
         <View>
           <Text style={styles.inputText}>Customer or Build Name</Text>
           <TextInput
@@ -192,6 +208,12 @@ const BuyerInfo = () => {
           <Feather name="chevron-right" size={19} color={Colors.white} />
         </TouchableOpacity>
       </View>
+
+      <QuotationDataTypeModel
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        // callBack={callBack}
+      />
     </KeyboardAvoidingView>
   );
 };
@@ -201,6 +223,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
     backgroundColor: Colors.background,
+  },
+  quotationType: {
+    backgroundColor: Colors.componentBg,
+    padding: 10,
+    paddingBottom: 15,
+    paddingTop: 15,
+    borderRadius: 5,
+    marginTop: 5,
+    marginBottom: 15,
   },
   title: {
     color: Colors.white,
