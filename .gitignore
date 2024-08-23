@@ -34,5 +34,5 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-constants/firebaseData.ts
+# constants/firebaseData.ts
 

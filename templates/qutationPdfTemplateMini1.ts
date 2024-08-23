@@ -33,7 +33,7 @@ const qutationPdfTemplateMini1 = () => {
 
   const generateWarranty = (itemWarranty: number, itemWarrantyType: string) => {
     if (itemWarranty === 0) {
-      return "No Warranty";
+      return ".........................................";
     }
     if (itemWarranty === 1 && itemWarrantyType === "months") {
       return `${itemWarranty} month`;
@@ -46,12 +46,14 @@ const qutationPdfTemplateMini1 = () => {
 
   const currentYear = new Date()?.getFullYear();
   const formattedNumber = usePhoneNumberFormatter(mobileNo);
-  const displayNumber = mobileNo ? mobileNo : "...........................";
+  const displayNumber = mobileNo
+    ? mobileNo
+    : ".........................................";
 
   const address =
     [addressLineOne || "", addressLineTwo || ""]
       ?.filter((line) => line?.trim() !== "")
-      ?.join(", ") || "...........................";
+      ?.join(", ") || ".........................................";
 
   const template = `
 <html>
@@ -61,11 +63,19 @@ const qutationPdfTemplateMini1 = () => {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <style>
+      @page {
+        margin: 0.2cm;
+        margin-bottom: 0cm;    
+      }
       body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
         font-family: "Lato", sans-serif;
         box-sizing: border-box;
       }
-
+        
       .container {
         padding: 10px;
       }
@@ -199,8 +209,11 @@ const qutationPdfTemplateMini1 = () => {
                     item?.itemName,
                     item?.itemQuantity
                   )}</td>
-                  <td style="text-align:center;">.........................................</td>
-                  <td style="text-align:center;">.........................................</td>
+                  <td>${generateWarranty(
+                    item.itemWarranty,
+                    item.itemWarrantyType
+                  )}</td>
+                  <td>.........................................</td>
                 </tr>
               `;
             })
@@ -222,7 +235,9 @@ const qutationPdfTemplateMini1 = () => {
       <div class="footer">
   <div>
       <p class="semiBoldText"><span class="boldText">Name:</span> ${
-        customerName ? customerName : "..........................."
+        customerName
+          ? customerName
+          : "........................................."
       }</p>   
     <div class="address">
       <p><span class="boldText">Address:</span></p>
@@ -232,7 +247,7 @@ const qutationPdfTemplateMini1 = () => {
   <div>
     <p class="semiBoldText"><span class="boldText">Mobile No:</span> ${displayNumber}</p>
     <p class="semiBoldText"><span class="boldText">Warranty:</span> ${
-      warranty ? warranty : "..........................."
+      warranty ? warranty : "........................................."
     }</p>
   </div>
 </div>
