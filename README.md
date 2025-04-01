@@ -5,6 +5,8 @@ This project is a quotation generator application developed for Sri Tech Compute
 | ![Image 1](https://github.com/user-attachments/assets/c7420b3f-910d-4485-bc0a-109c885374f3) | ![Image 2](https://github.com/user-attachments/assets/a27c5604-f767-4863-9095-250e70c11e78) | ![Image 3](https://github.com/user-attachments/assets/17fb7c2d-2381-4926-899a-d71f109f8c56) | ![Image 4](https://github.com/user-attachments/assets/44fe2646-8f06-443c-bbf3-412583cfeb15) |
 |---|---|---|---|
 
+[Download sample invoice](https://drive.google.com/file/d/1S46T2OEbh74psVQdZGec3aQ6KQLZN3AY/view?usp=sharing)
+
 ## Features
 
 - Generate professional quotations for computer products and services
